@@ -1,0 +1,207 @@
+\label{chap:rebinding}
+
+In this chapter we are going to examine a special type of a molecular (kinetics/dynamics?) system, namely receptor-ligand systems.
+To describe these systems we can use all the previously defined mathematical objects.
+
+To give a short overview about what is going to happen here. A molecular system can be described via a differential equation. The solution of this differential equation is a Markov(?) process which can be described via a transfer operator (section \ref{sec:transfer}). This operator will be projected onto a finite-dimensional state space (section \ref{sec:galerkin}) which may spoil the Markov Property of the process (section \ref{sec:recrossing}).
+
+%Here we will try to tackle this subject for nonreversible (NESS) processes also.
+
+%complies with
+%mathematically based
+This chapter is mainly based on Weber and Fackeldey\cite{weber2014}.
+%also\cite{weber2012}?
+
+\todo{In which model are we working? Hamiltonian ($\Gamma$)? Hamiltonian w/ randomized momentum ($\Omega$ w/ any momentum)? Langevin? Diffusion Dynamics?}
+
+\section{Receptor-Ligand System}
+\marginpar{together with reb. eff.}
+
+Ligand (L) can bind to a receptor (R) and form a receptor-ligand complex (LR)
+
+\todo{What is a molecular system? State space, Phase Space, Ensemble, Configurational Space, Conformation Space, reduced density}
+
+\section{Rebinding Effect}
+\marginpar{impact of multivalency on the rebinding effect (Weber, Chem.)}
+
+The rebinding effect has been characterized as a memory effect which leads to an additional thermodynamic weight of the bound state.
+%Weber quantifying rebinding effect
+%occurs when projecting a MD process onto a finite subspace??
+
+In fact, a stochastic process describing a receptor-ligand molecular system is NOT necessarily Markovian. The Markovianity can be spoiled by the Rebinding Effect. If a Receptor-Ligand system dissolves, due to the favorable spatial situation (?) it is more likely to rebing again than to stay dissolved. %\marginpar{Zusammenhang zum Absatz davor?}
+
+There are several papers (...) describing the rebinding effect on a chemical and a mathematical view. In chemistry, there are several reasons/ factors for the rebinding effect discussed.
+\\
+
+An important application of receptor-ligand processes is drug design. In short: A drug consists of ligands which should bind to the receptors of the virus. If the drug creates many bindings, the virus is "bound" and cannot attack the human (cell?) anymore. So many bindings are a favorable thing. So a high rebinding effect enhances the (overall?) binding affinity of the process/ system which is good for the efficiency of a drug. We want a high rebinding effect.
+So in this chapter, we examine the minimal rebinding effect for a given Kinetics.
+This task has been solved by Weber... for reversible processes.
+\\
+
+How: bound -> unbound
+
+
+\section{Molecular Kinetics as a Projection}
+\marginpar{Mathematical description of molecular kinetics}
+
+%can, should, have to
+In general, to describe molecular systems we can distinguish between two point of views: considering micro states or macro states of the system.
+Here, we will basically embed the theoretical concepts of chapter 1 and 2 in the physical/ chemical framework (phase space etc.).
+
+\subsubsection*{Micro States}
+A micro state of a molecular system with $N$ atoms can be represented in a $6N$-dimensional phase space $\Gamma = \Omega \times \Rdrei$, consisting of the configurational space $\Omega = \Rdrei$ and the momentum space $\Rdrei$.
+
+The Boltzmann distribution is expressed in the form
+\begin{equation}
+\bar{\rho}(q,p) \propto \exp{(-\beta H(q,p))},
+\end{equation}
+where $\beta = 1/ (k_BT)$ is the inverse of the temperature $T$ multiplied with the Boltzmann constant $k_B$. The Hamilton function denoted by $H$ is given by $H(q,p) = K(p)+V(q)$, the sum of the kinetic energy $K(p)$ and the potential energy $V(q)$.
+The Boltzmann distribution $\pi$ can be decomposed as $\pi = \pi_p \pi_q$, where \marginpar{see ..} $\pi_p: \R^{3N}  \rightarrow \R$ is the probability function of the kinetic part in the momentum space and $\pi_q: \Omega \rightarrow \R$ is the probability function of the potential part in the spatial/configurational space $\Omega$.
+Later, we will project our dynamics onto $\Omega$ (need a \textit{reduced density}).
+
+\subsubsection*{Macro States}
+
+Group/cluster a collection of the micro states having the same or similar values in one observable
+(e.g. bound, unbound state of receptor-ligand system). By grouping micro states, the (corresponding?) macro states yield statistical weights and entropic information (?).
+Macro states need not be distinct sets.
+Approach here: overlapping partial densities, which can be identified as membership functions $\cfam$.
+
+\todo{statistical weights and entropic information}
+
+\subsubsection*{General Approach here}
+In this section, we are going to describe the mathematical model which we will use to describe a molecular system and its propagation/ evolution/ time changes?
+As it is a stochastic process (on molecular level small arbitrary changes that cannot be described deterministically), we will get a transfer operator which describes the propagation of EACH state (=micro state) of the process.
+I.e. we have a state space which is enormous large.
+
+Since we want to make computations on that process, we need to make it smaller.
+This can be done using the Galerkin Projection as described in chapter 2. So we get a process on a finite state space which shold maintain the most important properties of the continuous process. (Markovianity?)
+
+This discretization can be achieved by using membership functions (linear combinations of eigenfunctions of the transfer operator corresponding to the dominant eigenvalues). These membership functions can be computed using PCCA+. BUT: PCCA+ works only for reversible processes.
+
+So we will at first handle only the reversible case, since it is much easier to deal with.
+
+At the end, we get the transition matrix(not stoch.) and the infinitesimal generator of the finite process.
+This important tool will help us to solve our optimization problem at the end; maximize/minimize the rebinding effect.
+
+\subsubsection*{Membership functions}
+There exist different approaches for ...
+set-based vs function based. Here we use membership functions which can have certain overlap.
+\marginpar{here overlap is good?}
+\marginpar{membership functions, overlapping partial densities, partition of unity}
+
+Membership functions $\chi_1,\dots,\chi_n : \Omega \rightarrow [0,1]$ which form a partition of unity, i.e.
+\begin{equation}
+\sum_{i=1}^n \chi_i(q) = 1.
+\end{equation}
+
+define macro states as overlapping partial densities, which can be identified as membership functions.
+
+%So: membership function "$=$" macro state? NOP
+
+\subsubsection*{Statistical Weights}
+We can assign a statistical weight to each macro state \marginpar{and entropic information?}
+(= membership function $\chi_i$): \marginpar{what is that good for?}
+%dq diff
+\begin{equation}
+w_i = \int_\Omega \chi_i(q) \pi_q(q) \diff q
+\end{equation}
+Statistical weight $w_i$ = probability to be in conformation/(metastable) macro state $i$
+
+\subsubsection*{Transfer Operator}
+For reversible(!) processes Weber \cite{weber2011subspace} defines a transfer operator as follows:
+\begin{equation}
+\label{eq:transferoperator}
+\Pcal(\tau)f(q) = \int_\Rdrei \left( \int_\Omega f(\tilde{q})\Psi^{-r}(\tilde{q}\mid (q,p)) \diff \tilde{q} \right) \pi_p(p)\diff p.
+\end{equation}
+This transfer operator is self-adjoint! due to the detailed balance condition. \marginpar{trivial?}
+So for the nonreversible approach we cannot use this operator?
+Or: we can use this operator but it is not self-adjoint anymore? (so complex eigenvalues)..
+
+We assume that the discrete spectrum of the transfer operator has $n$ dominant eigenvalues
+%Why? -> metastable sets
+$1 = \lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_n$ which are all close to $1$ and bounded away from the essential spectrum (see Sch\"utte?). \marginpar{?}
+The corresponding eigenfunctions are denoted by $\Xcal = \{ \Xcal_1,\dots, \Xcal_n\}$
+
+\subsubsection*{Relation between Transfer Operator and Markov Operator}
+%density propagating Markov Operator
+%Weber Habil p.28
+
+A transfer operator $\Pcal(\tau)$ also defines a (corresponding) projected Markov operator \marginpar{def} $\bar{\Pcal(\tau)}$ acting in configurational space $\Omega$, see Weber\cite{weber2011subspace};
+\begin{equation*}
+\bar{\Pcal} (\tau) = \pi_q \circ \Pcal(\tau) \circ (\pi_q)^{-1}.
+\end{equation*}
+
+\subsubsection*{Discrete Markov State Model}
+Now we want to create a discrete Markov State Model of our process. We want the states of this dicrete model to correspond to the metastable conformations/sets of the process.
+
+As we have seen in chapter \ref{chap:meta}, the number of metastable sets of a process can be determined by the number of dominant eigenvalues; i.e. we want to create a Markov State Model on $n$ states.
+%Since each of the $n$ dominant eigenvalues of the transfer operator corresponds to a metastable set (no? %because membership fct instead of set?)...
+%Using the dominant spectrum of the transfer operator, we want to create a discrete Markov State Model on %$n$ states.
+The state space of this Model should consist of the macro states of our Molecular System and its transition behaviour should be described via a $n\times n$-transition matrix $P(\tau)$ (i.e. row-stochastic matrix).
+%Each state space of this model shall be a macro state
+
+So somehow we need to get from our continuous operator $\Pcal(\tau)$ to a discrete matrix $P(\tau)$, while we want to preserve the most important properties of the process.
+(Markovianity?)
+%Of course by reducing the dimension we will lose some of the original informations but the discrete model
+%should be as good as possible
+
+For doing this, we have at first to determine the size and shape of the membership function $\chi_i$.
+%membership functions = always linear combination of eigenfunctions????
+\begin{equation}
+\chi_j(q) = \sum_{i=1}^N A_{ij}\Xcal_i(q), \ j=1,\dots,n,
+\end{equation}
+where $A= \{A_{ij}\}_{i,j=1,\dots,n}$ is the solution of PCCA+ (convex maximization problem).
+\marginpar{PCCA+ can be applied only for clustering processes on finite/ discrete state spaces}
+% state space = finite (6N states, but on continuous values)
+This choice of membership functions preserves Markovianity of the process when projecting. \marginpar{Ref?}
+%onto finite subspace consisting of states chi1,..chin (membership fct= state??)
+As a linear combination of eigenfunctions, the membership functions might have an overlap!
+
+\subsubsection*{Galerkin Projection}
+We can reduce our continuous stochastic process to a discrete process by the Galerkin projection
+\begin{equation}
+\label{eq:galerkin}
+P(\tau) = (\langle \chi, \chi \rangle_\pi)\inv (\langle \chi, \Pcal(\tau) \chi \rangle_\pi),
+\end{equation}
+compare theorem \ref{thm:galerkin}.
+%We can see that \eqref{eq:galerkin} fulfills Theorem \ref{thm:galerkin} in the case of set-based conformations
+%$\chi_i$, because then we have $\chi_i^2 = 1$ and $\chi_i\chi_j = 0$ for $i \neq j$ (indicator functions).
+
+If we use the transfer operator $\Pcal$ from \eqref{eq:transferoperator} we have NO discretization error under this projection. It means that $(\Pcal(\tau))^k = (P(\tau))^k$. In particular, the Galerkin projection of this particular transfer operator preserves Markovianity!
+
+%Normally the Markov Property is spoiled by a projection on a finite-dimensional space, but with this Galerkin %Projection Markovianity is preserverd....
+
+\subsubsection*{Infinitesimal Generator}
+Using the transfer operator $\Pcal(\tau)$ we can define a time-independent operator $\Qcal$ via
+\begin{equation}
+\Qcal = \lim_{\tau \rightarrow 0} \frac{\Pcal(\tau)-\mathcal{I}}{\tau}.
+\end{equation}
+,... then $\Qcal$ is the infinitesimal generator of $\Pcal$:
+\begin{equation}
+\Pcal(\tau) = \exp{(\tau\Qcal)}.
+\end{equation}
+Weber shows in \cite{weber2011subspace} that such an infinitesimal generator exists for a discretization in terms of membership functions.
+
+Since the eigenfunctions of the infinitesimal generator are the same as for the transfer operator and their eigenvalues are in the relation $\exp{(\xi_i)} = \lambda_i$, we can now apply the same Galerkin Projection for the infinitesimal generator as for the transfer operator in \eqref{eq:galerkin}.
+%For the infinitesimal generator we can apply the same Galerkin Projection as for the transfer operator in
+%\eqref{eq:galerkin}
+We get a $n\times n$-rate matrix
+\begin{equation}
+Q_c = ... = (\langle \chi, \chi \rangle_\pi)\inv (\langle \chi, \Qcal \chi \rangle_\pi).
+\end{equation}
+
+\section{Minimizing the Rebinding Effect}
+
+For reversible processes, this problem is solved by Weber and Fackeldey \cite{weber2014} with the
+spectral approach.
+
+With the tools from chapter 2 (Schur Decomposition) we give an approach how this problem can be solved
+for nonreversible processes (NESS processes) using Schur Decomposition to get rid of the possibly nonreal eigenvalues, see Djurdevac et al\cite{djur2016}(2016).
+
+\section{Approach for nonreversible processes}
+
+A nontrivial rebinding effect can be estimated only if the kinetics $Q_c$ of a system is nonreversible.
+
+detecting dominant cycles of the process?
+\subsubsection*{Galerkin Projection}
+with the help of a Schur decomposition we can make the eigenvalues real???

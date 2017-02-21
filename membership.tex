@@ -1,0 +1,106 @@
+\section{Fuzzy Clustering via Membership Functions}
+%Soft/ Fuzzy
+%\section{Decomposition via membership functions}
+%\section{Metastable decomposition via membership functions}
+%\section{Set-based vs Function-based Approach}
+
+The above considerations (metastable decomposition induced by zeros of eigenfunctions) result in a metastable full decomposition of the state space, i.e. each state is assigned to exactly one of the partition sets.
+We will see now, that there exist better solutions, considering/ including the fact that transition regions can belong to several metastable sets. So for this new approach (even though already examined/investigated/analyzed in recent research, see  ...), there may be some overlap in the assignment of states to metastable sets.
+
+% a transition region can be %assigned to several macro states with different weight(?).
+
+\subsubsection*{Set-based vs. Function-based Approach}
+An easy intuitive approach to decompose the state space would be to determine a certain number of metastable sets which form a full partition of the state space, such that each state is assigned to exactly one of the metastable sets.
+%each partition corresponds to one conformation/ metastable set.
+The problem with that approach is that also the transition regions of the process would have to be assigned to one of these partition sets. But why would you assign a state in a transition region to one adjacent metastable set and not to the/one other? So such an assignment is not a rigoruous description of actual behaviour of the process.
+%does not make so much sense.
+
+So this \textit{set-based approach} of decomposing the process has been replaced by the \textit{function-based approach}.
+That means that each state of the process is assigned with a certain probability to each metastable set.
+That makes sense, because a state in a transition region can go with certain probabilities to different conformations.
+
+\subsubsection*{Membership functions (=almost characteristic function)}
+
+%reversible
+Assuming we have already determined that our process consists of $n$ metastable sets (by knowing its $n$ dominant eigenvalues).
+%the number of metastable sets by 
+%we are considering a stochastic process with $n$ dominant eigenvalues
+We will follow the approach of \cite{weber2006meshless} by defining macro states as \textit{overlapping partial densities}. They can be identified by membership functions $\cfam : \X \rightarrow [0,1]$. Each state of the original state space shall be assigned to the different macro states with a certain \textit{degree of membership}.
+%using membership functions (linear combinations of eigenfunctions). no??
+
+\begin{defi}
+membership function $\chi_i$ = partition of unity (see 2.4) and nonnegative
+\end{defi}
+
+Membership functions can be used to decompose the space into metastable sets. In this case, the assignment of a state to a metastable set must not be unique, but a state can belong to different metastable sets with certain probabilities(?). That model takes into consideration
+%takes into account
+the existence of transitions regions which cannot be uniquely assigned to one macro state/ metastable set.
+%detect a 
+
+%membership functions: continuous and overlapping
+
+Since membership functions form a partition of unity, we can apply the Galerkin projection as defined in section \ref{sec:galerkin}. That gives us a Markov State Model where each (macro) state is a metastable set of the original process. \marginpar{so far: membership fct indep. of metastable set}
+%As membership functions are a partition of unity, we can 1) create a metastable decomposition (maybe with %overlap, so no partition) and 2) apply Galerkin Projection on it (partition of unity necessary).
+
+\begin{ex}
+A characteristic function is a membership function. It induces a full partition as metastable decomposition.
+\end{ex}
+Individual eigenfunctions $\Xcal$ do not overlap since they are orthogonal. But the membership functions $\chi_i$ as linear combinations of the dominant eigenfunctions might have an overlap.
+
+\subsubsection*{Statistical Weights}
+
+For each macrostate we can define a statistical weight
+\begin{equation*}
+w_i = \int_\Omega \chi_i(q) \pi_q(q) \diff q,
+\end{equation*}
+i.e. ....
+
+$D = \mathrm{diag}(w_1,\dots,w_n)$ is the diagonal matrix of the statistical weights of the membership functions
+
+\subsubsection*{Perron Cluster Analysis}
+
+The  whole approach  is  called Perron  cluster  analysis, its agorithmic  realization is  abbreviated  as  PCCA  (from  Perron  Custer  Custer  Analysis). \marginpar{PCCA+: robust}
+\\
+
+So now we need to choose/determine convenient/suitable membership functions s.t. the metastable decomposition becomes as good as possible. Normed eigenfunctions are one possibility (no overlap). But better: linear combinations of eigenfunctions. \marginpar{only for finite matrices? or also cont. operator w/ eigenfct.?}
+
+
+Perron Cluster Analysis has been developed by Deuflhard et al\cite{deuflhard2000identification} which used the sign structure of the dominant eigenvalues of the stochastic matrix. \marginpar{set-based approach?} That approach has been approved by
+Deuflhard and Weber\cite{deuflhard2005robust} \marginpar{oder Weber und Galliat?}
+who transformed the system of eigenvectors into a system of membership functions which results in a soft/fuzzy clustering of the state space of the original process; their algorithm is called PCCA+ (Perron Cluster Cluster Analysis).
+
+The required membership functions can be built as a linear combination $A\Xcal$ of the dominant eigenfunctions (convex problem?).
+The algorithm PCCA+ computes the matrix $A$ which results in the best metastable decomposition.
+%yields
+\\
+
+We are considering the set of dominant eigenvalues $\{\lfam\}$ with the correponding set of eigenfunctions $\Xcal = \{\xfam\}$. They fulfill the eigenvalue problem $\Pcal(\tau) \Xcal = \Xcal \Lambda$ of the transfer operator $\Pcal(\tau)$, where $\Lambda = \mathrm{diag}(\lfam)$.
+\\
+
+Let $\Xcal$ be the eigenvector matrix, \marginpar{why not eigenfct.?} i.e. the $i$-th column of $\Xcal$ is an eigenvector corresponding to the eigenvalue $\lambda_i$. \marginpar{only dom. spec.}
+Weber showed in \cite{weber2011subspace} that the choice $\chi = \Xcal A$ (linear combination of the eigenfunctions $\Xcal$) preserves the Markov property, i.e. \marginpar{jede konvexe lin.komb.?} \marginpar{bzw even: discretization error vanishes}
+%Markovianity
+\begin{equation*}
+\chi_j(q) = \sum_{i=1}^n A_{ij} \Xcal_i(q), \ j=1,\dots,n,
+\end{equation*}
+where $A = \{A_{ij}\}_{i,j=1,\dots,n} \in \R^{n\times n}$ is the solution of a convex maximization problem (PCCA+), see Weber\cite{weber2006meshless}. In order to fulfill the partition of unity of each $\chi_i$, the matrix $A$ has to be choosen s.t. $\chi$ is row-stochastic.
+
+\subsubsection*{Optimal decomposition (PCCA+)}
+
+Since there are so many possibilities membership functions (all convex combinations of dominant eigenfunctions), we want to find the solution which gives us the best decomposition into metastable sets; i.e. ...
+
+%Second largest eigenvalue results in the best decomposition and so on ...
+
+%But Better: linear combination of eigenfunctions (might have an overlap) (membership functions, PCCA+).
+%That will be described more in the next subsection 2.4 where, in aim to get a really good MSM, we try to %find the best possible decomposition (?) into metastable sets (? not a partition anymore) 
+
+\subsubsection*{PCCA+}
+Finding membership functions which result in optimal solution for metastable decomposition (but PCCA+ works only on finite state spaces(?).
+\\
+%PCCA+ can be used to perform the computation of the best metastable decomp. as described above
+
+%Noe Lecture 4 (MSM 2015)
+There are infinitely many transformations A of the eigenvectors resulting in a soft membership matrix
+$\chi$ satisfying the positivity and partition of unity constraints.  Consequently, we have to determine the transformation A that satisfies some optimality condition.
+
+Do we need PCCA+ to find the best(?) membership functions. And with the help of these membership functions we can apply a Galerkin Projection?

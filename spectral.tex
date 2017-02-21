@@ -1,0 +1,96 @@
+\section{Spectral Approach}
+In this section we will see that the spectrum of the transfer operator is highly connected to the metastability of the corresponding Markov process.
+Namely, the number of metastable sets can be determined by the number of eigenvalues close to 1.
+And the corresponding eigenfunctions allow a metastable decomposition. \marginpar{partition?}
+
+%When a Markov model is reversible then its metastable sets can be found
+%with the spectral approach.
+%If the spectrum of the transition matrix $P$ has $m$ dominant eigenvalues, i.e.
+%$m$ eigenvalues close to $1$, then there exists a decomposition of the state space
+%of the process into $m$ metastable sets.
+%(with high joint metastability)
+% m dominant eigenvalues <-> m metastable sets
+
+%The number of metastable sets/ regions can be determined by the number of dominant (discrete!) %eigenvalues which are bounded away from the essential spectrum. So we have eigenvalues lambdai, % %corresponding eigenfunctions xi.
+
+%metastable subsets: eigenvalues $\lambda_i \simeq 1$
+
+\subsubsection*{Existence of dominant eigenvalues}
+%\marginpar{maybe in chapter 2?}
+
+%We will give some informations about the spectrum of a transfer operator. In general, the spectrum of a %bounded linear operator is defined similar to the spectrum of a matrix.
+%The \textit{multiplicity} of an eigenvalue $\lambda$ is defined as the dimension of the generalized %eigenspace. Eigenvalues of multiplicity $1$ are called  \textit{simple}.
+
+For further informations, see Kato\cite{kato1995}.
+We are interested in large eigenvalues which are close to 1 and separated from the rest of the spectrum.
+The \textit{discrete spectrum} $\sigma_{\mathrm{discr}}(\Pcal)$ is the set consisting of all eigenvalues $\lambda \in \sigma(\Pcal)$ that are isolated and of finite multiplicity.
+%contains all
+The  \textit{essential spectral radius} $r_{\mathrm{ess}}(\Pcal)$ is defined as follows
+\begin{equation*}
+r_{\mathrm{ess}}(\Pcal) = \inf \{ r \geq 0 \mid \lambda \in \sigma(\Pcal) \textrm{ with } |\lambda| > r \textrm{ implies } \lambda \in \sigma_{\mathrm{discr}}(\Pcal) \}.
+\end{equation*}
+The existence of dominant eigenvalues requires that the essential/ continuous part of the spectrum is bounded away from the dominant elements of the discrete spectrum.
+Let us now consider the transfer operator $\Pcal = \Pcal^t$ for some fixed $t$ in the Hilbert space $L_\mu^2(\X)$. \marginpar{$L^1$ Huisinga diss; why $L^2$, $L^1$ enough?}
+
+To ensure that the process we are considering actually possesses metastable sets, we need to pose some conditions on the spectrum of the transfer operator:
+%determine some conditions
+
+\begin{description}
+    \item[C1] The essential spectral radius of $\Pcal$ is less than one; i.e. $r_{\mathrm{ess}} < 1$.
+    \item[C2] The eigenvalue $\lambda=1$ pf $\Pcal$ is simple and dominant; i.e. $\eta \in \sigma(\Pcal)$ with $|\eta| = 1$ implies $\eta = 1$.
+\end{description}
+We will not go into further details for which processes the two above conditions are fulfilled; 
+%for which operators
+some criteria about it can be found in Huisinga\cite{huisinga2001metastability}.
+%for more informations about it see Huisinga\cite{huisinga2001metastability}.
+Since these conditions are required for the later investigations, we will just assume that they are true.
+%these properties
+
+We need condition {\textbf{\textsf{C1}} to ensure that the continuous part of the spectrum is bounded away from the discrete eigenvalues. Otherwise they would not be dominant anymore and the process would be rather durchmischt than having any metastable sets.
+%rapidly mixing?
+Condition {\textbf{\textsf{C2}} however is important because a transfer operator with more than one eigenvalue of absolut value $1$ \marginpar{has periodic structures?} can be decomposed into stable/invariant sets, i.e. subsets which cannot be left. In that case we could just consider the different stable sets as independent processes. But that is not interesting for us. \marginpar{excludes modeling and interpretation problems} Instead, we want to know more about almost invariant sets and their critical/transition regions. \marginpar{C2 = ergodic?}
+%We will consider only ergodic process which means theat the eigenvalue $1$ is unique.
+
+\begin{thm}[Schuette\cite{schutte2013metastability}]
+%transfer operator for a process unique?
+The transfer operator $\Pcal: L^2 \rightarrow L^2$ of a reversible process with properties \textrm{\textbf{\textsf{C1}}} and \textrm{\textbf{\textsf{C2}}} has the following spectrum:
+\begin{equation*}
+\sigma(\Pcal) \subset [a,b] \cup \{\lambda_n\} \cup \dots \cup \{\lambda_2 \} \cup \{1\}
+\end{equation*}
+with $-1 < a \leq b < \lambda_n \leq \dots \leq \lambda_1 = 1$. \marginpar{why discr. rechts?}
+\end{thm}
+This theorem assures us the existence of a discrete set of dominant eigenvalues. In the following we will see that this property results in metastability.
+
+\subsubsection*{Relation of dominant eigenvalues to metastable sets}
+%metastability
+
+The number of metastable sets can be determined by counting the dominant eigenvalues.
+
+\subsubsection*{Relation of dominant eigenfunctions to metastable decomposition}
+\begin{thm}
+Each single eigenfunction induces a metastable decomposition
+\end{thm}
+\begin{proof}
+\end{proof}
+The zeros of an eigenfunction (bzw. Vorzeichenwechsel) induce a metastable decomposition of the state space.
+
+Different eigenfunction results in a different decomposition. (partition into sets??) \marginpar{eigenfunctions vs committor functions}
+%result/ yield
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.7\textwidth]{spectrum.jpg} %70% der Textbreite
+	\caption{Relation of eigenvalues and eigenvectors to metastability of a process}
+\end{figure}
+
+\subsubsection*{Disadvantages}
+%Advantages, Alternatives
+
+So the spectral approach is suitable/ convenient to characterize metastability of Markov processes.
+But: there are two disadvantages.
+1: the result is only appliable on reversible processes, because a self-adjoint transfer operator is needed in order to get real eigenvalues.
+2: eigenvector(?) problem of the transfer operator has only global solutions.
+%Jo:
+%Daher beschäftigen wir uns nun mit einem alternativen Ansatz, der diese beiden Probleme
+%nicht hat. Dieser Ansatz wurde in [5] bereits erfolgreich auf Markov-Ketten angewandt,
+%und wir wollen nun analoge Resultate für den kontinuierlichen Fall herleiten.

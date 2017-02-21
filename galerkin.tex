@@ -1,0 +1,250 @@
+\section{Galerkin Projection}
+%interpret $P_Q$ as a projected transfer operator
+\label{sec:galerkin}
+
+%Until now
+So far we considered Markov processes on very large (possibly continuous) state spaces. Since we are often/mainly interested in computations/simulations on/of a process, we are now going to create a process on a smaller (namely finite) \marginpar{discr./finite?} state space which shall inherit the most important properties of our original process. This can be done by a Galerkin projection/discretization.
+
+\subsubsection*{Galerkin Projection}
+%for Galerkin projection (ansatz space) and/or/= membership functions to apply PCCA+
+%At first, we need to chose an appropriate/ desired/ favoured/ convenient ansatz space
+%in order to design...
+The first step in order to create our desired finite process is to determine a convenient state space $D \subset L^2(\mu)$.
+%Instead of choosing a basis that consists of characteristic functions
+%adopt/select; approach/idea
+Instead of just chosing characteristic functions as the basis of our new state space, we will adopt the concept of a partition of unity. \marginpar{real?}
+Using that more general idea gives us more possibilities/options in/for later applications.
+%flexibility
+
+\begin{defi}[Partition of Unity]
+A family of measurable functions $\{ \cfam \} \subset L^2(\mu)$ \marginpar{why L2?} is called a partition of unity if the following two conditions are fullfilled:
+\begin{enumerate}
+\item The $\chi_i$ are non-negative and  linear independent
+%pairwise indep?
+\item $\sum_{i=1}^n \chi_i(q) = 1$ for all $q \in \X$ \marginpar{a.e.??}
+\end{enumerate}
+\end{defi}
+
+\begin{defi}[Galerkin Projection]
+Let $\{ \cfam \}$ be a partition of unity, $D = \mathrm{span}\{\cfam\}$ the associated finite-dimensional ansatz space and $\hat{S} \in \R^{n\times n}$ with $\hat{S}_{kj} = \langle \chi_k, \chi_j \rangle_\mu$. The Galerkin projection onto $D$ is defined by $G: L^2 (\mu) \rightarrow D$
+\begin{equation}
+\label{eq:galerkin}
+G\nu = \sum_{k,j=1}^n \hat{S}^{-1}(k,j) \langle \chi_k, \nu \rangle_\mu \chi_j.
+\end{equation}
+\end{defi}
+
+The matrix $\hat{S}$ is invertible since it is the Gramian matrix of linear independent functions.
+In the easy case that the $\{\cfam\}$ are the characteristic functions belonging to a full partition $\{A_1,\dots,A_n\}$, equation \eqref{eq:galerkin} becomes \marginpar{weighted orthogonal projection?}
+\begin{equation*}
+G\nu = \sum_{k=1}^n \frac{1}{\mu(A_k)} \langle \chi_k, \nu \rangle_\mu \chi_k,
+\end{equation*}
+since the $\chi_i$ are orthogonal which means that $\chi_k \chi_j = 1$ if $j=k$ and $0$ otherwise.
+
+A Galerkin projection can be applied on the transfer operator of a Markov process.
+
+\begin{defi}[Projected Transfer Operator]
+Let $\Pcal := \Pcal^t$ be the transfer operator of a Markov process on a state space $\X$ with unique invariant measure $\mu$, $\{ \cfam \}$ be a partition of unity and $G$ the Galerkin projection onto the associated subspace $D$. Then an operator of the form
+\begin{equation*}
+G \Pcal G: L_\mu^2 (\X) \rightarrow D
+\end{equation*}
+is called projected transfer operator and we abbreviate it by $G(\Pcal)$.
+\end{defi}
+
+\subsubsection*{Matrix Representation} \marginpar{left or right?}
+
+\marginpar{def. GPG not $n \times n$, but $\infty \times n$?}
+Since we are interested in transitions inside of our smaller (projected) space, we want to propagate $n$-dimensional vectors by the projected transfer operator. That's why we consider now the projection of the restricted transfer operator $G\Pcal_{\mid D} : D \rightarrow D$. \marginpar{GPG same as $GP_D$}
+%It can be written as a $n \times n$-matrix in an interesting/useful way.
+
+%remember
+We remind that every linear map between finite-dimensional vector spaces can be described by a matrix which is determined by chosen bases.
+So we can write the projected transfer operator as a $n \times n$-matrix in a way that will be very useful later.
+
+\begin{thm}
+%sarich p.45
+\label{thm:galerkin}
+Let $\Pcal$ be the transfer operator of a Markov process, $\{ \cfam \}$ a partition of unity and $G\Pcal G$ the Galerkin projection of the transfer operator onto the associated subspace. \marginpar{ansatz space vs subspace}
+Then $G\Pcal G$ has a matrix representation
+\marginpar{skillnad QPQ vs P}
+%Galerkin projection onto $D$ has a matrix representation
+%is defined by $Q: L^2 (\mu) \rightarrow D$ by
+\begin{equation*}
+P = S^{-1}T,
+\end{equation*}
+where
+\begin{equation}
+\label{eq:massmatrix}
+S_{kj} =  \frac{\hat{S}(k,j)}{\langle \chi_k, \eins \rangle_\mu}
+= \frac{\langle \chi_k, \chi_j \rangle_\mu}{\langle \chi_k, \eins \rangle_\mu}
+\end{equation}
+and \marginpar{$\eins_D \eins_\X$?}
+\begin{equation}
+T_{kj} = \frac{\langle \chi_k, \Pcal \chi_j \rangle_\mu}{\langle \chi_k, \eins \rangle_\mu}.
+\end{equation}
+%Both $S$ and $T$ are $n \times n$-matrices.
+%Furthermore, they are stochastic matrices.
+\end{thm}
+
+\begin{proof}
+%a/the matr. repr.?
+Remember that $P_c$ is a (left) matrix representation of $G\Pcal G$ with respect to a basis $\{\pfam\}$ of $D$ if for any function $f \in D$ with \marginpar{$f: D \rightarrow L^2$ or $f: D \rightarrow D$ possible?}
+\begin{equation*}
+f = \sum_{i=1}^n \alpha_i\psi_i \ \textrm{ and } \ (G\Pcal G) f = \sum_{i=1}^n \beta_i\psi_i
+\end{equation*}
+it holds that
+\begin{equation}
+\label{eq:representation1}
+(\afam)P_c = (\bfam).
+\end{equation}
+We assume that \eqref{eq:representation1} holds and choose a basis $\{\pfam\}$ of $D$ with
+\begin{equation*}
+\psi_k = \frac{\chi_k}{\langle \chi_k, \eins_\X \rangle_\mu}.
+\end{equation*}
+By applying the projected transfer operator to $f$, we try to find the coefficient vector $(\bfam)$. Therefor we  exploit the definition of a Galerkin projection and the definition of our basis:
+\begin{align*}
+(G\Pcal G) f & =  \sum_{k=1}^n \alpha_k (G\Pcal) f \\
+ & = \sum_{k,l,j=1}^n \alpha_k \hat{S}^{-1} (j,l) \langle \chi_j, \Pcal \psi_k \rangle_\mu \chi_l \\
+ & = \sum_{k,l,j=1}^n \alpha_k \hat{S}^{-1} (j,l) \langle \chi_j, \Pcal \psi_k \rangle_\mu \langle \chi_l, 		      \eins_\X \rangle_\mu \psi_l \\
+ & =  \sum_{l=1}^n \beta_l\psi_l.
+\end{align*}
+That means that
+\begin{align*}
+\beta_l & = \sum_{k,j=1}^n  \alpha_k \hat{S}^{-1} (j,l) \langle \chi_l, \eins_\X \rangle_\mu \langle \chi_j, \Pcal \psi_k \rangle_\mu  \\
+ & = \sum_{k=1}^n \alpha_k \underbrace{\sum_{j=1}^n \hat{S}^{-1} (j,l) \langle \chi_l, \eins_\X \rangle_\mu \frac{\langle \chi_j, \Pcal \chi_k \rangle_\mu}{\langle \chi_k, \eins_\X \rangle_\mu}}_{P_{kl}}. \numberthis \label{eq:representation2}
+\end{align*}
+The underbraced term is equal to $P_{kl}$ because of \eqref{eq:representation1}. Now we can compare it to the $(k,l)$-th entry of $TS^{-1}$ which is computed via matrix multiplication as
+\marginpar{not correct! change S,T?}
+\begin{align*}
+(TS^{-1})_{kl} & = \sum_{j=1}^n T_{kj} (S^{-1})_{jl} \\
+ &  = \sum_{j=1}^n \frac{\langle \chi_k, \Pcal \chi_j \rangle}{\langle \chi_k, \eins \rangle}
+(\hat{S}^{-1})_{jl} \langle \chi_j, \eins \rangle.
+\end{align*}
+We see that this corresponds to the $(k,l)$-th entry of $P_c$, compare with \eqref{eq:representation2}.
+\end{proof}
+%Nielsen p.40
+
+\begin{thm}
+The matrices $S$ and $T$ are stochastic. \marginpar{non-neg.}
+\end{thm}
+\begin{proof}
+In order to be stochastic, each row must sum up to $1$. We exploit the partition of unity property $\sum_j \chi_j = 1$ for all $j$ and the aforementioned property $\Pcal  \eins =  \eins$ of a transfer operator:
+\begin{equation*}
+\sum_{j=1}^n S_{kj}
+= \frac{\langle \chi_k, \sum_j\chi_j \rangle_\mu}{\langle \chi_k, \eins \rangle_\mu}
+= \frac{\langle \chi_k, \mathbb{1} \rangle_\mu}{\langle \chi_k, \eins \rangle_\mu} =1,
+\end{equation*}
+\begin{equation*}
+\sum_{j=1}^n T_{kj}
+= \frac{\langle \chi_k, \Pcal \sum_j \chi_j \rangle_\mu}{\langle \chi_k, \eins \rangle_\mu}
+= \frac{\langle \chi_k, \Pcal \mathbb{1} \rangle_\mu}{\langle \chi_k, \eins \rangle_\mu} = 1.
+\end{equation*}
+\end{proof}
+Since $S$ and $T$ are both stochastic matrices, they have $\eins_D$ as right eigenvector to the eigenvalue $1$. It implies that the same holds for $P$, i.e.
+the product $S^{-1}T$ is at least pseudostochastic, i.e. its rows sum up to $1$. But nonnegativity is not assured since inverting $S$ can provoke/evoke/produce/cause negative entries. The non-negativity depends on the choice of the partition of unity. There are examples s.t. $S^{-1}T$ is a stochastic matrix.
+
+\subsubsection*{Example}
+
+A good way to understand the concept of a Galerkin Projection is to consider the case of a full partition discretization.
+
+\begin{thm}[Full Partition Discretization]
+Let $\{ \cfam \}$ be a partition of unity that is induced by a full partition, i.e. the $\chi_i$ are the characteristic functions of pairwise disjoint sets $A_i$ s.t. $\cup A_i = \X$. Then the matrix representation $P$ of $G\Pcal G$ is a stochastic matrix consisting of the transition probabilities between the partition sets, i.e.
+\begin{equation*}
+P(k,l) = \Prob(X_t \in A_l \mid X_0 \in X_k).
+\end{equation*}
+\end{thm}
+
+\begin{proof}
+The entries of the Gram matrix $\hat{S}$ are $\mu(A_k)$ on the diagonal and $0$ everywhere else.
+We can deduce that $S$ is the unit matrix, while $P=T$ is a stochastic matrix. \marginpar{makes role of $S,T$ clear}
+For the entries of $P$ we get:
+\begin{equation*}
+P(k,l)=
+\frac{\langle \chi_l, \Pcal \chi_k \rangle_\mu}{\langle \chi_k, \eins_\X \rangle_\mu}
+= \frac{\Prob_\mu (\{X_t \in A_l\} \cap \{X_0 \in A_k\})}{\Prob_\mu(X_0 \in A_k)}
+= \Prob(X_t \in A_l \mid X_0 \in X_k).
+\end{equation*}
+\end{proof}
+
+In this case, $P$ is a stochastic matrix and hence the transition matrix of a Markov chain. \marginpar{ref to 1-1-rel?}
+Its state space consists just of the partition sets $A_i$. The stationary distribution of the so defined Markov chain $P_c$ is just the projection of the invariant measure $\mu$ onto $D$. \marginpar{what for?}
+
+%This example makes clear that blablabla
+For a full partition discretization, the matrix $S$ is a diagonal matrix. If we choose a partition of unity that is \textit{close} to a full partition, i.e. we choose \textit{almost characteristic functions}, then the matrix $S$ is not diagonal, but close to that. We will later see the consequences of that fact regarding to the examination/investigations of the \textit{rebinding effect}.
+
+\subsubsection*{Properties of Galerkin Projection}
+
+As the matrix representation of a projected transfer operator is in general \textit{not} a stochastic matrix, which is equivalent to being the transition matrix of a Markov chain (see ..), we see immediately that the process can lose its Markovianity by projecting it (onto a subspace).
+
+This possible loss of Markovianity is certainly a really undesirable effect. But before examining that later in section 2.4, let us now first analyze further, hopefully \textit{nice}, properties of the matrix representation $P$.
+\\
+
+We already know that the matrices $S$ and $T$ from Theorem \ref{thm:galerkin} are stochastic matrices. This leads to some good properties of $P$:
+
+\begin{itemize}
+\item The eigenvalue $\lambda = 1$ of $P$ has the associated right-eigenvector $e = (1,\dots,1)^T$ and left-eigenvector $\hat{\mu}^T$ from theorem \ref{thm:lefteigenvector}.
+\item If $\Pcal$ is self-adjoint in $L^2$, then $G\Pcal G$ as well. Then the matrices $S$ and $T$ are self-adjoint with respect to the discrete scalar product \marginpar{$P$ self-adj.?}
+\marginpar{$\langle Av,w \rangle = \langle v, Aw \rangle$}
+\begin{equation*}
+\langle u, v \rangle_{\hat{\mu}} = \sum_{i=1}^n u_i v_i \hat{\mu}_i.
+\end{equation*}
+Since self-adjointness of the operator is equivalent to reversibility of the corresponding process, detailed balance equation (e.g. $\hat{\mu}_k T_{kl} = \hat{\mu}_l T_{lk}$ for all $k,l =1,\dots, n$) is fulfilled for $S$ and $T$.
+\marginpar{and so, eigenvalues of S and T are real and in $[-1,1]$}
+\item If the transfer operator has a simple and dominant eigenvalue $1$ and the continuous part of the spectrum is bounded away from the discrete part, then the process is irreducible and aperiodic which is inherited by the matrix $T$. In particular $T$ has the simple and dominant eigenvalue $\lambda=1$ which is the only eigenvalue with $|\lambda|=1$ and the discrete invariant density $\hat{\mu}$ is the unique invariant density of $T$.
+\item As seen in the last example a full-partition projection yields the transition matrix $P=T$ of a Markov chain describing transitions between the partition sets.
+\end{itemize}
+
+\begin{thm}
+\label{thm:lefteigenvector}
+The matrix representation $P$ from Thm \ref{thm:galerkin} has the left eigenvector
+%left-eigenvector = invariant measure = stationary distribution/ measure of $P_c$
+\begin{equation*}
+\hat{\mu} = \langle \eins, \chi_k \rangle_\mu = \int_\X \chi_k(x) \mu(\diff x).
+\end{equation*}
+\end{thm}
+
+\begin{proof}
+We observe that $\hat{\mu}^T S = \hat{\mu}^T$ and $\hat{\mu}^T T = \hat{\mu}^T$ since
+\begin{equation*}
+(\hat{\mu}^T S)_j = \sum_{k=1}^n  \langle \eins, \chi_k \rangle_\mu \frac{\langle \chi_k, \chi_j \rangle_\mu}{\langle \chi_k, \eins \rangle_\mu}
+= \langle \eins, \chi_j \rangle_\mu = \hat{\mu}_j
+\end{equation*}
+and
+\begin{equation*}
+(\hat{\mu}^T T)_j = \sum_{k=1}^n \langle \chi_k, \Pcal \chi_j \rangle_\mu = \langle \eins, \Pcal \chi_j \rangle_\mu
+= ... = \hat{\mu}_j.
+\end{equation*}
+We can deduce that $\hat{\mu}^T P = \hat{\mu}^T TS^{-1} = \hat{\mu}^T S^{-1} = \hat{\mu}^T SS^{-1} = \hat{\mu}^T$.
+\end{proof}
+
+\subsubsection*{Summary}
+%p.65
+Summarizing, the discretization of the propagator can be interpreted as a \textit{coarse graining} procedure.
+%in the sense that ...
+... blabla ......
+The discretization maintains/keeps/inherits the most important properties of the transfer operator/propagator.
+
+\subsubsection*{Projected infinitesimal generator}
+
+The Galerkin projection of an infinitesimal generator yields a similar matrix representation as it has been the case for the transfer operator. It can also be written as the product of two stochastic matrices, one of them inverted.
+
+\begin{thm}
+Let $\Qcal: L^2(\mu) \rightarrow L^2(\mu)$ be a generator of a semigroup of transfer operators with unique invariant measure $\mu$ and satisfying $\Qcal\eins_\X = 0$.
+Let $\chi$ be a partition of unity with a projection $G$ onto the associated subspace spanned by $\chi$.
+Then the projected generator $G \Qcal G$ has the matrix representation $Q = RS^{-1}$ with the stochastic mass matrix $S$ from \eqref{eq:massmatrix} and \marginpar{not commutative}
+\begin{equation}
+R(k,j) = \frac{\langle \chi_k, \Qcal\chi_j \rangle_\mu}{\langle \chi_k, \eins \rangle_\mu}
+\end{equation}
+The eigenvalue problem of $Q$ is equivalent to the generalized eigenvalue problem $Ru = \Lambda Su$.
+For both $Q$ and $R$ the largest eigenvalue is $\lambda = 0$. The associated right eigenvector is $e=(1,\dots,1)^T$, the associated left eigenvector is $\hat{\mu}^T$ from theorem \ref{thm:lefteigenvector}.
+\end{thm}
+\begin{proof}
+The matrix representation of $G\Qcal G$ can be shown similar to the proof of theorem \ref{thm:galerkin}. For the other properties see...
+\end{proof}
+
+There are obiously many possibilities/options to make a Galerkin discretization/projection of the propagator/generator of a given process because we can define it on an arbitrary partition of unity $\cfam$.
+%transfer operator respectively infinitesimal generator 
+%\marginpar{propagator, generator}, desirable/favorable
+In chapter \ref{chap:meta} we are going to see which choice of $\chi$ gives us a \textit{good} discretization of our process in the sense that it maintains certain desired properties; in our case the long-time behaviour of the process using so called \textit{metastability}.
+%n can be determined by regarding the spectrum of the transfer operator
+%In chapter \ref{chap:meta} we are going to show how the number of clusters (= metastable sets) can be %determined using the spectrum of the transfer operator. Furthermore we will show how to construct %functions $\cfam$ (=membership functions) that give us a decomposition which is as good as possible.
+%(linear combination of eigenfunctions).
