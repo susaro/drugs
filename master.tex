@@ -1,0 +1,129 @@
+\documentclass[
+  12pt,
+  a4paper,
+  pdftex,
+  oneside,
+%  twoside,
+  DIVcalc,
+ % BCOR=5mm,
+  openright
+  ] {scrreprt}
+%BCOR=9mm
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+%self-defined sty-file with math-definitions
+\usepackage{preamble}
+
+\typearea[current]{calc}
+\usepackage[kerning=alltext,spacing,babel]{microtype}
+
+%\clubpenalty = 10000
+%\widowpenalty = 10000 \displaywidowpenalty = 10000
+
+
+\usepackage[pdftex,bookmarks, colorlinks]{hyperref}
+% Für Druckversion:
+%\usepackage[pdftex,bookmarks, colorlinks=false, linktocpage=true]{hyperref}
+\hypersetup{
+	pdftitle={Computing the minimal rebinding effect for nonreversible processes},
+	pdfauthor={Susanne~R\"ohl},
+    unicode=true
+}
+
+%auskommentieren!!?
+\setlength{\oddsidemargin}{14pt}
+\setlength{\textwidth}{420pt}
+
+\makenomenclature
+
+\begin{document}
+\subject{Master thesis}
+\title{Computing the minimal rebinding effect for nonreversible processes}
+\subtitle{Zur Erlangung des akademischen Grades\\
+  Master of Science}
+\author{ \small Susanne R\"ohl}
+\date{Berlin, den 21. Februar 2017}
+\maketitle
+
+% \newpage
+\tableofcontents
+% \newpage
+%\listoffigures
+% \listoftables
+% \newpage
+% \printnomenclature
+% \newpage
+
+%\setpagewiselinenumbers
+%\modulolinenumbers[5]
+%\linenumbers
+
+% \chapter*{Abstract}
+\nocite{*}
+% \addcontentsline{toc}{chapter}{Abstract}
+%  \input{./parts/summary}
+% \chapter*{Acknowledgements}
+% \addcontentsline{toc}{chapter}{Acknowledgements}
+%  \input{./parts/ack}
+% \chapter{Introduction}  
+%  \input{./parts/Introduction}
+
+\chapter{Markov State Models}
+  \input{./parts/Markov/markov}
+  \input{./parts/Markov/transfer}
+  \input{./parts/Markov/galerkin}
+  \input{./parts/Markov/recrossing}
+
+\chapter{Metastability and Dominant Structures}
+  \input{./parts/Metastability/metastable}
+  \input{./parts/Metastability/spectral}
+  \input{./parts/Metastability/membership}
+  \input{./parts/Metastability/nonreversible}
+
+\chapter{Rebinding Effect in a Given Kinetics}
+  \input{./parts/rebinding}
+
+\chapter{Illustrative Examples}
+  \input{./parts/artificial}
+
+% \chapter{Numerical aspects}\label{chap:bc}
+%  \input{./parts/numerics}
+%  \input{./parts/bc}
+
+% \chapter{Dynamics of a nonlinear chain of oscillators}\label{chap:nlc}
+%  \input{./parts/Validation}
+%  \input{./parts/energy}
+
+% \chapter{Transition to chaos}
+%  \input{./parts/nlc}
+
+% \chapter{Summary and concluding remarks}
+%  \input{./parts/outlook}
+
+
+\clearpage
+\newpage
+\pagenumbering{roman}
+%\input{./parts/eidesstattliche_erklaerung}
+%\newpage
+%\bibliographystyle{abbrv}
+%\bibliographystyle{abbrvnat}
+%\bibliographystyle{acm}
+\bibliographystyle{siamplain}
+\bibliography{bib/main.bib}
+\addcontentsline{toc}{chapter}{Bibliography}
+
+% \newpage
+% \chapter{Source Code}
+%  \input{./parts/source_code}
+
+% \clearpage
+%\addcontentsline{toc}{chapter}{Eidesstattliche Erklärung}
+% \input{./parts/eid}
+
+
+\end{document}
+
+
