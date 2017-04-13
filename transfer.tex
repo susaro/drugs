@@ -6,114 +6,149 @@ With the previously defined transition function, we have a tool to describe the 
 
 \subsubsection*{$L^r$-Spaces}
 
-As probability densities are defined about their integral properties,
+As probability densities are defined about their integral properties, \marginpar{no?}
 %(integral = 1) (?),
 we need some convenient integrable spaces on which the transfer operator can act.
 %suitable
 %we can define the transfer operator?
-We are going to define an operator which acts just on general $L^r$-spaces, i.e. $r$-integrable spaces.
+We are going to define an operator which acts just generally on $L^r$-spaces, i.e. $r$-integrable spaces.
 
-\begin{defi}[$L^r$-Spaces]
-\begin{equation}
-L_\mu^r(\X) = \{ u: \X \rightarrow \R \mid \int_\X |u(x)|^r \mu(\diff x) < \infty \}
-\end{equation}
-\end{defi}
+\begin{defi}[$L^r$-Spaces] We define the $r$-integrable spaces as
+\begin{equation*}
+L_\mu^r(\X) = \{ f: \X \rightarrow \R \mid \int_\X |f(x)|^r \mu(\diff x) < \infty \}
+\end{equation*}
 for $1 \leq r < \infty$ and
-\begin{equation}
-L_\mu^\infty(\X) = \{ u: \X \rightarrow \R \mid \esssup_{x\in\X} |u(x)|^r \mu(\diff x) < \infty \}.
-\end{equation}
+\begin{equation*}
+L_\mu^\infty(\X) = \{ f: \X \rightarrow \R \mid \esssup_{x\in\X} |f(x)|^r \mu(\diff x) < \infty \}.
+\end{equation*}
+\end{defi}
 %If its clear which space and measure are considered, we just omit them and simplify the notation to
 % a $L^r := L_\mu^r(\X)$
-The space $L^2$ is the only of the $L^r$-spaces which can be equipped with a canonical scalar product and thus becomes a Hilbert space (see..). For $u,v \in L^2$ we define \marginpar{complex needed?}
-\begin{equation}
-\langle u,v \rangle_\mu := \int_\X u(x)v(x) \mu(\diff x).
-\end{equation}
-Now let $\nu_0$ be the density function corresponding to the given start distribution (function). Then the density function of a subset $A \subset \X$ at time $t$ is given by
-\begin{equation}
+The space $L^2$ is the only of the $L^r$-spaces which can be equipped with a canonical scalar product and thus becomes a Hilbert space (see..). For $f,g \in L^2$ we define \marginpar{complex needed?}
+\begin{equation*}
+\langle f,g \rangle_\mu := \int_\X f(x)g(x) \mu(\diff x).
+\end{equation*}
+Now let $\nu_0$ be the density function of a given start distribution.
+%corresponding to the given start distribution (function).
+Then the density function of a subset $A \subset \X$ at time $t$ is given in terms of the transition function by
+\begin{equation*}
 \nu_t(A) = \int_\X \nu_0 p(t,x,A) \mu(\diff x).
-\end{equation}
+\end{equation*}
 On the other hand, the density $\nu_t$ is given by
-\begin{equation}
+\begin{equation*}
 \nu_t(A) = \int_A \nu_t(x) \mu(\diff x).
-\end{equation}
+\end{equation*}
 
 \subsubsection*{Transfer Operator and spectral properties}
 %transport of functions; u.a. probability densitiy functions?
-The two equations above yield in the following intuitive definition of a transfer operator which should "propagate" probability densities according to a given Markov process. But instead of limiting us to density functions, we define the transfer operator as acting on any $r$-integrable function.
+The two equations above yield in the following intuitive definition of a transfer operator which should ``propagate'' probability densities according to a given Markov process. But instead of limiting us to density functions, we define the transfer operator as acting on any $r$-integrable function.
 \marginpar{propagates subensembles?}
 
-\begin{defi}[Transfer Operator]
-% well-defined Huisinga diss
+\begin{defi}[Transfer Operator] \marginpar{propagator}
+%Nielsen p.16
 Let $p: \T \times \X \times \B(\X) \rightarrow [0,1]$ be the transition function of a Markov Process $\markov$ and $\mu$ be an invariant measure of $\markov$.
-The semigroup of propagators or (forward) transfer operators $\Pcal^t : L_\mu^r (\X) \rightarrow L_\mu^r (\X)$ with $t \in T$ and $1\leq r \leq \infty$ is defined via
+The semigroup of \textit{propagators} or \textit{(forward) transfer operators} $\Tcal^t : L_\mu^r (\X) \rightarrow L_\mu^r (\X)$ with $t \in T$ and $1\leq r \leq \infty$ is defined via
 \begin{equation}
-\int_A \Pcal^t \nu(y) \mu(\diff y) = \int_\mathbb{X} \nu(x)p(t,x,A) \mu(\diff x)
+\int_A \Tcal^t \nu(y) \mu(\diff y) = \int_\mathbb{X} \nu(x)p(t,x,A) \mu(\diff x)
 \end{equation}
-for measurable $A \subset \mathbb{X}.$ \marginpar{backwards operator important?}
+for all measurable $A \subset \mathbb{X}$ and $\nu \in L^r$. \marginpar{$A \in \Sigma$}
 \end{defi}
 %\marginpar{anschauung?}
 The transfer operator is well-defined, see \cite{huisinga2001metastability}.
 We will announce here already some properties of the transfer operator which will be useful in the following chapter(s).
-$\Pcal^t$ is a Markov operator; i.e. it conserves the norm, $\Vert \Pcal^t\nu \Vert_1 = \Vert \nu \Vert_1$, and is positive, $\Pcal^t \nu \geq 0$ for $\nu \geq 0$. \marginpar{Markov operator?}
-$\Pcal^t \nu_0$ describes the transport of the function $\nu_0$ in time $t$ by the underlying dynamics given by the process $X_t$ and weighted with respect to $\mu$:
-\begin{equation}
-\nu_0 \mapsto \nu_t = \Pcal^t \nu_0.
-\end{equation}
-Since $\mu$ is invariant(?), we have that the characteristic function of the state space is invariant under the action of $\Pcal^t$, i.e.
-\begin{equation}
-\Pcal^t \mathbb{1}_\X = \mathbb{1}_\X.
-\end{equation}
-It means that $\Pcal^t$ has the eigenvalue $1$ which corresponds to its eigenfunction $\mathbb{1}_\X$.
+$\Tcal^t$ is a \textit{Markov operator}; i.e. it conserves the norm, $\Vert \Tcal^t\nu \Vert_1 = \Vert \nu \Vert_1$, and is positive, $\Tcal^t \nu \geq 0$ for $\nu \geq 0$. \marginpar{Markov operator?}
+$\Tcal^t \nu_0$ describes the transport of the function $\nu_0$ in time $t$ by the underlying dynamics given by the process $X_t$ and weighted with respect to $\mu$:
+\begin{equation*}
+\nu_0 \mapsto \nu_t = \Tcal^t \nu_0.
+\end{equation*}
+Since $\mu$ is invariant(?), we have that the characteristic function of the state space is invariant under the action of $\Tcal^t$, i.e.
+\begin{equation*}
+\Tcal^t \mathbb{1}_\X = \mathbb{1}_\X.
+\end{equation*}
+It means that $\Tcal^t$ has the eigenvalue $1$ which corresponds to its eigenfunction $\mathbb{1}_\X$.
 \\
 
 %since bblabla, we can deduce that
-Furthermore $\Pcal$ is a bounded operator with operator norm $\Vert \Pcal \Vert_2 =1$ \marginpar{why only in L2?} and $\Pcal  \mathbb{1}_\X = \mathbb{1}_\X$. This implies that the spectrum $\sigma(\Pcal)$ of $\Pcal$ is contained in the unit circle of the complex plane; i.e. we have $| \lambda | \leq 1$ for all $\lambda \in \sigma(\Pcal) \subset \mathbb{C}$. \marginpar{stationary measure $\pi$}
+Furthermore $\Tcal$ is a bounded operator with operator norm $\Vert \Tcal \Vert_2 =1$ \marginpar{why only in $L^2$?} and $\Tcal  \mathbb{1}_\X = \mathbb{1}_\X$. This implies that the spectrum $\sigma(\Tcal)$ of $\Tcal$ is contained in the unit circle of the complex plane; i.e. we have $| \lambda | \leq 1$ for all $\lambda \in \sigma(\Tcal) \subset \mathbb{C}$. \marginpar{stat.meas. $\pi$}
 
 \subsubsection*{Transfer operator of reversible processes}
 
 The following two theorems give us an important insight about the spectrum of the transfer operator. Since self-adjointness of the transfer operator is equivalent to reversibility of the process, we know that only reversible processes guarantees a real spectrum!
 
+\begin{defi}[Self-adjoint Operator]
+An operator $\Tcal$ on $L^2(\mu)$ is called \textit{self-adjoint} if for all $f,g \in L_\mu^2(\X)$
+\marginpar{def adj.}
+\begin{equation*}
+\langle f, \Tcal g \rangle_\mu = \langle \Tcal f, g \rangle_\mu.
+\end{equation*}
+\end{defi}
+
+\begin{lem}
+\label{thm:selfadjoint_real}
+A self-adjoint operator has only real eigenvalues; $\sigma(\Tcal) \subset \R$.
+\end{lem}
+\begin{proof}
+\end{proof}
+
 \begin{thm}
 \label{thm:selfadjoint_reversible}
-Let $\Pcal^t: L_\mu^2(\X) \subset L_\mu^1(\X) \rightarrow L_\mu^2(\X)$ denote the propagator corresponding to the Markov process $X_t$. Then $\Pcal^t$ is self-adjoint with repect to the scalar product $\langle \cdot, \cdot \rangle_\mu$ in $L_\mu^2(\X)$, i.e.
-\begin{equation*}
-\langle u, \Pcal^t v \rangle_\mu = \langle \Pcal^t u, v \rangle_\mu \ \textrm{ for all } u,v \in L_\mu^2(\X),
-\end{equation*}
+Let $\Tcal^t: L_\mu^2(\X) \subset L_\mu^1(\X) \rightarrow L_\mu^2(\X)$ denote the propagator corresponding to the Markov process $X_t$. Then $\Tcal^t$ is self-adjoint with repect to the scalar product $\langle \cdot, \cdot \rangle_\mu$ in $L_\mu^2(\X)$
+%, i.e.
+%\begin{equation*}
+%\langle u, \Tcal^t v \rangle_\mu = \langle \Tcal^t u, v \rangle_\mu \ \textrm{ for all } u,v \in L_\mu^2(\X),
+%\end{equation*}
 if and only if $X_t$ is reversible.
 \end{thm}
 \begin{proof}
 Huisinga\cite{huisinga2001metastability}
 \end{proof}
-
-\begin{thm}
-\label{thm:selfadjoint_real}
-A self-adjoint operator has only real eigenvalues; $\sigma(\Pcal) \subset \R$.
-\end{thm}
-\begin{proof}
-\end{proof}
-Since the spectral radius of any transfer operator is $1$, it follows for a reversible process that $\sigma(\Pcal) \subset [-1, 1]$.
+Since the spectral radius of any transfer operator is $1$, it follows from the previous two theorems that a reversible process has a spectrum $\sigma(\Tcal) \subset [-1, 1]$.
 
 Later in this thesis, we are going to be very interested in examining the spectrum of the transfer operator of a given Markov process. Unfortunately we also have to consider nonreversible processes, so with a nonreal (complex) spectrum which will be a bit harder to compute with.
 
-\subsubsection*{Infinitesimal Generator}
+\subsubsection*{Backwards Operator}
 
-For $\T = \R$ the Chapman-Kolmogorov property of the transition functions makes the family $\{\Pcal^t\}_{t\in\R}$ a continuous semigroup due to \marginpar{proof}
+\begin{defi}[Backwards Operator]
+The \textit{backwards transfer operator} $\Ucal^t: L^r(\mu) \rightarrow L^r(\mu)$ with $t \in \T$ and $1 \leq r  \leq \infty$ is defined by
+\begin{equation}
+\Ucal f(x) = \int_\X f(y) p(t,x,\diff y).
+\end{equation}
+\end{defi}
+For all $t \in \T$ we have again
 \begin{equation*}
-\Pcal^{t+s} = \Pcal^t \Pcal^s.
+\Ucal^t \mathbb{1}_\X = \mathbb{1}_\X.
+\end{equation*}
+The operator $\Ucal$ is \textit{adjoint} to $\Tcal^t$, that is they are related via the duality bracket, namely
+\begin{equation*}
+\langle \Tcal^t f, g \rangle_\mu = \langle f, \Ucal^t g \rangle_\mu
+\end{equation*}
+for all $f,g \in L$. \marginpar{which $L$?}
+Thus, if a Markov process $X_t$ is reversible, then we have
+\begin{equation*}
+\Tcal f(x) = \Ucal f(x)
+\end{equation*}
+for the corresponding forward and backward operators $\Tcal$ and $\Ucal$.
+
+\subsubsection*{Infinitesimal Generator}
+%\marginpar{describes the rate a MC moves between states}
+
+For $\T = \R$ the Chapman-Kolmogorov property of the transition functions makes the family $\{\Tcal^t\}_{t\in\R}$ a continuous \textit{semigroup} due to \marginpar{proof}
+\begin{equation*}
+\Tcal^{t+s} = \Tcal^t \Tcal^s.
 \end{equation*}
 This leads to the following definition of the the infinitesimal generator. \marginpar{time-indep.?}
 
 \begin{defi}[Infinitesimal Generator]
-For the semigroup of propagators or forward transfer operators $\Pcal^t : L_\mu^r (\X) \rightarrow L_\mu^r (\X)$ with $t \in T$ and $1\leq r \leq \infty$ we define $\mathcal{D}(L)$ as the set of all $\nu \in L_\mu^r(\X)$ s.t. the strong limit
+For the semigroup of propagators or forward transfer operators $\Tcal^t : L_\mu^r (\X) \rightarrow L_\mu^r (\X)$ with $t \in T$ and $1\leq r \leq \infty$ we define $\mathcal{D}(L)$ as the set of all $\nu \in L_\mu^r(\X)$ s.t. the strong limit
 \begin{equation*}
-\Qcal \nu = \lim_{t \rightarrow \infty} \frac{\Pcal^t\nu-\nu}{t}.
+\Qcal \nu = \lim_{t \rightarrow 0} \frac{\Tcal^t\nu-\nu}{t}.
 \end{equation*}
-exists. Then the operator $\Qcal: \mathcal{D}(L) \rightarrow L_\mu^r(\X)$ is called the infinitesimal generator corresponding to the semigroup $\Pcal^t$.
+exists. Then the operator $\Qcal: \mathcal{D}(L) \rightarrow L_\mu^r(\X)$ is called the \textit{infinitesimal generator} corresponding to the semigroup $\Tcal^t$.
 \end{defi}
 
-The infinitesimal generator is an operator which describes the behaviour of a Markov process in infinitesimal time. That becomes clear by the relation $\Pcal^t = \exp{(t \Qcal)}$ in $L^2$. \marginpar{ref} We can say that $\Qcal$ "generates" the semigroup of transfer operators since the whole semi-group of transfer operators can be derived from it.
+The infinitesimal generator is an operator which describes the behaviour of a Markov process in infinitesimal time. That becomes clear by the relation $\Tcal^t = \exp{(t \Qcal)}$ in $L^2$. \marginpar{ref} We can say that $\Qcal$ ``generates'' the semigroup of transfer operators since the whole semi-group of transfer operators can be derived from it.
 
-So the eigenvalues $1 = \lambda_1,\dots,\lambda_m$ of the propagator $\Pcal^t$ are related to the eigenvalues $0 = \Lambda_1,\dots,\Lambda_m$ of the propagator $L$ via \marginpar{not yet discrete?}
+Therefore, the eigenvalues $1 = \lambda_1,\dots,\lambda_m$ of the propagator $\Tcal^t$ are related to the eigenvalues $0 = \Lambda_1,\dots,\Lambda_m$ of the generator $\Qcal$ via \marginpar{not yet discrete?}
 %in the following way:
 \begin{equation*}
 \lambda_k = \exp(t\Lambda_k)
@@ -121,4 +156,4 @@ So the eigenvalues $1 = \lambda_1,\dots,\lambda_m$ of the propagator $\Pcal^t$ a
 for all $1\leq k \leq m$. Their corresponding (associated) eigenfunctions are identical.
 %So the spectrum of the infinitesimal generator is $\Lambda_1=0,\dots$.
 \marginpar{properties of generator}
-Thus, the stationary distribution of $\Pcal^t$ is the solution of $\Qcal\pi = 0$;  $\Qcal\eins = 0$. \marginpar{?}
+Thus, the stationary distribution of $\Tcal^t$ is the solution of $\Qcal\pi = 0$;  $\Qcal\eins = 0$. \marginpar{?}

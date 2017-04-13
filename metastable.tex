@@ -1,75 +1,99 @@
-\label{chap:meta}
-%\section{Dominant metastable sets (reversible)}
+In section \ref{sec:galerkin}, we introduced a method/technique to reduce the dimension of a Markov process by projecting it onto a smaller state space.
+But we don't know yet \textit{how} to choose a partition of unity such that the corresponding Galerkin projection yields a \textit{reasonable} Markov State Model, in the sense that important properties of the process are maintained.
+The answer to the question,  what an \textit{important property} is, can differ from case to case.
+For our investigations (and many other research in MD systems), we are particulary interested in the long-time behaviour of a process, which can be characterized by the concept of \textit{metastability}.
+It describes the typical behaviour of rare transitions between specific subsets, called \textit{metastable} or \textit{dominant subsets}, after a long duration of stay inside.
+%aforementioned
+We will see why it makes sense to project the process onto its metastable sets and how they are related to the spectrum of the transfer operator.
+%can be detected employing the spectrum of the transfer operator.
+We will also see that the optimal metastable decomposition is not sharp/crisp but soft/fuzzy using \textit{membership functions}.
+%using membership functions, in terms of membership functions
+%membership fct. = part. of unity? Here: yes. Röblitz: required that each function takes value 1
 
-In section \ref{sec:galerkin}, we already mentioned that under certain conditions (high complexity/ long-time simulations) a reduction of dimension of our process is needed. In order to be able to apply a reasonable Galerkin Projection, we are now going to introduce the concept of metastability which is a certain behaviour of the trajectory of  stochastic processes that occurs in many molecular dynamic systems \marginpar{see ..}
-%not only Markov processes?
-and describes the characteristics of rare transitions between specific subsets after a long duration of stay inside.
-%case
-We will see why it makes sense to choose these \textit{metastable sets}  as clustering sets in the aforementioned Galerkin Projection
-%We will also see the relation of metastable sets and the spectrum of the transfer operator
-and how they can be detected using the spectrum of the corresponding transfer operator.
-We will also see that the optimal metastable decomposition is not shark/crisp but soft/fuzzy.
-%(i.e. eigenvalues and eigenfunctions)
-%which metastable decomposition is optimal (no unique solution) (PCCA+).
-%which solution is optimal
-%of the transfer operator of the corresponding process.
-
-Unfortunately, metastability of nonreversible processes is much harder to detect, since we are not guaranteed a real spectrum of the transfer operator. So we need the concept of dominant cycles instead of dominant sets. We will give a short outlook how that case could be handled.
-%tackled
+For a nonreversible process, such a dominant structure can sometimes be given in terms of \textit{dominant cycles} instead of \textit{dominant sets}. We will introduce these structures as well and give a short outlook/overview how they can be detected.
+%handled/tackled
 
 %The basics of cycle representations stem from Kalpazidou\cite{kalpazidou2007} and its application to %nonreversible Markov processes from Djurdjevac, Weber and Sch\"utte\cite{djur2016}.
 
-\section{Concept of metastability applied to MD}
+\section{Metastability}
 \label{sec:metastability}
 
-%views on metastability
-There exist several different definitions of metastability. Shortly said, metastability is the property of a Markov
+There exist several different definitions of metastability. Shortly said, metastability is the property that the state space of a process
 %can be for arbitrary stoch. proc.?
-process which consists of (a decomposition into?) subsets s.t. transitions between these subsets are rare events while the duration of stay inside of each of these subsets is long.
+%which has subsets/regions
+consists of subsets/regions s.t. transitions between these subsets are rare events while the duration of stay inside of each of these subsets is rather long.
+%(a decomposition into?)
 %stays for a long time in certain subsets before moving to other subsets. \marginpar{schlecht beschrieben}
-%For example, it can be characterized by large hitting times (see ...) or small exit rates (see ...).
-Some possible characterizations of that behaviour are based on large hitting times (see...) or small exit rates (...).
-%All of them give a good idea about the concept, so we will present some of them to make clear why %metastability is such an important concept, especially in molecular dynamics.
-%for MD processes
+Some possible characterizations of that behaviour are based on large hitting times or small exit rates, see Sch\"utte and Sarich\cite[chapter 3]{schutte2013metastability} which gives a good overview of the most common definitions.
+%relation/comparison
 
 \subsubsection*{Mathematical concept of metastability}
-%and relation to MD
 
-To describe the concept of metastability, it is a good way to start with so called \textit{stable} or \textit{invariant subsets}. A subset of the state space of a Markov process is called stable or invariant if it cannot be left, i.e. if $\Prob(X_t \in A \mid X_0 \in A) = 1$ for all $t$.
-Analoguously, we can define a \textit{metastable} or \textit{almost invariant subset} as a subset in which the process will stay for a very long time before exiting it into any other subset; i.e. $\Prob(X_{t_f} \in A \mid X_0 \in A) \approx 1$ for a convenient timescale $t_f$.
+%define, introduce. In order to..
+In order to describe the concept of metastability, it is a good way to start with so called \textit{stable} or \textit{invariant subsets}. A subset $A \subset \X$ of the state space of a Markov process $X_t$ is called stable or invariant if it cannot be left, i.e. if $\Prob(X_t \in A \mid X_0 \in A) = 1$ for all $t$.
+%Similarly
+%$A \subset \X$
+Analoguously, we can define a \textit{metastable} or \textit{almost invariant subset} as a subset in which the process will stay for a very long time before exiting it into any other subset; that is $\Prob(X_{t_f} \in A \mid X_0 \in A) \approx 1$ for a convenient timescale $t_f$.
 %Metastability: A subset is not invariant but almost invariant
-\\
-
-%lack of concreteness can be eliminated ..
-Obviously, being "close to 1" is a rather vague statement. But that lack of concreteness will be eliminated later,
-%However,
-since we will only be interested in the "best" metastable decomposition, so for each metastable set we try do get that probability as close to 1 as possible. Instead, we will have to determine the number of subsets we are looking for.
-\\
-
-Let $A_1,\dots,A_m$ be a full partition of the state space $\X$. Then this partition and each of its partition sets are called \textit{metastable} if
-\begin{equation*}
+%Consequentially
+Thus, a full partition $A_1,\dots,A_m$ of the state space $\X$ is called \textit{metastable} if
+\begin{equation}
+\label{eq:metastability}
 \sum_{k=1}^m \Prob_\mu(X_{t_f} \in A_k \mid X_0 \in A_k) \approx m.
-\end{equation*}
+\end{equation}
+%mu??
 Then each of the sets $A_k$ is almost invariant with respect to timescale $t_f$;
 the probability to stay in one of the partition sets being started there is almost $1$, while the probability to change between any two different partition sets is almost $0$.
-%\begin{equation*}
-%p(A_k,A_k) \approx 1 \textrm{ for all } k=1,\dots,m \textrm{ and } p(A_k,A_l) \approx 0  \textrm{ for all } %k,l=1,\dots,m \textrm{ s.t. } k \neq l
-%\end{equation*}
+Such a partition is also called a \textit{metastable decomposition}.
+%of the state space?
+
+Obviously, being ``close to 1'' or ``close to $m$'' are rather vague statements. But that lack of concreteness will be eliminated later,
+%However,
+since we will only be interested in the ``best'' metastable decomposition.
+That means that we want to obtain a decomposition where the sum \eqref{eq:metastability} is as close as possible to $m$, or equivalently the probability to stay inside of a metastable set is as close as possible to $1$.
+%High holding probability?
+%That means that we want to obtain a decomposition where the probability to stay inside of a metastable set is as close as possible to $1$, resulting in the sum \eqref{eq:metastability} being as close as possible to $m$.
+%so for each metastable set we try do get that probability as close to 1 as possible.
+Also the choice of the timescale $t_f$ is not specified in general and will depend on the particular system in consideration.
+%system/question in consideration/investigation.
+%case.
+Hence, the only parameter in \eqref{eq:metastability} that has to be determined is the number $m$ of subsets we are looking for. \marginpar{def. conformation?}
+%determined before
 \\
 
-Have projected transfer operator $P$ by Galerkin projection with $\{\cfam\}$. Then the trace of $P$ is referred to as metastability of the conformations $\{\cfam\}$.
+\marginpar{membership fct, cluster, metastability, macro state}
+In section \ref{sec:galerkin}, we defined the Galerkin projection on an arbitrary partition of unity $\{\cfam\}$, instead of defining it just on full partitions. Such a partition of unity (membership fcts.) defines a projected transfer operator $P_c$.
+Then the trace of $P_c$ is referred to as \textit{metastability} of the conformations $\{\cfam\}$.
+%why that makes sense? high diagonal elements -> high eigenvalues -> high metastability
+%projected transfer operator from theorem...
+This definition of metastability corresponds to the full-partition formulation \eqref{eq:metastability}, since the projected process has the state space $\{\cfam\}$. Therefore, the diagonal of $P_c$ consists of the holding probabilities of the conformations.
 
-%\subsubsection*{Metastability in Molecular Dynamic Systems}
+\subsubsection*{Metastability in Molecular Dynamic Systems}
+%\marginpar{results in need for clustering}
 
-\subsubsection*{Importance of metastability to MD systems}
-
-Metastability is a concept which is very important for stochastic processes describing molecular dynamic systems.
-Such systems/processes often have the characteristic behaviour that their trajectory stays inside of a certain conformation/region/subset for a very long time before switching/changing/exiting to another region. Furthermore, transitions between these conformations are rare. 
+Metastability is a very important concept for stochastic processes describing molecular dynamic systems.
+%a realization
+Such processes often have the characteristic behaviour that their trajectory stays inside of a certain
+%switching/changing/exiting. region/subset
+region, also called \textit{conformation},  for a long time before switching to another region. Furthermore, transitions between these conformations are rare. \marginpar{conformation = spatial arrangement? special case of metastability?}
 %So this behaviour
-So these regions correpond to our above definition of metastable sets if we choose a convenient timescale.
+%So these regions
+So they correpond to our above definition of metastable sets if we choose a convenient timescale.
 % long duration of stay + small transition rates/probabilities/ rare transitions between these subsets
 
-\subsubsection*{Problem of long-time simulations of MD systems}
+\begin{figure}[!htb]
+	\label{fig:conformations}
+	\centering
+	\includegraphics[width=0.7\textwidth]{conformations.jpg} %70% der Textbreite
+	\caption{Example of a molecule with two (metastable) conformations}
+\end{figure}
+
+%examplified
+This behaviour is depicted in figure \ref{fig:conformations}, taken from ... . This example shows a molecule, whose dihedral angle can take values between $+45°$ and $-45°$, thus the process consists orginally of infinitely many states.
+But we can see, that there are two regions (red and blue) where the process stays for a rather long time and that transitions between these regions are rare. Thus, they correspond to our characterization of metastable sets.
+\\
+
+%\subsubsection*{Problem of long-time simulations of MD systems}
 
 %Metastability -> long Verweildauer in conformation -> long-time simulations required
 %Long-time simulations -> not feasible with nowaday computers -> need reduction of dimension
@@ -77,57 +101,34 @@ So these regions correpond to our above definition of metastable sets if we choo
 %Because of that fact, rather long simulations of the system are required if we want to know more about %these "conformation changes".
 
 As transitions between metastable sets are a rather rare event, we need to make long-time simulations of our process in order to get reasonable results about these changes of conformations.
-But, as mentioned in Chapter 2, long-time simulations of such complex systems are not feasible even with the best computers nowaday, see (...).
+But, as mentioned in Chapter \ref{chap:markov}, long-time simulations of such complex systems are not feasible even with the best computers nowaday, see (...).
 %Unfortunately..
 
-%\subsubsection*{Solution: Galerkin Projection}
-So, in order to be able to compute some long-time simulations of a given MD system, a reduction of complexity like described in section 2.4 is needed/ required. This can be achieved by a clustering of a state space. Different states of the state space will be clustered appropriately s.t. we get a process on a smaller state space.
+Thus, in order to be able to compute some long-time simulations of a given MD system, a reduction of complexity  is needed/required. This can be achieved by a clustering of the state space as described in section \ref{sec:galerkin}. Different states of the state space will be clustered appropriately s.t. we get a process on a smaller state space.
 
 \subsubsection*{Clustering into metastable sets}
 
-So far, we didn't mention how we should choose the clusters for the Galerkin projection, i.e. wich states of the original states should be grouped together for the reduced/projected model. \marginpar{Galerkin = clustering???}
+So far, we didn't mention how we should choose the clusters/macro states/membership fcts. for the Galerkin projection, i.e. wich states of the original process should be grouped together for the reduced model. %\marginpar{Galerkin = clustering?}
+%projected model
 
-As we are mainly interested (for the moment) in the long-time behaviour of our process, we are not interested in short-time transitions, i.e. transitions inside of a conformation/ metastable set. So knowing now the concept of metastability, it seems directly/intuitively appropriate/reasonable to group/cluster states of a metastable together and create a new process where each state corresponds to one of the metastable sets.
+%cluster/group together
+As we are mainly interested in the long-time behaviour of a given process, it seems reasonable to cluster states of a metastable set together and create a new process where each (macro) state corresponds to one of the metastable sets. The transition probabilities of the clustered process/reduced model should correspond to the transition rates of the original process between its metastable sets. \marginpar{micro/macro states}
+%between the macro states
+%In order to..
+%maintains..
+As metastability describes a behaviour on long timescales, our newly created process should maintain the long-time behaviour of the original process, but \textit{forget} about its short-time transitions, i.e. transitions inside of a conformation/metastable set.
 
-Since we want to maintain/keep the long-time-behaviour/properties of the original space/system/process, the transition probabilities of the clustered/reduced process/model should correspond to the transition rates of the original process between its metastable sets.
-In doing to, we get a new process which possesses the long-time-behaviour of the original process, but "forgets" its short-time-behaviour, i.e. transitions inside of a conformation.
+Since there is not one unique metastable decomposition of the state space, we need to find a decomposition which is in some sense ``the best''; then we can use it to create a reduced model. In sections \ref{sec:spectral} and \ref{sec:fuzzy} we will see how to find such a decomposition.
 
-%But such a clustering is not a eindeutig thing. For example: in which metastable set should we assign a %transition region (e.g. a region which is close to several metastable sets).
+%clustering not unique: different metastable decompositions
+%For example: in which metastable set should we assign a
+%transition region (e.g. a region which is close to several metastable sets). SOLVED BY MEMBERSHIP?
 
-%The reduction of dimension (deletion of unnecessary information) gives us a much smaller state space than %before. Going from micro states to macro states.
+%Going from micro states to macro states.
 
-%Summary:
-%The metastability of a process is a reason for the need of too long and complex computations/ simulations. %But this problem can also be solved using metastability. Namely reducing the system onto metastable sets.
+\subsubsection*{Advantages / Disadvantages} \marginpar{weg?}
 
-
-%\subsubsection*{Clustering and Why and How}
-%Aim: complexity reduction
-
-\subsubsection*{Advantages / Disadvantages}
-
-First of all, our newly created process will have the desired property of a reduced dimension/complexity since the model acts on a (much) smaller state space while maintaining its crucial property (transitions between metastable sets = long-time behavious). So the computation effort for (long-time) simulations is definitely decreased.
-Furthermore, we get a better overview of our process, since it is always easier to consider a process on a few states in comparison to a process on a very large or even continuous state space. Since fast/ short-time transitions (transitions inside conformation/ metastable set) are not our research goal, we just omit this (at least for our case!) superfluous informations.
-%Not every value is interesting, but just conformations/ metastable clusters/ sets are interesting.
-So our advantages in clustering are
-\begin{enumerate}
-\item reduction of dimension (main reason b/c otherwise computation are just not possible)
-\item better overview of the crucial behaviour of the process (rare transitions)
-%(nice side effect, also helpful)
-\end{enumerate}
-%Eigentlicher Grund: Reduction of Complexicity
-%Guter Side-Effekt: Smaller number of states = anschaulicheres Model, besserer Überblich
-%main factor: too many states -> not possible to compute with computers nowaday
-%maybe also: not every of the maybe infinitely many states is of relevance: clustering to get better overview
-But there is also a disadvantage, as we mentioned in 2.4, by projecting a process it can lose its Markov property. \marginpar{under certain/ which conditions not?} \marginpar{Disadv: no good metastability -> no good model?}
-
-\subsubsection*{Example}
-
-To explain metastability in Molecular Dynamics, consider the following easy example, figure ... .
-Our system consists of ..? molecule and can take ...? values.
-As we can see from figure ..., showing a long-time-simulation of that process,
-
-\begin{figure}
-	\centering
-	\includegraphics[width=0.7\textwidth]{conformations.jpg} %70% der Textbreite
-	\caption{Example of a molecule with two conformations}
-\end{figure}
+Most importantly, our newly created process will have the desired property of a reduced dimension/complexity since the model acts on a smaller state space while maintaining the crucial property of the original process (transitions between metastable sets = long-time behaviour). So the computation effort for (long-time) simulations is definitely decreased.
+Furthermore, we get a better overview of our process, since it is always easier to consider a process on a few states in comparison to a process on a very large or even continuous state space. Since fast/short-time transitions (transitions inside conformation/metastable set) are not our research goal, we just omit these (at least for our case!) superfluous informations.
+But there is also a disadvantage, as already mentioned in section \ref{sec:recrossing}, by projecting a process it can lose its Markov property.
+%\marginpar{under certain/ which conditions not?} WOANDERS!

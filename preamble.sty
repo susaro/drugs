@@ -17,19 +17,58 @@
 \usepackage{bbold}
 \usepackage{tikz-cd}
 
+%for tables
+\usepackage{booktabs}
+
 %font
 %\usepackage{mathpazo} % add possibly `sc` and `osf` options
 %\usepackage{eulervm}
 %\usepackage{palatino,eulervm}
 
+\newcommand{\mailto}[1]{\href{mailto:#1}{#1}}
+
+%-----------------------------------------------------------------------
+%Theorems
+\newtheoremstyle{normal}% normale Schrift
+{10pt}% hSpace abovei
+{10pt}% hSpace belowi
+{\normalfont}% hBody fonti
+{}% hIndent amounti1
+{\bfseries}% hTheorem head fonti
+{}% Punctuation after theorem headi
+{0.8em}% hSpace after theorem headi2
+{\bfseries{\thmname{#1}\thmnumber{ #2}.\thmnote{ \hspace{0.5em}(#3)\newline}}}% hTheorem head spec (can be left empty, meaning `normal')
+ 
+\newtheoremstyle{kursiv}% kursive Schrift
+{10pt}% hSpace abovei
+{10pt}% hSpace belowi
+{\itshape}% hBody fonti
+{}% hIndent amounti1
+{\bfseries}% hTheorem head fonti
+{}% Punctuation after theorem headi
+{0.8em}% hSpace after theorem headi2
+%{}% hTheorem head spec (can be left empty, meaning `normal')
+{\bfseries{\thmname{#1}\thmnumber{ #2}.\thmnote{ \hspace{0.5em}(#3)\newline}}}% hTheorem head spec (can be left empty, meaning `normal')
+
+\theoremstyle{normal}
 \newtheorem{chap}{Proposition}[chapter]
 \newtheorem{defi}[chap]{Definition}
+\newtheorem{ex}[chap]{Example}
+\newtheorem{rem}[chap]{Remark}
+\newtheorem{cor}[chap]{Corollary}
+\newtheorem{erin}[chap]{Erinnerung}
+
+\theoremstyle{kursiv}
 \newtheorem{lem}[chap]{Lemma}
 \newtheorem{thm}[chap]{Theorem}
-\newtheorem{ex}[chap]{Example}
+
+%-----------------------------------------------------------------------
 
 \newcommand{\eins}{\mathbb{1}}
+\newcommand{\Acal}{\mathcal{A}}
 \newcommand{\B}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Dcal}{\mathcal{D}}
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\Lcal}{\mathcal{L}}
 \newcommand{\N}{\mathbb{N}}
@@ -38,7 +77,11 @@
 \newcommand{\Qcal}{\mathcal{Q}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Rdrei}{{\R^{3N}}}
+\newcommand{\Sopt}{S_{\mathrm{opt}}}
+\newcommand{\Sreal}{S_{\mathrm{real}}}
+\newcommand{\Tcal}{\mathcal{T}}
 \newcommand{\T}{\mathbb{T}}
+\newcommand{\Ucal}{\mathcal{U}}
 \newcommand{\markov}{(X_t)_{t\in\T}}
 \newcommand{\Xcal}{\mathcal{X}}
 \newcommand{\X}{\mathbb{X}}
@@ -52,6 +95,8 @@
 \newcommand{\xtilde}{\widetilde{X}}
 \newcommand{\xhat}{\widehat{X}}
 
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\trace}{\mathrm{trace}}
 \newcommand*\diff{\mathop{}\!\mathrm{d}}
 
 \DeclareMathOperator*{\esssup}{ess\,sup}

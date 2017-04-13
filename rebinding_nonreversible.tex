@@ -1,0 +1,15 @@
+\section{Approach for nonreversible processes}
+\label{sec:rebinding_nonreversible}
+
+With the tools from section \ref{sec:nonreversible} (Schur Decomposition and G-PCCA+) we give an approach how this problem can be solved
+for nonreversible processes (NESS processes) using Schur Decomposition to get rid of the possibly nonreal eigenvalues, see Djurdevac et al\cite{djur2016}(2016).
+
+\subsubsection*{Transfer Operator}
+Have the transfer operator $\Pcal$ from \eqref{eq:transferoperator} given, but from theorem \ref{thm:selfadjoint_reversible} we know that the transfer operator of a nonreversible process is not self-adjoint.
+
+\subsubsection*{Schur Decomposition}
+Applying a Schur Decomposition, we can create real eigenvalues from the possibly nonreal eigenvalues of the transfer operator.
+\marginpar{detecting dominant cycles of the process?}
+
+\subsubsection*{Galerkin Projection}
+Now that we have real eigenvalues, we can apply the Galerkin Projection as usual. \marginpar{G-PCCA+?}

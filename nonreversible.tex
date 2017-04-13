@@ -1,22 +1,150 @@
-\section{Dominant cycles (non reversible NESS process)}
+\section{Dominant Cycles}
+%(non reversible NESS process)
+\label{sec:nonreversible}
 
-\subsubsection*{Approaches for nonreversible processes}
-What is the dominant structure of a nonreversible process? cycle?
-What is egentligen the problem with nonreversible processes? non-real eigenvalues
-\\
+When it comes to computing a metastable decomposition for a nonreversible process, we have to face the problem that the eigenvalues/eigenvectors might be complex valued and thus, PCCA+ is not applicable. \marginpar{of transf.op.?}
+One possibility/alternative/way to circumvent this problem is to consider the real Schur decomposition of the matrix(?) instead of its spectral decomposition. Then, we can apply PCCA+ to the real Schur vectors of the matrix instead to its eigenvectors.
+This approach is feasible/possible, since the real Schur vectors span the same subspace as the corresponding complex Schur vectors and those span the same subspace as the corresponding eigenvectors. \marginpar{see ...}
 
-How can the computation of dominant cycles help to detect metastable sets/ metastables cycles?
-\\
+%In this section, we give an overview about a special case of nonreversible processes (NESS); nonreversible but having a steady state/stat. dist./stat. meas.
 
-What is a metastable cycle?
-\\
+%In addition, additionally
+Furthermore, a nonreversible process can contain other dominant structures than just \textit{metastable sets/conformations}. It can as well contain \textit{metastable cycles}, that is subsets with a cyclic behaviour and a high probability to stay inside of such a cycle for a long time.
+%structures/subsets
 
-Definition dominant cycle
+%In general, there exist two possible ways to uniquely describe a Markov chain; via a transition matrix or via cycles.
 
-\subsubsection*{Schur Decomposition}
+\subsubsection*{NESS processes}
+
+%We begin with introducing a certain class of processes that are nonreversible, but still have some nice properties.
+
+\begin{defi}[NESS process]
+A Markov process is called \textit{nonequilibrium steady state (NESS)} process if it is nonreversible, but still has a steady state, \marginpar{what is that?} given by an invariant measure $\mu$ w.r.t. which the process is ergodic.
+\end{defi}
+
+$p_\tau(A,B) = p(\tau,A,B) =  \Prob(X_\tau = B \mid X_0 = A)$
+
+As a NESS process is nonreversible, there are regions where the detailed balance equation is not fulfilled, i.e. there is an effective probability flow $p(\tau, A, B) - p(\tau,B,A) \neq 0$ between some subsets $A,B \subset S$ of the state space.
+
+\subsubsection*{Flow of a process}
+\marginpar{why only finite?}
+
+In the following we consider an irreducible and aperiodic (i.e. ergodic) Markov chain on the finite state space $S= \{1,\dots,n\}$ given by the transition matrix $P$. Since this Markov chain is irreducible and aperiodic, it possesses a unique invariant measure $\mu$ that is positive everywhere. \marginpar{see ..}
+Then $\mu$ is the normalized eigenvector of $P$ for the unique eigenvalue $\lambda = 1$.
+
+\begin{defi}[Flow Matrix]
+The probability flow associated to a Markov process is given by the flow matrix
+\begin{equation*}
+F = DP,
+\end{equation*}
+where $P$ is the transition matrix of the process and $D$ the diagonal matrix $D_{ii} = \mu_i$ with the entries of the invariant measure $\mu$.
+\end{defi}
+So the (steady state) probability flow from state $i$ to $j$ is given by $F_{ij} = \mu_i P_{ij}$.
+If the process is reversible, the flow matrix $F$ is symmetric due to the detailed balance equation. For a NESS process, $F$ is not symmetric since there are states $i,j \in S$ with $F_{ij} \neq F_{ji}$.
+
+\subsubsection*{Cycle Decomposition}
+
+This flow must be decomposable into elementary cycles. \marginpar{why?}
+
+\begin{defi}[Cycle of a process]
+A $k$-cycle $\gamma$ on $S$ is an ordered sequence (up to cyclic permutations) of $k$ connected states $\gamma = (i_1,\dots,i_k)$ with length $|\gamma| = k$, i.e. the probability to get to the next state is always positive: $\Prob_{i_j, i_{j+1}} > 0$ and $\Prob_{i_k,i_1} > 0$.
+\marginpar{1-step prob.?}
+Cycles without repetition/self-intersections are called simple cycles. The set of all simple cycles is denoted by $\Ccal$.
+\end{defi}
+
+We want to make a cycle decomposition of the flow $F$, see Kalpazidou\cite{kalpazidou2007}.
+
+\begin{defi}[Cycle/flow Decomposition]
+A collection $\Ccal_+ \subset \Ccal$ of cycles $\gamma$ with real positive weights $w(\gamma)$ is a flow decomposition if for every edge $(i,j) \in S^2$ we have
+\begin{equation*}
+F_{ij} = \sum_{\gamma \supset (i,j)} w(\gamma),
+\end{equation*}
+where $(i,j) \subset \gamma$ if the edge $(i,j)$ is in $\gamma$.
+\end{defi}
+
+In order to make sense in a probabilistic context, we define the weight $w$ of a cycle $\gamma$ in the following way. Given a (realization of?) Markov chain $(X_t)_{t \in \T}$, we count the number of times $N_T^\gamma$ the process passes through a cycle $\gamma$ up to time $T$.
+%w will be the mean/average number of the appearances of c along almost all the sample paths
+
+\begin{defi}[Weight of a Cycle]
+\begin{equation*}
+w(\gamma) = \lim_{T \rightarrow \infty} \frac{N_T^\gamma}{T}.
+\end{equation*}
+\end{defi}
+Since we are considering/assuming an ergodic process, this limit exists a.s. \marginpar{jian qian}
+
+
+\subsubsection*{Dominant cycles/sets}
 %[djur] chap 5
 %same as PCCA+ but for nonreversible processes, so with Schur vectors instead of eigenvectors
+
+We will see that dominant cycles have similar properties as dominant sets for reversible processes, i.e. large eigenvalues with $|\lambda| \approx 1$. But now the eigenvalues are lying in the complex plane and might be non-real (pairs of complex eigenv.).
+
+%What is a metastable cycle?
+\begin{defi}[Dominant Cycle]
+= metastable cycle?
+\end{defi}
+
+So a cycle is dominant if there is a high probability inside the Markov chain to follow this cycle.
+
+%What is the dominant structure of a nonreversible process? ibland cycle, ibland set?
+%What is egentligen the problem with nonreversible processes? non-real eigenvalues
+
 Dominant structures will be defined utilizing the dominant Schur vectors
 of the transition matrix instead of its eigenvectors.
+A membership matrix can be defined as a linear combination of these leading Schur vectors (spectral clustering with PCCA+).
 
-A membership matrix can be defined as a linear combination of these Schur vectors.
+%\subsubsection*{Spectrum of a NESS process}
+
+\subsubsection*{Schur Decomposition}
+
+We have the same situation/aim as in the previous sections: we have a Markov process on a large state space $S$ and we want to decompose it into a smaller state space consisting of clusters that belong to dominant structures of the process.
+
+%Schur Decomposition = Matrix Decomposition
+
+\begin{defi}[Schur Decomposition]
+Let $P \in \mathbb{R}^{n \times n}$ be a transition matrix. Then it can be written as
+\begin{equation*}
+P = XRX^{-1},
+\end{equation*}
+where $X$ is a unitary matrix and $U$ is an upper triangular matrix, which is called a \textit{Schur form/matrix/decomposition} of $P$.
+\end{defi}
+
+Since $R$ is similar to $P$, both matrices have the same spectrum. Since $R$ is triangular, their eigenvalues are the diagonal entries of $R$.
+
+A Schur Decomposition is not unique. \marginpar{...}
+As $P$ is a real matrix, its non-real eigenvalues come in complex conjugate pairs. This fact can be used to build a \textit{real Schur form}, where $X$ and $R$ are both real matrices. But then $R$ is no longer triagonal, but only \textit{quasi-triangular}, allowing $2 \times 2$-blocks on its diagonal. \marginpar{picture}
+The eigenvalues of the $2\times 2$-blocks are exactly the complex conjugate eigenpairs of $P$. \marginpar{see ..}
+
+\begin{thm}[Real Schur Decomposition {\cite[Exc. I.3.24]{stewart1990matrix}}]
+%Röblitz p. 22
+If $A \in \R^{N \times N}$, then there exists an orthogonal matrix $U \in \R^{N \times N}$ such that
+\begin{equation*}
+U^TAU = T,
+\end{equation*}
+where $T$ is block-triangular with $1 \times 1$ and $2 \times 2$-blocks on its diagonal. The $1 \times 1$-blocks contain the real eigenvalues of $A$ and the eigenvalues of the $2 \times 2$-blocks are the complex eigenvalues of $A$.
+\end{thm}
+
+\begin{defi}[Schur Vector]
+Let $\widetilde{R} \in \mathbb{R}^{m \times m}$ be a submatrix of $R$ (top left part of $R$). Then
+\begin{equation*}
+P = \xtilde \widetilde{R} \xtilde^{-1},
+\end{equation*}
+where $\xtilde \in \R^{n \times m}$ consists of the first $m$ columns of $X$. These vectors will be denoted as the dominant Schur Vectors of $P$. \marginpar{why?} Schur Values?
+\end{defi}
+
+\subsubsection*{Using PCCA+}
+Djurdjevac Conrad et al\cite{djur2016} propose an algorithm in order to determine/get the desired membership vectors $\chi$.
+\begin{enumerate}
+\item Compute a real Schur decomposition $(\xtilde, R)$ of ...
+\item Sort the Schur values and the $2 \times 2$-blocks such that they are in a descending order
+%according to their maximal absolut values
+\item Determine the submatrix $\xhat$ and solve PCCA+ equation (...) in order to get the membership functions $\chi$
+\end{enumerate}
+
+\subsubsection*{Computation of metastable cycles/sets}
+
+%I. Beckenbach, L. Eifler, K. Fackeldey, A. Gleixner, A. Grever, M. Weber, J. Witzig: Mixed-Integer Programming for Cycle Detection in Non-reversible Markov Processes(2017)
+Fackeldey and Weber\cite{fackeldey2017gen}
+%GenPCCA+
+%M. Weber and K. Fackeldey.   G-PCCA: Spectral clustering for non-
+%reversible markov chains. ZIB-Report 15-35, Zuse Institute Berlin, 2015

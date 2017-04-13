@@ -1,0 +1,279 @@
+\section{Minimizing the Rebinding Effect}
+\label{sec:minimizing}
+
+So far, we know that the matrix $S$ from \eqref{eq:projection_presentation} gives a measure for the quantity of the rebinding effect, i.e. being close to the identity matrix implies a low rebinding, while high outer diagonal elements of $S$ (overlap?) imply a high rebinding effect.
+But we don't know yet the meaning of this effect for the whole process.
+%So before starting with any kind of optimization problems,
+So we will at first set the rebinding effect (respectively the matrix $S$) in relation to the stability of a system/process.
+%\marginpar{2 adv.: stability and efficiency of drugs}
+Afterwards, we will formulate an optimization problem in order to get a lower bound for the rebinding effect.
+
+%Is rebinding effect good/bad/desirable?
+%As mentioned before, the rebinding effect is a desired/favorable property for some processes, e.g. in drug %design, where high rebinding increases the efficiency of a drug.
+%In order to get high rebinding effects, we will now derive a lower bound for it; i.e. minimize the rebinding %effect.
+
+As the computation of eigenfunctions of a continuous operator $\Qcal$ is an extensive task, we will assume in the further course that the transition rates can be measured experimentally.
+%of a process
+Thus, we will examine a given transition rate matrix $Q_c$.
+%a process belonging/corresponding to a given transition rate matrix?
+
+%For reversible processes, this problem is solved by Weber and Fackeldey \cite{weber2014} with the
+%spectral approach.
+
+\subsubsection*{Stability of the system/process in terms of determinants}
+
+If the eigenvalues $\xi_i$ of $Q_c$ are close to $0$, then the macro states are very stable in the sense that the probability to stay inside of such a state is close to $1$.
+The trace of $Q_c$ corresponds to the sum of the dominant eigenvalues of $\Qcal$.
+%Remember that the largest eigenvalue ist $0$; the other eigenvalues arbitrarily negative numbers
+Thus, we can measure the \textit{stability} of the molecular system by considering $F := - \trace(Q_c)$.
+If $F$ is high, then the process is fast and less stable. If $F$ is close to $0$, then the process is slow and very stable. \marginpar{trace indep. of $A$?}
+We want to set the indicator for stability $F$ in relation to the matrices $S$ and $T$ from theorem \ref{thm:galerkin} (matrix representation of Galerkin projection).
+\begin{lem}
+If $Q_c$ is a projected infinitesimal generator of a process and $P_c(\tau)$ the corresponding projected transfer operator with a matrix representation $P_c(\tau) = S^{-1}T$ from theorem \ref{thm:galerkin}, then the quantity $F := - \trace(Q_c)$ can be measured by
+%the stability $F$?
+\begin{equation*}
+\label{thm:stability}
+F = \tau^{-1}(\log(\det(S)) - \log(\det(T))).
+\end{equation*}
+%if $\tau$ is the time-step of the corresponding (discretized) transition matrix $P(\tau)$.
+\end{lem}
+\begin{proof}
+We use the relation $\exp(\trace()) = \det(\exp())$, the fact that $Q_c$ ``generates'' $P_c(\tau)$, theorem \ref{thm:galerkin} and multiplicativity of determinants to see that \marginpar{see ..}
+\marginpar{why $\exp(\tau Q_c) = P_c(\tau)$?}
+\begin{align*}
+F & = - \trace(Q_c) \\
+  & = -  \tau^{-1}\log(\exp(\trace(\tau Q_c))) \\
+  & = -  \tau^{-1}\log(\det(\exp(\tau Q_c)))  \\
+  & = -  \tau^{-1} \log(\det(P_c(\tau))) \\
+  & = \tau^{-1}(\log(\det(S)) - \log(\det(T))).
+\end{align*}
+\end{proof}
+
+%Assume det S/T in [0,1]? I.e. diagonal elements more influence than other entries -> log only def. on pos.
+Thus, both determinants of the stochastic matrices $S$ and $T$  influence the stability of the system, but in converse directions.
+%We remark that both determinants lie in $[-1,1]$ since both matrices $S$ and $T$ are stochastic matrices.
+
+If $\det(T)$ is close to $1$, then $F$ is low and thus the process is stable/slow.
+\marginpar{assuming $\det$ between $0$ and $1$?}
+%($F = \log\det(S) + 0$ is low).
+%That makes sense since we wanted the process to be clustered into metastable sets, so $T$ having large %eigenvalues on its diagonal, which results in a high determinant.
+If $\det(T)$ is close to $0$, then the process is unstable/fast, since $F$ is high.
+%$F = \log\det(S) + \infty$ is high).
+%Remember that $T$ was interpreted to be the stochastic matrix describing the propagation(?) of the %process, while $S$ was the matrix ``disturbing'' that.
+That makes sense because a high determinant of $T$ can be interpreted as ``good'' metastability and thus corresponds to a slower/stable process, while a low determinant of $T$ (``bad'' metastability) makes the process faster/unstable.
+%Thus, it makes sense that a high determinant of $T$ (``good'' metastability) corresponds to a slower/stable
+%process, while a low determinant of $T$ (``bad'' metastability) makes the process faster/unstable.
+%metastability measured by trace? not det?
+
+On the other hand, if $\det(S)$ is close to $1$ (almost unit matrix), then $F$
+%$F = 0 + \log\det T$
+is high, i.e. the process is unstable/fast.
+If $\det(S)$ is close to $0$ (much overlap), then $F$ is low, i.e. the process is stable/slow.
+%$F = - \infty + \log\det T$
+That means that a higher overlap in $S$ leads to a slower process!
+This relation is not as obvious at first sight.
+
+As we figured out in section \ref{sec:projection}, the rebinding effect can be measured by the matrix $S$. If that matrix is close to the identity matrix, i.e. having a determinant close to $1$, yields a low rebinding. Large deviation from the identity matrix, i.e. having higher outer diagonal elements, i.e. having a smaller determinant, results in high rebinding.
+
+%We can deduce now, that a system with strong rebinding, i.e. $S$ deviating from the unity matrix/ having %small determinant (much overlap), is more stable.
+
+Combining these two properties of $S$, we can deduce that a high rebinding effect corresponds to a high stability of the system. This can be achieved by high outer diagonal elements/deviation from identity, i.e. by a high overlap of the membership functions(?).
+%At first sight, this is an astonishing result as...
+%We can deduce that..
+%A system with strong rebinding is more stable!
+
+%As we wanted $P_c(\tau)$ to be clustered by metastable sets, we can assume its eigenvalues to be not too %far away from $1$, let's say at least positive, which should be the case as well for $S$ and $T$.
+%\marginpar{what about dominant cycles (NESS)? then $\det = -1$ could be interesting?}
+%We also assume T to be more "dominant" in the sense that T should determine the actual behaviour of the
+%process. Whereas S is only an "asjusting" factor which adds some "disturbance".
+%Thus det T > det S??
+
+%In a nutshell/in summary, there are two factors(?) which lead to an increased/high stability of a system.
+%First, a process is stable if it is clustered into metastable sets, which results in a clustered matrix with large %eigenvalues on its diagonal and small outer diagonal elements; thus a large determinant of $T$.
+%Secondly, a large overlap of the membership functions(?)/high rebinding effect, corresponding to high outer %diagonal elements of $S$, result in a stable process; thus a small determinant of $S$.
+
+%Conclusion: A process is stable if it is clustered into metastable sets, which results in a clustered matrix with %large eigenvalues on its diagonal (high determinant of $T$). Another factor which makes the process stable %is a large overlap of the membership functions(?), contained in the matrix $S$, having a low determinant %(much overlap).
+
+\subsubsection*{Finding a lower bound for the rebinding effect}
+
+What is the meaning of the previous results/relation of $S$ to stability of the system?
+%If we have a determinant $\det(S) = 1$, we have no rebinding.
+On the one hand, the rebinding effect increases bindings(?). \marginpar{bad}
+On the other hand, it increases the stability of a system. Thus, we we are interested in a high/increased rebinding effect.
+%it would be nice to get a small determinant of $S$.
+We are going to compute a lower bound for it, in order to know
+how much rebinding there will be \textit{at least}.
+%guaranteed
+%The smaller this determinant, the higher the rebinding effect. As we are interested in a high/increased %rebinding effect, it would be nice to get a small determinant of $S$.
+
+In order to do so, let us first of all remember how $S$ is determined. We were given a transfer operator $\Pcal$ which was projected onto a finite-dimensional state space via membership functions $\chi_i$. These membership functions have been computed as a linear combination of the eigenfunctions with a regular matrix $A$. Thus, the choice of the matrix $A$ determines $S$ respectively the size of its determinant.
+
+So far, $A$ was assumed to be computed via PCCA+, i.e. such that the result is an optimal metastable decomposition/clustering.
+Now, we want to take into consideration the set of all possible, \textit{feasible}, matrices $A$, to see if different choices result in a better/higher or worse/less rebinding.
+%We want to know if there are possible choices of $A$ resulting in a ``better'', i.e. higher, rebinding effect.
+
+%Task:
+%Thus, we want to formulate an optimization problem to find out which choice of $A$ results in the ``best'', %i.e. highest, rebinding effect, measured by an \textit{optimal matrix} $\Sopt$.
+Thus, we are going to formulate an optimization problem to find out which choice of $A$ results in the lowest
+\marginpar{``worst''}
+rebinding effect, measured by an \textit{optimal matrix} $\Sopt$, in order to know how much rebinding we are \textit{guaranteed} \textbf{at least} for a given process.
+This problem is equivalent to finding the largest possible determinant of $S$.
+
+\subsubsection*{Optimization Problem (Maximizing determinant of $S$)}
+
+Since $Q_c$ has the same eigenvalues as $\Qcal$, the eigenvalue problem of $Q_c$ is given by
+\begin{equation*}
+Q_c X = X \Xi,
+\end{equation*}
+where the first column of $X$ corresponds to the first eigenvector $X_1 := (1,\dots, 1)^T$.
+By \eqref{eq:galerkin_infinitesimal}, we see that $A^{-1}$ is an eigenvector matrix of $Q_c$ as well.
+Therefore, the columns of the matrix $A^{-1}$ consists of multiples of the eigenvectors $X_i$. So we have
+\begin{equation*}
+A^{-1} =
+\begin{pmatrix}
+1 	  & & & \\
+\vdots & \alpha_2 X_2 & \cdots & \alpha_3 X_3 \\
+1	  & & &
+\end{pmatrix}
+\end{equation*}
+with $\alpha_2,\dots,\alpha_n \in \R$. We know from theorem \ref{thm:stability} that a $\det(S)$ close to $1$ results in a low rebinding effect. Thus, in order to find a lower bound for the rebinding effect, we try to maximize $\det(S)$, or equivalently minimize $|\det(S)-1|$, since $S$ is a stochastic matrix having $1$ as largest possible determinant.
+The \textit{objective function} of our optimization problem is then given by
+\begin{equation}
+\label{eq:optimization}
+\mbox{
+\boxed{ \min_{\alpha_1, \dots, \alpha_n \in \R} |\det(S) -1|},
+}
+\end{equation}
+where we have to include several \textit{side constraints}. As the inverse matrix $A^{-1}$ consists of linear combinations of eigenvectors $X_i$, we have to consider
+\begin{equation*}
+\mbox{
+\boxed{ \alpha_1 = 1 \ \ \ \mathrm{and} \ \ \ A_{ij}^{-1} = \alpha_i X_{ij} \ \ \forall i,j}.
+}
+\end{equation*}
+Furthermore, $S$ is a stochastic matrix, see theorem \ref{thm:galerkin}, and its structure is given in terms of the linear transformation matrix $A$, so we have two further constraints
+\marginpar{row-sum $1$ included in formula?}
+\begin{equation*}
+\mbox{
+\boxed{S = D^{-1} A^TA \ \ \ \mathrm{and} \ \ \ S_{ij} \geq 0 \ \ \forall i,j}.
+}
+\end{equation*}
+A \textit{feasible solution} of this optimization problem is a matrix $S$ fullfilling all side contraints, but not necessarily being an optimum.
+% For instance, that could be a solution computed via PCCA+.?? fullfills really all constraints???
+
+\subsubsection*{Interpretation}
+\marginpar{explain overlap}
+In the last section, we mentioned how the matrix $S$ describes the \textit{overlap} of the membership functions. \marginpar{???}
+For this reason, any feasible solution of the optimization problem \eqref{eq:optimization} will be called a \textit{real overlap matrix} $\Sreal$, while an actual optimum will be called an \textit{optimal overlap matrix} $\Sopt$. Clearly, we get $\det(\Sreal) \leq \det(\Sopt) \leq 1$.
+
+The real ocurring rebinding effect is high if the determinant of $\Sreal$ is low. Thus, a small determinant of $\Sopt$ increases the rebinding effect, while a large determinant of $\Sopt$ gives us only few information about the quantity(?) of the rebinding effect, it could be large or small.
+
+Unfortunately, for a reversible $Q_c$, the solution of optimization problem \eqref{eq:optimization} gives us no information, as the following theorem shows.
+\begin{thm}[Weber and Fackeldey{\cite[Theorem 1]{weber2014}}]
+Let $Q_c \in \R^{n \times n}$ be a reversible matrix that stems from a clustering with positive definite overlap matrix $S$. Then there exists a matrix $A \in \R^{n \times n}$ in optimization problem \eqref{eq:optimization} such that $\det(\Sopt) = 1$.
+%\det(D^{-1}A^TA)=1$.
+\end{thm}
+\begin{proof}
+It is enough to show that for a given reversible $Q_c$, we can find a matrix $A$ fulfilling all constraints such that $S=D\inv A^TA$ is equal to the identity matrix $I$.
+\\
+
+Assume that there is a regular matrix $B$, such that $Q_c = B\inv \Xi B$.
+
+Since $Q_c$ is reversible, we have $DQ_c = Q_c^T D$, see section \ref{sec:galerkin}, and thus
+\begin{equation*}
+DB\inv\Xi B = B^T\Xi^T B^{-T}D.
+\end{equation*}
+Now let $C:= B^{-T}D$, then we get
+\begin{equation*}
+Q_c = \dots = C\inv \Xi C.
+\end{equation*}
+$\dots$
+
+Have a real positive matrix $M = \diag (m_1,\dots,m_n)$ \marginpar{???} and therefore a real positive diagonal matrix $\widetilde{M} = \diag (\sqrt{m_1}, \dots, \sqrt{m_n})$.
+
+$\dots$
+
+Let $A:= \widetilde{M}\inv B$. Show: $A$ fulfills the constraints of \eqref{eq:optimization}, in order that $S$ is a feasible matrix. Then
+\begin{align*}
+S = D\inv A^TA  & = D\inv B^T \widetilde{M}\inv \widetilde{M}\inv B \\
+			 & = D\inv B^T M\inv B \\
+		 	& = C\inv M\inv B         \\
+			& = B\inv MM\inv B = I.
+\end{align*}
+Since all contraints of \eqref{eq:optimization} are fulfilled, $S$ is a feasible matrix with $\det(S) =1$.
+%Determinants of stochastic matrices are inside $[-1,1]$. Hence maximality of
+\end{proof}
+
+This theorem does \textbf{not} mean that a reversible process has no rebinding effect. It just means that for \textbf{every} reversible process, it is possible to find a clustering with no rebinding.
+
+For instance, if we computed a clustering of a reversible process via PCCA+, then it could be the case that we have a low determinant of $S$, i.e. a high rebinding. But the optimization problem \eqref{eq:optimization} gave us the lower bound of no rebinding, so it gave us no information about the rebinding of a particular/concrete clustering.
+%it was just a superfluous/useless bound. \marginpar{no information}
+
+\subsubsection*{Linear Optimization Problem (Maximizing trace of $S$)}
+Now we present a different formulation of the above optimization problem \eqref{eq:optimization}. We will slightly change the objective function and turn the problem into a \textit{linear optimization problem}.
+As a special case of the class of convex optimization problems, they have the nice property that any local optimum is also a global optimum. \marginpar{and easier to solve?}
+
+We want to \textit{minimize} the rebinding effect, i.e. we want to give a bound for how large the rebinding effect is \textit{at least} (lower bound for rebinding effect). The closer the matrix $S$ is to the identity matrix, the smaller is the rebinding effect.
+A matrix is close to the identity matrix, if its determinant is close to $1$ or (equivalently) if its trace is close to $n$.
+So in order to compute the minimal rebinding effect, we can either maximize the determinant (get it as close as possible to $1$) or maximize the trace of $S$ (get it as close as possible to $n$), as the following theorem shows.
+\begin{thm}
+In optimization problem \eqref{eq:optimization}, we have $\det(S) \leq 1$ and $\trace(S) \leq n$ with equality if and only if $S$ is the identity/unit matrix.
+\end{thm}
+\begin{proof}
+\end{proof}
+
+So instead of maximizing $\det(S)$, we can also maximize $\trace(S)$. In order to do so, let us first make some further observations about the eigenvectors of $Q_c$.
+We already found out that $A^{-1}$ is a right eigenvector matrix of $Q_c$, with vectors being linear combinations of the eigenvectors $X_i$.
+Similarly, the matrix $A$ is a \textit{left} eigenvector matrix of $Q_c$, with row vectors being linear combinations of the eigenvectors $Y_i$. That fact can be expressed as
+\begin{equation*}
+A= \tilde{U}Y^T =
+\begin{pmatrix}
+ & & \tilde{\alpha_1}Y_1   & &  \\
+ & & \vdots                       & &   \\
+ & & \tilde{\alpha_n}Y_n   & &
+\end{pmatrix},
+\end{equation*}
+where each $Y_i$ is a left eigenvector of $Q_c$ (row vector) and the $\tilde{\alpha}_i \in \R$ are again some optimization parameters.
+The first eigenvector $Y_i$ corresponds to the leading eigenvalue $\xi_1 = 0$ and is thus the stationary density of the process. The first row of $A$ consists of the statistical weights of the clusters \marginpar{?}
+and therefore we have again $\tilde{\alpha}_i = 1$.
+With these notations we can write the new objective function as
+\begin{align*}
+\trace(S) & = \trace(D^{-1} A^T A) \\
+              & = \trace(D^{-1}Y \tilde{U}^2 Y^T) \\
+              & = \sum_{i=1}^n \sum_{k=1}^n \tilde{\alpha}_k^2 \frac{y_{ik}^2}{y_{k1}}.
+\end{align*}
+The side constraints remain the same, i.e. $S_{ij} = \dots \geq 0$. \marginpar{why $i \neq j$?}
+Let $\beta = (\beta_1,\dots, \beta_n)$ with $\beta_i = \tilde{\alpha}_i^2$.
+Then the linear optimization problem of maximizing $\trace(S)$ is given by
+
+\begin{equation}
+\label{eq:optimization_linear}
+\mbox{
+	\boxed{ \max_{\beta} \sum_{k=1}^n \beta_k \left( \sum_{i=1}^n 			\frac{y_{ik}^2}{y_{k1}} \right)},
+}
+\end{equation}
+fullfilling the side contraints
+\begin{equation*}
+\mbox{
+	\boxed{ \beta_i \geq 0, \ \beta_1 = 1}
+}
+\end{equation*}
+and
+\begin{equation*}
+\mbox{
+	\boxed{ \sum_{k=1}^n \beta_k y_{ik} y_{jk} \geq 0}.
+}
+\end{equation*}
+
+At first sight, this second formulation of the optimization problem might seem a bit more complex/confusing since we introduced several new matrices and variables.
+But in fact, the only change is that we maximize now the trace instead of the determinant (trace is easier to compute as it is just a sum).
+This formulation is better since, we have a \textit{linear} program, which makes it easier to solve. And we have fewer contraints than before, because we merged some of the contraints into the objective function.
+
+Let $B = \mathrm{diag}(\beta_1,\dots, \beta_n)$. Then a solution $\beta$ of \eqref{eq:optimization_linear} gives an optimal matrix $\Sopt = D^{-1} YBY^T$ resulting in the smallest possible rebinding effect.
+
+%We know that the magnitude of the determinant of a stochastic matrix must be between 0 and 1 inclusive. %It's equal to 1 if and only if the matrix is a permutation matrix, with the determinant itself being equal to 1 %for an even permutation, and -1 for an odd permutation.
+
+%So the closer the determinant of a stochastic matrix is to 1, the slower the transitions reach the steady state. %The closer the determinant is to 0, the faster the transitions reach steady state. 
+
+\subsubsection*{Conclusion}
+
+A nontrivial rebinding effect can be estimated only if the kinetics $Q_c$ of a system is nonreversible. \marginpar{why?}

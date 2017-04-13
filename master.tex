@@ -8,6 +8,7 @@
  % BCOR=5mm,
   openright
   ] {scrreprt}
+% ]{MastersDoctoralThesis}
 %BCOR=9mm
 
 \usepackage[english]{babel}
@@ -33,22 +34,52 @@
 }
 
 %auskommentieren!!?
-\setlength{\oddsidemargin}{14pt}
+\setlength{\oddsidemargin}{9pt}
 \setlength{\textwidth}{420pt}
 
 \makenomenclature
 
+
+% Titel and author 
+\title{\includegraphics[width=0.6\textwidth]{pictures/logo}\\
+{\normalsize Masterarbeit am Institut f\"ur Mathematik der Freien Universit\"at Berlin}\\[4ex]
+%, Arbeitsgruppe Software Engineering}\\[4ex]
+Computing the minimal rebinding effect for nonreversible processes}
+
+\author{Susanne R\"ohl\\
+{\normalsize Matrikelnummer: 4364172}\\
+{\normalsize \mailto{susanne.roehl@fu-berlin.de}}\\\\
+{\normalsize Betreuer: Marcus Weber}}
+
+\date{Berlin, 09.04.2017}
+
+
 \begin{document}
-\subject{Master thesis}
-\title{Computing the minimal rebinding effect for nonreversible processes}
-\subtitle{Zur Erlangung des akademischen Grades\\
-  Master of Science}
-\author{ \small Susanne R\"ohl}
-\date{Berlin, den 21. Februar 2017}
+
+\begin{titlepage}
+
+\pagenumbering{alph}
 \maketitle
+\thispagestyle{empty}
+
+%\vfill{}
+
+%\begin{abstract}
+%Abstract
+%\end{abstract}
+
+%\vfill{}
+
+\end{titlepage}
+
+\thispagestyle{empty}
+\clearpage\pagenumbering{roman}
 
 % \newpage
 \tableofcontents
+\clearpage\pagenumbering{arabic}
+%\pagestyle{fancy}
+%\setcounter{page}{1}
 % \newpage
 %\listoffigures
 % \listoftables
@@ -70,34 +101,28 @@
 % \chapter{Introduction}  
 %  \input{./parts/Introduction}
 
-\chapter{Markov State Models}
+\chapter{Markov State Models}\label{chap:markov}
   \input{./parts/Markov/markov}
   \input{./parts/Markov/transfer}
   \input{./parts/Markov/galerkin}
   \input{./parts/Markov/recrossing}
 
-\chapter{Metastability and Dominant Structures}
+%\chapter{Metastability and Dominant Structures}
+\chapter{Dominant Structures in Markov Processes}\label{chap:meta}
+% in Markov Processes
   \input{./parts/Metastability/metastable}
   \input{./parts/Metastability/spectral}
   \input{./parts/Metastability/membership}
   \input{./parts/Metastability/nonreversible}
 
-\chapter{Rebinding Effect in a Given Kinetics}
+\chapter{Rebinding Effect in a Given Kinetics}\label{chap:rebinding}
   \input{./parts/rebinding}
+  \input{./parts/Rebinding/projection}
+  \input{./parts/Rebinding/minimizing}
+  \input{./parts/Rebinding/rebinding_nonreversible}
 
-\chapter{Illustrative Examples}
+\chapter{Illustrative Examples}\label{chap:example}
   \input{./parts/artificial}
-
-% \chapter{Numerical aspects}\label{chap:bc}
-%  \input{./parts/numerics}
-%  \input{./parts/bc}
-
-% \chapter{Dynamics of a nonlinear chain of oscillators}\label{chap:nlc}
-%  \input{./parts/Validation}
-%  \input{./parts/energy}
-
-% \chapter{Transition to chaos}
-%  \input{./parts/nlc}
 
 % \chapter{Summary and concluding remarks}
 %  \input{./parts/outlook}
@@ -106,6 +131,7 @@
 \clearpage
 \newpage
 \pagenumbering{roman}
+\setcounter{page}{2}
 %\input{./parts/eidesstattliche_erklaerung}
 %\newpage
 %\bibliographystyle{abbrv}
@@ -114,6 +140,7 @@
 \bibliographystyle{siamplain}
 \bibliography{bib/main.bib}
 \addcontentsline{toc}{chapter}{Bibliography}
+%\addcontentsline{totoc}{chapter}{Bibliography}
 
 % \newpage
 % \chapter{Source Code}
