@@ -1,0 +1,33 @@
+
+\subparagraph*{Summary}
+We have seen how we can get from a continuous stochastic process to a finite process defined on its metastable sets.
+%role/differences
+The relevance of metastability and the differences between reversible and nonreversible processes have been highlighted, in order to solve an optimization problem for both kind of processes in a given molecular system.
+
+The rebinding effect included in a receptor-ligand system stems from the projection onto a finite state space.
+%importance/meaning/relevance
+Its relevance is justified by its influence to the stability of this system. That means that a high rebinding effect increases the binding affinity of a process, which is relevant for applications like (computational) drug design where it is important to predict the exact binding affinity of ligands.
+
+\subparagraph*{Role of overlap matrix}
+We want to highlight the role of the matrix $S$, from theorem \ref{thm:galerkin}, which is used to measure the rebinding effect.
+In chapter \ref{chap:markov}, it has been introduced mathematically as a part of the matrix representation of a clustered Markov process. It basically consists of the scalar products of the different membership functions representing the macro states. %statistical weights. representing/corresponding to
+In chapter \ref{chap:meta}, we have seen its relation to the overlap of the membership functions, that is $S$ can be interpreted as an ``overlap matrix'', containing information about the degree of fuzzyness of the clustering.
+In chapter \ref{chap:rebinding}, we stated a lower bound for the rebinding effect in terms of the matrix $S$.
+We have seen that a high rebinding effect, and thus strongly overlapping membership functions (information encoded in $S$), result in a more stable system. Thus, $S$ influences the metastability of a given system.
+\noindent\fbox{%
+	\parbox{\textwidth}{%
+		Rebinding Effect $\leftrightarrow$ Overlap of Membership Functions (=Degree of fuzzyness) $\leftrightarrow$ Stability of System $\leftrightarrow$ Degree of Nonreversibility?
+	}%
+}
+%(=Degree of Fuzzyness)
+%=higher binding affinity
+
+\subparagraph*{Role of Nonreversibility}
+
+%rebinding effect vanishes
+In a reversible system, the minimal rebinding effect is always given by $\det(S_{\textrm{opt}}) = 1$, meaning that there is no rebinding. Such a clustering in metastable sets is hard and not fuzzy and therefore not recommended. As described in chapter \ref{chap:meta}, some overlap in the clustering is good.
+
+In a nonreversible system however, the minimal rebinding effect is higher, meaning that the clustering includes some overlap.
+The higher the nonreversibility of a system, the higher the minimal rebinding effect and thus, the higher the overlap of the membership functions.
+
+%\subparagraph*{Role of Multivalence}

@@ -1,15 +1,143 @@
-\section{Approach for nonreversible processes}
+\section{Approach for non-reversible Processes}
 \label{sec:rebinding_nonreversible}
 
-With the tools from section \ref{sec:nonreversible} (Schur Decomposition and G-PCCA+) we give an approach how this problem can be solved
-for nonreversible processes (NESS processes) using Schur Decomposition to get rid of the possibly nonreal eigenvalues, see Djurdevac et al\cite{djur2016}(2016).
-
-\subsubsection*{Transfer Operator}
-Have the transfer operator $\Pcal$ from \eqref{eq:transferoperator} given, but from theorem \ref{thm:selfadjoint_reversible} we know that the transfer operator of a nonreversible process is not self-adjoint.
+Employing the ideas presented in section \ref{sec:nonreversible}, we extend the problem of computing the minimal rebinding effect of a system to non-reversible processes. %tools/ideas. can be tackled
+%(NESS processes). Djurdevac et al\cite{djur2016}(2016).
 
 \subsubsection*{Schur Decomposition}
-Applying a Schur Decomposition, we can create real eigenvalues from the possibly nonreal eigenvalues of the transfer operator.
-\marginpar{detecting dominant cycles of the process?}
+The transfer operator $\Pcal$ from \eqref{eq:transferoperator} describing a \textbf{non-reversible} process is \textbf{not} self-adjoint and hence, real eigenvalues are not guaranteed. %\ref{thm:selfadjoint_reversible}
+In that case, problems as depicted in section \ref{sec:nonreversible} like complex eigenvectors can occur and consequently, we have to employ the Schur decomposition instead of the eigendecomposition in order to obtain a set of \textbf{real} vectors $X$ spanning an invariant subspace. % and being orthogonal. %compute/employ
+%fuzzy clustering in terms of eigenvectors is in general not feasible/realizable/accomplishable
+%In order to obtain a set of orthogonal vectors $X$ spanning an invariant subspace. fulfilling \eqref{eq:invariant} and \eqref{eq:orthogonal}
+However, we cannot compute a real Schur decomposition for a continuous operator.
+Therefore, we need to discretize the transfer operator $\Pcal$ to a matrix $P \in \R^{N \times N}$ at first. \marginpar{how?}
+Then we can determine a subset $X \in \R^{N \times n}$ of real Schur vectors in order to compute the membership vectors as a linear combination $\chi = XA$ with a transformation matrix $A$, for instance obtained by Gen-PCCA. %orthogonal
+
+As shown in section \ref{sec:nonreversible}, a reasonable result is achieved by employing Schur vectors that are orthogonal with respect to \textbf{any} initial distribution $\eta$.
+%employing Schur vectors that are orthogonal with respect to \textbf{any} initial distribution $\eta$ yield a reasonable clustering.
+However, we choose orthogonality with respect to the stationary distribution $\mu$. \marginpar{NESS?}
 
 \subsubsection*{Galerkin Projection}
-Now that we have real eigenvalues, we can apply the Galerkin Projection as usual. \marginpar{G-PCCA+?}
+
+%Having the membership vectors $\chi = XA$, for instance obtained by Gen-PCCA+ or using any other feasible transformation matrix $A$, we can compute 
+The clustered transition matrix is given by
+%respectively its matrix decomposition $S\inv T$.
+\begin{equation*}
+P_c = S\inv T =  \langle \chi, \chi \rangle_\mu\inv \langle \chi, P \chi \rangle_\mu.
+\end{equation*}
+As demonstrated in the proof of theorem \ref{thm:iteration_error}, it can as well be represented by
+%the projected process can be computed by
+\begin{equation*}
+P_c = A\inv \Lambda_s A,
+\end{equation*}
+where $\Lambda_s$ is the Schur matrix with the dominant eigenvalues and blocks. %sorted. consisting of
+The corresponding transition rate matrix $Q_c$ can be computed by $Q_c = \frac{1}{\tau} \log(P_c)$ or equivalently by
+\begin{equation}
+\label{eq:schur}
+Q_c = A\inv \Xi_s A,
+\end{equation}
+where $\Xi_s = \frac{1}{\tau} \log(\Lambda_s)$ is the Schur decomposition of the $Q_c$. %Schur block matrix
+
+\subsubsection*{Rebinding Effect}
+
+Again, we are interested in the rebinding effect included in a clustered system $Q_c$. %given by a transition rate matrix
+If we know the utilized membership functions $\chi$ or the transformation matrix $A$, then we can measure the \textbf{real} rebinding effect which is encoded in the overlap matrix $S = D\inv A^T A$.
+\\
+
+%minimal rebinding effect: smallest rebinding effect under all possible transformation matrices A
+However, if we want to estimate the \textbf{minimal} rebinding effect included in a system $Q_c$, then it is not sufficient to solve optimization problem \eqref{eq:optimization}. %since that was
+It was based on the clustering with eigenvectors, assuming an originally reversible system, while the actual clustering is based on Schur vectors. In \eqref{eq:schur}, the invariant subspace $\Xi_s$ is not necessarily diagonal, but may have a block-diagonal shape. %/structure.
+%. The current/actual clustering though 
+%In the non-reversible case, we did not compute the membership functions based on orthogonal eigenvectors, but on \textbf{orthogonal Schur vectors}.
+%Thus
+%\begin{equation*}
+%	Q_c = A\inv \Xi A
+%\end{equation*}
+%with Schur matrix $\Xi$ instead of Eigen-matrix.
+
+Consequently, the columns of the transformation matrix $A$ are not multiples of the eigenvectors of $Q_c$, but of Schur vectors.
+Thus, optimization problem \eqref{eq:optimization} has to be modified such that it is formulated in terms of Schur vectors: %modified/adapted
+\begin{equation}
+	\label{eq:schur_decomposition}
+	Q_c X = X \Xi_s.
+\end{equation}
+Apart from that, %everything remains as in section \ref{sec:minimizing}; the side constraints are the same except for the replacement of eigenvectors by Schur vectors.
+%In principle,
+the optimization problem coincides with \eqref{eq:optimization}; we aim at minimizing the rebinding effect by maximizing $\det(S)$. The side constraints guarantee the necessary structure of $A$, leading to a stochastic matrix $S$. Though the columns of $A$ correspond to multiple of Schur vectors $X$ from \eqref{eq:schur_decomposition} now:
+
+\begin{equation}
+%\label{eq:optimization}
+\mbox{
+	\boxed{ \min_{\alpha_1, \dots, \alpha_n \in \R} |\det(S) -1|},
+}
+\end{equation}
+%where we have to include several \textit{side constraints}. As the inverse matrix $A^{-1}$ consists of linear combinations of eigenvectors $X_i$, we have to consider
+\begin{equation*}
+	\mbox{
+		\boxed{ \alpha_1 = 1 \ \ \ \mathrm{and} \ \ \ A_{ij}^{-1} = \alpha_j X_{ij} \ \ \forall i,j}.
+	}
+\end{equation*}
+%Furthermore, $S$ is a stochastic matrix, see theorem \ref{thm:galerkin_stochastic}, and its structure is given in terms of the linear transformation matrix $A$, so we have two further constraints
+\begin{equation*}
+	\mbox{
+		\boxed{S = D^{-1} A^TA \ \ \ \mathrm{and} \ \ \ S_{ij} \geq 0 \ \ \forall i,j}.
+	}
+\end{equation*}
+
+\subsubsection*{Comparison}
+
+%There exist several different cases which have to be distinguished. % and should not be confused!
+%We have to distinguish between several cases.
+
+In section \ref{sec:minimizing}, we examined originally \textbf{reversible} processes $Q$, clustered onto a subspace $Q_c$. In that case, the clustered process could be either reversible or non-reversible (not to confuse with a full decomposition clustering where reversibility is inherited).
+The reversible (clustered) case is rather uninteresting as it yields the trivial solution as minimal rebinding effect. However, also non-reversible clustered matrices can be examined via the eigen-decomposition, since the eigenvalues are real and thus, no complex entries in the eigenvectors are possible.
+
+%(for instance GenPCCA)
+In contrast to that, an originally \textbf{non-reversible} process is clustered in terms of Schur vectors.
+%In contrast to that, if the original process was \textbf{non-reversible}, then the clustering happened/took place in terms of Schur vectors.
+Then, the initial point for the optimization problem is not given by the eigenvalue problem \eqref{eq:eigenvalue_problem}, but in terms of the Schur decomposition \eqref{eq:schur_decomposition},
+%\begin{equation*}
+%	Q_c X = X \Xi_s.
+%\end{equation*}
+%Here, we have to remark, that not only the $X$ are Schur vectors, but also $\Xi_s$ is not diagonal, but the Schur matrix,
+with $\Xi_s$ possibly having outer diagonal elements.
+%\newpage
+
+%The clustered matrix is given by $Q_c = A\inv \Xi_s A$, and thus, the columns of $A\inv$ are multiples of the Schur vectors.
+
+%But we don't have this useful relation $\exp(\xi_i) = \lambda_i$. What is the relation of $\Lambda_s$ and $\Xi_s$? (Block matrices)
+
+%\subsubsection*{Advantage of Schur vectors}
+
+The advantages of employing the Schur decomposition instead of the spectral decomposition have already been emphasized in section \ref{sec:nonreversible}. Also in this context, 
+it is advantageous, since it generalizes the optimization problem, including reversible as well as non-reversible original systems.
+%they yield some advantages, since they generalize the optimization problem, including reversible as well as non-reversible original processes.
+
+%enables/allows
+%The utilization of Schur vectors provides a generalization of the eigenvector-based approach. They include reversible as well as non-reversible processes.
+%Hence, it is not necessary to know if the original process was reversible or not.
+
+\subsubsection*{Motivation}
+
+In which cases would it be interesting to compute the minimal rebinding effect? We can use it as an estimation (though bad!) for the real rebinding effect.
+If we know the clustering, the real rebinding effect is calculated fast/easily.
+Thus: interesting for systems which are clustered (or can be interpreted as a projection), where we don't know the original process or the clustering $(\chi,A)$.
+\\
+
+However, in that case it is not adequate to solve the previous optimization problem \eqref{eq:optimization}. If the original process was non-reversible, then the clustering has to be interpreted as based on Schur vectors instead of eigenvectors. % Hence the ansatz $Q_c X = X \Xi$ is wrong. Using this optimization problem would yield the wrong solution, assuming an original reversible system!
+\\
+
+%Solution: Cluster with Schur vectors (GenPCCA), get a projected process $Q_c = A\inv \Xi_s A$, where $\Xi_s$ is the (sorted!) block Schur matrix.
+%\\
+
+%Compare it with $Q_c X = X \Xi_s$, where $X$ are the (sorted!) Schur vectors. \marginpar{possible? Schur vectors not unique}
+%Thus, as before, the columns of $A\inv$ can be interpreted as multiples of the Schur vectors. ...
+%\\
+
+Thus, we can compute the minimal rebinding effect for \textbf{any} system, independent of the reversibility/non-reversibility of the original process.
+\\
+
+Nevertheless, this estimation/bound may be good or not. But at least: applicable!
+
+%A comparison of this optimization problem
+The quality of this estimation will be evaluated in the next chapter by means of an exemplary reversible process, which is perturbed to non-reversibility.

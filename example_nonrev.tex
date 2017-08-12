@@ -1,0 +1,168 @@
+%\section{Outlook for nonreversible systems} %nonreversible Q
+\section{Rebinding in a non-reversible System}
+
+%examine different kinds of nonreversibility
+%In order to find out if the rebinding effect in the clustering of a \textbf{non-reversible} system behaves differently than in the reversible case,
+%we come back/further examine
+In order to compare the rebinding effect in the clustering of a \textbf{non-reversible} system to the reversible case, we further examine the example from section \ref{sec:example_reversible}. We modify it slightly by introducing small \textbf{perturbations} in the eigendecomposition of the reversible process, leading to non-reversibility, as proposed by Weber\cite{Weber2017}.
+%and thereby changing it to a Schur decomposition
+%In order to find out the role of nonreversibility to $S_\textrm{opt}$, we follow the approach of Weber\cite{Weber2017} to classify the non-reversibility of a process by the real Schur decomposition of the transition matrix. It can be written as $P = X_s \Lambda_s X_s^{-1}$, where the matrix $X_s$ consists of the Schur vectors and the matrix $\Lambda_s$ is an upper triangular matrix with possible $2 \times 2$-blocks on its diagonal.
+%For this aim, we examine the given Schur decomposition from Weber\cite{Weber2017}
+%, but compute the corresponding transition rate matrices, instead of transition matrices.
+The outcome shall be a Schur decomposition given by
+\begin{equation}
+\label{eq:schur_decomp}
+\Lambda_s =
+\begin{pmatrix}
+1 & 0 & 0 & 0 & 0 \\
+0 & 0.99 & \epsilon & 0 & 0 \\
+0 & -\gamma & 0.98+\delta & 0 & 0 \\
+0 & 0 & 0 & 0.005 & 0 \\
+0 & 0 & 0 & 0 & 0.001
+\end{pmatrix}.
+\end{equation}
+We compute the corresponding transition rate matrix by $P = X \Lambda_s X\inv$ with the Schur vectors $X$ being equal to the eigenvectors from \eqref{eq:transition_matrix}.
+If $\Lambda_s$ is a diagonal matrix, then this equation represents the eigenvalue problem of a reversible process $P$. By introducing non-zero values for $\epsilon, \gamma$ and $\delta$, the system gets non-reversible.
+
+Why is this example interesting? We examine different systems/matrices, having the same Schur vectors and rather similar Schur decompositions. However, these small changes in the Schur decomposition lead to different results when it comes to compute the rebinding effect.
+%Normally det(S_real) chould be the same for all these systems, since tranformation matrices (feasibility) depends only on the eigen/Schur vectors
+
+Accordingly to the example from section \ref{sec:example_reversible}, we compute the real rebinding effect, when projecting the process onto a three-dimensional subspace represented by the transition rate matrix $Q_c$ and compare it to the minimal rebinding effect included in that subspace.
+Starting from the projected process $Q_c$, we use the Schur vectors $X$ from $Q_c X = X \Xi_s$, where $\Xi_s$ is the Schur decomposition with \textbf{sorted} Schur values.
+%Schur matrix, consisting of the \textbf{sorted} Schur blocks.
+%to solve optimization problem \eqref{eq:optimization}.
+Since $\Xi_s$ has a $2 \times 2$ block on its diagonal, we cannot utilize optimization problem \eqref{eq:optimization} to compute the minimal rebinding effect.
+Instead, we employ the same approach based on Schur vectors as described in section \ref{sec:rebinding_nonreversible}.
+%estimate rebinding effect
+
+\subsubsection*{$P$ is reversible}
+
+$P$ is reversible if we set $\epsilon = \gamma = \delta = 0$ in the Schur decomposition \eqref{eq:schur_decomp}. In that case, the Schur vectors are also eigenvectors of $P$ and the system is equal to the one from section \ref{sec:example_reversible}. Therefore, we should obtain the same results when solving the optimization problem based on Schur vectors instead of eigenvectors.
+%employing Schur vectors instead of eigenvectors.
+In order to verify that, we compute again $200$ clusterings with random feasible transformation matrices. The result, depicted in appendix A.1 coincides with the result from section \ref{sec:example_reversible}.
+%represented/presented. coincides/conformes/resembles
+
+%From section \ref{sec:minimizing}, we know that the minimal rebinding effect is given by $\detSopt = 1$.
+
+%However the application of PCCA+ yields an overlap matrix
+%\begin{equation*}
+%	\Sreal = \begin{pmatrix}
+%		0.8677  &  0.0061  &  0.1262 \\
+%		0.0058  &  0.9101  &  0.0841 \\
+%		0.1144  &  0.0803  &  0.8053
+%	\end{pmatrix},
+%\end{equation*}
+%which results in the ``real'' rebinding effect $\detSreal = 0.6171$.   Wo kommt das her?? PCCA+ macht orthogonale Matrix ohne overlap, det(S) = 1 ???????
+%realized by application of PCCA+
+
+\subsubsection*{$P$ is nonreversible with real eigenvalues}
+
+If we set $\epsilon = 0.004$, the matrix $P$ becomes nonreversible, but still has real eigenvalues, since $\epsilon$ is on the upper triangle of $\Lambda_s$, while all eigenvalues are distinct (same algebraic and geometric dimension).
+
+\begin{equation*}
+	P = 
+	\begin{pmatrix}
+		0.9886  &  0.0011  	&  0.0011  	&  0.0046	& 0.0046 	\\
+		0.0001 	&  0.4973  	&  0.4949  	&  0.0052  	& 0.0025	\\
+		0.0001  &  0.4949	&  0.4973  	&  0.0025  	& 0.0052	\\
+		0.0086  &  0.0018 	&  0.0004	&  0.4964  	& 0.4928	\\
+		0.0086  &  0.0004	&  0.0018   &  0.4928  	& 0.4964
+	\end{pmatrix}.
+\end{equation*}
+
+\begin{figure}[ht!]
+	%	\label{fig:reb_example_nonrev}
+	\centering
+	\subfigure[The minimal rebinding effect compared to the degree of non-reversibility of the clustered system $Q_c$.]{\includegraphics[width=0.46\textwidth]{figures/rebinding/200_random_schur/epsilon0.004/reb_opt_nonrev_200_random.eps}}
+	\subfigure[The minimal and the real rebinding effect compared to the degree of non-reversibility of the clustered system $Q_c$.]{\includegraphics[width=0.46\textwidth]{figures/rebinding/200_random_schur/epsilon0.004/reb_nonrev_200_random.eps}}
+	%, increasing the probability of a fast \textbf{rebinding}.
+	\hspace{20pt}
+	\subfigure[The minimal rebinding effect $\det(\Sopt)$ compared to the real rebinding effect $\det(\Sreal)$ included in $Q_c$.]{\includegraphics[width=0.46\textwidth]{figures/rebinding/200_random_schur/epsilon0.004/reb_200_random.eps}}
+	\caption{The system described by the transition matrix $P$ is clustered with $200$ randomly generated feasible transformation matrices $A$ for the values $\epsilon = 0.004$, $\delta = 0$.} % in order to compare some important parameters
+\end{figure}
+
+Need: $3$ dominant Schur vectors $X$. Generate some feasible matrices $A$. Compute real rebinding  $\det(\Sreal) = \det(D\inv A^TA)$.
+
+Assumption: since Schur vectors $X$ are the same as for the reversible case (matrix $P$ constructed in terms of this set of real, orthogonal vectors), the set of feasible matrices remains the same and thus, the computed real rebinding effect should also remain the same.
+
+However, the \textbf{minimal} rebinding could change, since the optimization problem required the clustered Schur vectors as input. They are not necessarily the same as in the reversible case.
+Maybe this estimation gets better or worse than it was the case for the reversible process?
+
+Have given the process as $P_c = A\inv \Lambda_s A$, hence the columns of $A$ are multiples of the dominant Schur vectors.
+
+All other things to compute remain the same. $S = D\inv A^T A$ and minimized rebinding effect for $\det(S)$ maximized.
+
+In order to compute Schur Decomposition of the clustered process $Q_c$, we need to come back to the trick presented in section \ref{sec:nonreversible} to employ the symmetrized matrix $D^{1/2} P D^{-1/2}$. Thus we need at first to compute the stationary distribution of the clustered process.
+
+%obtain a symmetric
+
+\subsubsection*{$P$ is non-diagonalizable}
+
+The Schur decomposition has an upper diagonal element, while the eigenvalue $0.99$ occurs algebraically twice.
+\begin{figure}[h]
+	%	\label{fig:reb_example_nonrev}
+	\centering
+	\subfigure[The minimal rebinding effect compared to the degree of non-reversibility of the clustered system $Q_c$.]{\includegraphics[width=0.31\textwidth]{figures/rebinding/200_random_schur/epsilon0.004delta0.01/reb_opt_nonrev_200_random.eps}}
+	\hspace{1pt}
+	\subfigure[The minimal and the real rebinding effect compared to the degree of non-reversibility of the clustered system $Q_c$.]{\includegraphics[width=0.31\textwidth]{figures/rebinding/200_random_schur/epsilon0.004delta0.01/reb_nonrev_200_random.eps}}
+	%, increasing the probability of a fast \textbf{rebinding}.
+	\hspace{1pt}
+	\subfigure[The minimal rebinding effect $\det(\Sopt)$ compared to the real rebinding effect $\det(\Sreal)$ included in $Q_c$.]{\includegraphics[width=0.31\textwidth]{figures/rebinding/200_random_schur/epsilon0.004delta0.01/reb_200_random.eps}}
+	\caption{The system described by the transition matrix $P$ is clustered with $200$ randomly generated feasible transformation matrices $A$ for the values $\epsilon = 0.004$, $\delta = 0.01$.} % in order to compare some important parameters
+\end{figure}
+
+\subsubsection*{$P$ is non-reversible with complex eigenvalues}
+
+Complex eigenvalues always occur in pairs and are indicated by a complete $2 \times 2$-block in the Schur decomposition. For $\epsilon = 0.004$, $\delta = 0.01$ and $\gamma = 10^{-15}$, we get two complex eigenvalues $0.99+2.3 \cdot 10^{-9}i$ and $0.99-2.3 \cdot 10^{-9}i$.
+\begin{figure}[h]
+	%	\label{fig:reb_example_nonrev}
+	\centering
+	\subfigure[The minimal rebinding effect compared to the degree of non-reversibility of the clustered system $Q_c$.]{\includegraphics[width=0.31\textwidth]{figures/rebinding/200_random_schur/epsilon0.002gamma0.01/reb_opt_nonrev_200_random.eps}}
+	\hspace{1pt}
+	\subfigure[The minimal and the real rebinding effect compared to the degree of non-reversibility of the clustered system $Q_c$.]{\includegraphics[width=0.31\textwidth]{figures/rebinding/200_random_schur/epsilon0.002gamma0.01/reb_nonrev_200_random.eps}}
+	%, increasing the probability of a fast \textbf{rebinding}.
+	\hspace{1pt}
+	\subfigure[The minimal rebinding effect $\det(\Sopt)$ compared to the real rebinding effect $\det(\Sreal)$ included in $Q_c$.]{\includegraphics[width=0.31\textwidth]{figures/rebinding/200_random_schur/epsilon0.002gamma0.01/reb_200_random.eps}}
+	\caption{The system described by the transition matrix $P$ is clustered with $200$ randomly generated feasible transformation matrices $A$ for the values $\epsilon = 0.002$, $\gamma = 0.01$.} % in order to compare some important parameters
+\end{figure}
+
+%Overview of the different rebindings by Schur:
+%\clearpage
+%\input{./parts/Examples/schur}
+
+\subsubsection*{Conclusion}
+
+It makes sense that the solution of optimization problem bla using/based on Schur vectors is a \textbf{worse} estimation for the real rebinding effect than the solution based on eigenvectors.
+When computing the minimal rebinding effect in terms of Schur vectors, we do not specify if the original process has been reversible or non-reversible.
+Hence, this extended approach includes \textbf{more} possible solutions.
+\clearpage
+
+%If we examine a given clustered system $Q_c$, det(S_opt_eigen) \leq det(S_opt_schur)
+
+%\begin{figure}[!ht]
+%	\label{fig:reb_example_nonrev}
+%	\centering
+%	\subfigure[The minimal rebinding effect compared to the degree of non-reversibility of the clustered system $Q_c$.]{\includegraphics[width=0.46\textwidth]{figures/rebinding/200_random_nonrev/reb_opt_nonrev_200_random.eps}}
+%	\subfigure[The minimal and the real rebinding effect compared to the degree of non-reversibility of the clustered system $Q_c$.]{\includegraphics[width=0.46\textwidth]{figures/rebinding/200_random_nonrev/reb_nonrev_200_random.eps}}
+	%, increasing the probability of a fast \textbf{rebinding}.
+%	\hspace{20pt}
+%	\subfigure[The minimal rebinding effect $\det(\Sopt)$ compared to the real rebinding effect $\det(\Sreal)$ included in %$Q_c$.]{\includegraphics[width=0.46\textwidth]{figures/rebinding/200_random_nonrev/reb_200_random.eps}}
+%	\caption{The system described by the transition matrix $P$ is clustered with $200$ randomly generated feasible transformation matrices $A$ for the values $\epsilon = 0.4$, $\delta = 0.7$.} % in order to compare some important parameters
+%\end{figure}
+%\newpage
+
+%\subsubsection*{$Q$ has real eigenvalues}
+
+
+%In order to find out the role of nonreversibility to $S_\textrm{opt}$, we begin to examine a reversible transition rate matrix $Q_\epsilon$. It contains a parameter $\epsilon = 0$, guaranteeing its reversibility. In small time steps, we increase $\epsilon$ and thereby increase the nonreversibility of the process, measured by $\Vert DQ - Q^TD \Vert$, where $D = \textrm{diag}(\mu_1, \dots, \mu_n)$ is the diagonal matrix consisting of the entries of the stationary distribution, compare characterization \eqref{eq:detailed} of reversibility.
+%\marginpar{nop. need dense matrix}
+%\eqref{}.
+
+%\begin{equation*}
+%	(Q_\epsilon)_{\epsilon = 0, \dots, 100} = 
+%	\begin{pmatrix}
+%		bla & \epsilon & 0 \\
+%		0 & bla & 0 \\
+%		0 & 0 & bla
+%	\end{pmatrix}
+%\end{equation*}

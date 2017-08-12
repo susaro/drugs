@@ -1,18 +1,22 @@
 \section{Molecular Kinetics as a Projection}
 \label{sec:projection}
-\marginpar{Mol. Kinetics Weber p.10}
+%\marginpar{Mol. Kinetics Weber p.10}
 
-% deduce/develop/derive two different point of views 
-In this section, we will basically embed the mathematical concepts/results of chapter \ref{chap:markov} into a chemical/physical context in order to get a rigorous description of molecular (dynamic/kinetic?) systems. In considering such systems, we can distinguish between two point of views: we will see how we can get from the \textit{atomistic (=microsopic)} to a  \textit{macroscopic} scale/point of view by a projection.
+%In this section, 
+We will deduce a rigorous description of molecular systems, in particular receptor-ligand-systems, basically by embedding the mathematical concepts from chapter \ref{chap:markov} into an adequate physical context.
+% deduce/develop/derive
+When considering such systems, we can distinguish between two points of view: we will see how we can get from the \textit{microsopic} or \textit{atomistic} to a  \textit{macroscopic} scale by a projection.
+
+%\todo{which model? Hamiltonian ($\Gamma$)? Hamiltonian w/ randomized momentum ($\Omega$ w/ any momentum)? Langevin? Diffusion Dynamics?}
+%ensemble,subensemble,observable
 
 \subsubsection*{Micro States}
 %Boltzmann distribution = example for a canonical ensemble
-A micro state of a molecular system with $N$ atoms can be represented in a $6N$-dimensional \textit{phase space} $\Gamma = \Omega \times \Rdrei$, \marginpar{spatial/position space}
-consisting of the \textit{configurational space} $\Omega = \Rdrei$ and the \textit{momentum space} $\Rdrei$. In the following, we consider systems in \textit{thermodynamical equilibrium}.
+A micro state of a molecular system with $N$ atoms can be represented in a $6N$-dimensional \textit{phase space} $\Gamma = \Omega \times \Rdrei$, consisting of the \textit{configuration space} $\Omega = \Rdrei$ and the \textit{momentum space} $\Rdrei$. In the following, we consider systems in \textit{thermodynamical equilibrium}.
 %assume equilibrium
 %\R_{+}
 One possible model is given by the \textit{Boltzmann distribution} $\pi: \Omega \times \R^{3N} \rightarrow \R$, a
-\marginpar{prob. dens. fct.?}
+%\marginpar{prob. dens. fct.?}
 probability distribution assigning to each micro state a probability depending on its energy and temperature,
 see McQuarrie\cite{mcquarrie2000}. It can be expressed as
 % in the form
@@ -31,160 +35,130 @@ Thus, the Boltzmann distribution $\pi$ can be decomposed into $\pi = \pi_p \pi_q
 \pi(q,p) =  \underbrace{\frac{1}{Z_p} \exp{(-\beta K(p))}}_{\pi_p} \cdot
 \underbrace{\frac{1}{Z_q} \exp{(-\beta V(q))}}_{\pi_q},
 \end{equation*}
-where $\pi_p: \R^{3N}  \rightarrow \R$ is the probability density function of the kinetic part in the momentum space $\R^{3N}$ and $\pi_q: \Omega \rightarrow \R$ is the probability density function of the potential part in the configurational space $\Omega$.
-
-
-As we are interested in examining conformations/metastable sets, which are objects in configurational space, we will restrict ourselves to $\Omega$:
+where $\pi_p: \R^{3N}  \rightarrow \R$ is the probability density function of the kinetic part in the momentum space $\R^{3N}$ and $\pi_q: \Omega \rightarrow \R$ is the probability density function of the potential part in the configuration space $\Omega$.
+%conformations/metastable sets
+%being objects in configuration space
+As we are interested in examining conformations, that are objects in configuration space, we will restrict ourselves to $\Omega$, see Huisinga\cite{huisinga2001metastability}:
 %Huisinga p.12
 \begin{quote}
 ``A conformation $C \subset \Omega$ will be identified with the particular metastable sub-ensemble $\mu_{C \times \R^{3N}}$ corresponding to the particular subset $C \times \R^{3N} \subset \Gamma$. Hence, for every position $q \in C$, the conformation contains all states with $q \in \Omega$ and arbitrary $p \in \R^{3N}$.''
 \end{quote}
-In this sense, conformations/metastable sets contain no information on momenta and are determined in configurational space only. We are considering a reduced model in position space with a \textit{reduced density} $\pi_q = \int_{\R^{3N}} \pi(q,p) \diff p$. \marginpar{?}
+%conformations/metastable sets
+In this sense, conformations contain no information on momenta and are determined in configuration space only. We consider a reduced model with the \textit{reduced density} $\pi_q = \int_{\R^{3N}} \pi(q,p) \diff p$.
 
-\todo{difference conformation vs. metastable set}
-%Later, we will project our dynamics onto $\Omega$;
+%\todo{difference conformation vs. metastable set}
 
 \subsubsection*{Macro States via Membership Functions}
 
-As the phase space and even the configurational space are very large, we aim to reveal the underlying  discrete Markov State Model by  group/cluster a collection of the micro states having the same or similar values in one observable. Such a collection of micro states will be called a \textit{macro state}.
-For instance, that could be the states/observables ``bound'' or ``unbound'' for a receptor-ligand system.
-\marginpar{entropic inf.?}
+%As the phase space and even the configuration space; by grouping/clustering; average/ordinary
+As the configuration space of an average molecular system is very large, we aim to reveal the underlying  discrete Markov State Model by clustering a collection of the micro states having the same or similar values in one observable. Such a collection of micro states will be called a \textit{macro state}.
+For instance, that could be the states ``bound'' or ``unbound'' for a simple receptor-ligand system. %states/observables
+%\marginpar{entropic inf.?}
 %and entropic information?
 %Macro states need not be distinct sets.
 
-We apply the function-based clustering method presented in section \ref{sec:fuzzy}. \marginpar{overlap = good?}
-We define macro states as overlapping partial densities, which can be identified as membership functions $\cfam$.
+We apply the function-based fuzzy clustering method presented in section \ref{sec:fuzzy}.
+%\marginpar{overlap = good?}
+We define macro states as \textbf{overlapping} partial densities, which can be identified as membership functions $\cfam : \Omega \rightarrow [0,1]$.
 %using membership functions which can have certain overlap.
-The membership functions $\chi_1,\dots,\chi_n : \Omega \rightarrow [0,1]$ form a partition of unity, i.e.
-\begin{equation}
-\label{eq:statistical_weights}
-\sum_{i=1}^n \chi_i(q) = 1.
-\end{equation}
-%So: membership function "$=$" macro state? NOP
-By grouping micro states, the (corresponding) macro states yield \textit{statistical weights}
-%We can assign a statistical weight to each macro state (= membership fct. $\chi_i$):
-\marginpar{what is that good for?}
-\marginpar{$e$ vs. $\eins$}
+They form a partition of unity, that is
 \begin{equation*}
+\sum_{i=1}^n \chi_i(q) = 1.
+\end{equation*}
+%So: membership function "$=$" macro state? NOP
+By grouping micro states, the corresponding macro states yield statistical weights
+\begin{equation}
 %pi_q?
 %here: continuous process and thus \eins instead of e
-w_i = \langle \chi_i, \eins \rangle_\pi = \int_\Omega \chi_i(q) \pi_q(q) \diff q.
-\end{equation*}
-The statistical weight $w_i$ corresponds to the ``probability to be in conformation $\chi_i$''.
+\label{eq:statistical_weights}
+w_i = \langle \chi_i, \eins \rangle_\pi := \int_\Omega \chi_i(q) \pi_q(q) \diff q,
+\end{equation}
+%The statistical weight $w_i$ corresponds
+corresponding to the ``probability for the system to \textbf{be} in conformation $\chi_i$''. %Weber Habil p.2
 %(metastable) macro state $i$
 
 \subsubsection*{Transfer Operator}
 %Weber habil p.14
-Each micro state $(q,p) \in \Gamma$ determines a \textit{probability density function} $\Psi^{-\tau}(\cdot \mid (q,p))$ describing the possible evolutions of the system in configurational space $\Omega$ in time $\tau$, being started at the initial state $(q,p)$.
+Each micro state $(q,p) \in \Gamma$ determines a \textit{probability density function} $\Psi^{-\tau}(\cdot \mid (q,p))$ describing the possible evolutions of the system in configuration space $\Omega$ in time $\tau$, having started at the initial state $(q,p)$.
 %For instance, $\Psi^{-\tau}(\tilde{q} \mid (q,p))$ is the probability to get to $\tilde{q} \in \Omega$ starting %from $(q,p) \in \Gamma$.
 %For a given micro state $(q,p) \in \Gamma$, we define the probability density function $\Psi^{-\tau}%(\tilde{q} \mid (q,p))$ as the probability of the system to get to $\tilde{q} \in \Omega$ in time %(step) $\tau$, after being started in $(q,p)$.
-Weber\cite{weber2011subspace} defines a transfer operator $\Pcal (\tau): L^{1,2}_{\pi_q}(\Omega) \rightarrow L^{1,2}_{\pi_q}(\Omega)$ for the propagation of (membership) functions via \marginpar{why not densities?}
+Weber\cite{weber2011subspace} defines a transfer operator $\Pcal (\tau): L^{1,2}_{\pi_q}(\Omega) \rightarrow L^{1,2}_{\pi_q}(\Omega)$ acting on membership functions via %for the propagation of membership functions via
 \begin{equation}
 \label{eq:transferoperator}
 \Pcal(\tau)f(q) = \int_\Rdrei \left( \int_\Omega f(\tilde{q})\Psi^{-r}(\tilde{q}\mid (q,p)) \diff \tilde{q} \right) \pi_p(p)\diff p.
 \end{equation}
 In this definition, the density function $\Psi^{-\tau}(\cdot \mid (q,p))$ can be interpreted as a transition function as defined in section \ref{sec:markov}.
-We have to notice that this transfer operator corresponds to the \textit{backward operator} from section \ref{sec:transfer}. \marginpar{?}
-%We have to notice that this transfer operator doesn't correspond to the transfer operator from section %\ref{sec:transfer}, since that one was defined to be a \textit{forward} operator. However/in contrast, the %transfer operator \eqref{eq:transferoperator} is a \textit{backward} operator.
+We notice that this operator corresponds to a \textbf{backward} transfer operator as introduced in section \ref{sec:transfer}. %\marginpar{?}
 
-It is a \textit{generalized} transfer operator in the sense that it includes deterministic as well as stochastic dynamical models. In order to describe deterministic dynamics, the density function $\Psi^{-\tau}$ has to be chosen as a Dirac delta function, since an initial state $(q(0),p(0))$ determines exactly the future states in configurational space.
+It is a \textit{generalized} transfer operator in the sense that it includes deterministic as well as stochastic dynamical models. In order to describe deterministic dynamics, the density function $\Psi^{-\tau}$ has to be chosen as a Dirac delta function, since an initial state $(q(0),p(0))$ determines exactly the future states in configuration space.
 \\
 
 %Weber Habil p.28 Markov Operator!
 %\marginpar{adjoint operator}
 % (corresponding)
-It is important to remark that the transfer operator $\Pcal(\tau)$ also defines a
-\marginpar{propagator sec \ref{sec:transfer}}
-projected \textit{Markov operator} \marginpar{def} $\overline{\Pcal} (\tau)$ acting in configurational space $\Omega$, see Weber\cite{weber2011subspace}, by
+It is important to remark that the transfer operator $\Pcal(\tau)$ also defines a projected Markov operator $\overline{\Pcal} (\tau)$ acting in configuration space $\Omega$, see Weber\cite{weber2011subspace}, by
 \begin{equation}
 \label{eq:markov_operator}
 \overline{\Pcal} (\tau) = \pi_q \circ \Pcal(\tau) \circ (\pi_q)^{-1},
 \end{equation}
-which propagates density functions.
+which propagates density functions and thus corresponds to a \textbf{forward} transfer operator.
 The previous equation shows that the space of membership functions is connected to the space of density functions by multiplication with $\pi_q$.
 %Weber Habil.
-We will keep that relation in mind, but just use $\Pcal$ in the following.
+%but, though, yet
+We will keep that relation in mind, though just use $\Pcal$ in the following.
 %Pcal = propagates sets/membership fct; Pcalbar = propagates densities.
 \\
 
-As $\Pcal(\tau)$ in \eqref{eq:transferoperator} propagates \textbf{membership functions}, stationarity is characterized by the equation $e=\Pcal(\tau)e$ for the constant function $e = 1$ in $\Omega$. For the Markov operator $\overline{\Pcal} (\tau) $ in \eqref{eq:markov_operator} propagating \textbf{densities}, stationarity can be characterized by $\pi$ = $\overline{\Pcal} (\tau) \pi$, where $\pi$ is the Boltzmann density. \marginpar{Boltzmann dens. = dist.?}
-These two operators are \textit{adjoint} operators. This can also be seen by the fact that a discretization of $\Pcal(\tau)$ results in a matrix $P_c$, while a discretization of $\overline{\Pcal} (\tau)$ will result in the transposed matrix $P_c^T$.
+As $\Pcal(\tau)$ in \eqref{eq:transferoperator} propagates \textbf{membership functions}, stationarity is characterized by the equation $e=\Pcal(\tau)e$ for the constant function $e = 1$ in $\Omega$. For the Markov operator $\overline{\Pcal} (\tau) $ in \eqref{eq:markov_operator} propagating \textbf{densities}, stationarity can be characterized by $\pi$ = $\overline{\Pcal} (\tau) \pi$, where $\pi$ is the Boltzmann density. %\marginpar{Boltzmann dens. = dist.?}
+These two operators are adjoint operators. This can also be seen by the fact that a discretization of $\Pcal(\tau)$ results in a matrix $P_c$, while a discretization of $\overline{\Pcal} (\tau)$ will result in the transposed matrix $P_c^T$.
 
-\subsubsection*{Maybe: Properties of transfer operator for reversible Processes}
+%\subsubsection*{Maybe: Properties of transfer operator for reversible Processes}
 %\subsubsection*{Spectrum of Transfer Operator for reversible processes}
-Detailed Balance
-\begin{equation}
-\label{eq:detailed_balance}
-\pi_q (\tilde{q}) \cdot \int_{\R^{3N}} \Psi^{-r}(q \mid (\tilde{q},p)) \pi_p(p)\diff p 
-	= \pi_q(q) \cdot \int_{\R^{3N}} \Psi^{-r}(\tilde{q}\mid (q,p)) \pi_p(p)\diff p
-\end{equation}
+%Detailed Balance
+%\begin{equation}
+%\label{eq:detailed_balance}
+%\pi_q (\tilde{q}) \cdot \int_{\R^{3N}} \Psi^{-r}(q \mid (\tilde{q},p)) \pi_p(p)\diff p 
+%	= \pi_q(q) \cdot \int_{\R^{3N}} \Psi^{-r}(\tilde{q}\mid (q,p)) \pi_p(p)\diff p
+%\end{equation}
 
 \subsubsection*{Markov State Model for reversible Processes}
 
-%equation/condition
-For now, we consider a reversible process. Then due to the detailed balance condition \eqref{eq:detailed_balance}, the corresponding transfer operator $\Pcal$ is \textbf{self-adjoint} and thus has a real spectrum, see theorem \ref{thm:selfadjoint_real} (follows from linearity and self-adjointness) and $\sigma(\Pcal) \subset [-1,1]$ (since $\Vert \Pcal f \Vert_{\pi_q} \leq \Vert f \Vert_{\pi_q}$).
-\marginpar{self-adj. wrt $\pi_q$}
-%corresponding process
+For now, we consider a reversible process. In that case, the corresponding transfer operator $\Pcal := \Pcal(\tau)$ is \textbf{self-adjoint} with respect to $\pi_q$ and thus has a real spectrum with $\sigma(\Pcal) \subset [-1,1]$. %see theorem \ref{thm:spectrum_operator}.
+%(since $\Vert \Pcal f \Vert_{\pi_q} \leq \Vert f \Vert_{\pi_q}$).
+%The reason for that can be understood by theorem \ref{thm:selfadjoint_reversible}, but we additionally need to consider the projection onto the configuration space. A rigorous proof is found in Weber\cite[theorem 1]{weber2011subspace}.
 %If the process is non-reversible, then this operator is not self-adjoint and hence can possess complex %eigenvalues. We will handle this case in section \ref{sec:rebinding_nonreversible}.
-In order to apply the spectral approach from section \ref{sec:spectral}, we assume that the \textbf{discrete spectrum} of the transfer operator $\Pcal$ has $n$ \textbf{dominant eigenvalues}
-%Why? -> metastable sets
-$1 = \lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_n$ which are all close to $1$ and bounded away from the essential spectrum.
-%see section \ref{sec:spectral}. %(see Sch\"utte?).
-The corresponding dominant eigenfunctions are denoted by $\Xcal = \{ \Xcal_1,\dots, \Xcal_n\}$ and therefore the eigenvalue problem is $\Pcal (\tau) \Xcal = \Xcal \Lambda$, with the eigenvalue matrix $\Lambda = \mathrm{diag}(\lambda_1, \dots, \lambda_n)$.
-\\
+In order to apply the spectral approach from section \ref{sec:spectral}, we assume that the \textbf{discrete spectrum} of the transfer operator $\Pcal$ has $n$ \textbf{dominant eigenvalues} $1 = \lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_n$ which are all close to $1$ and bounded away from the essential spectrum.
+The corresponding dominant eigenfunctions are denoted by $\Xcal = \{ \Xcal_1,\dots, \Xcal_n\}$ and therefore the eigenvalue problem is given by $\Pcal \Xcal = \Xcal \Lambda$, with the eigenvalue matrix $\Lambda = \mathrm{diag}(\lambda_1, \dots, \lambda_n)$.
 
-As we have seen in chapter \ref{chap:meta}, the number of metastable sets of a process can be determined by the number of dominant eigenvalues; i.e. we are going to create a Markov State Model on $n$ states.
+As we know from chapter \ref{chap:meta}, the number of metastable sets of a Markov process is determined by the number of dominant eigenvalues; thus we are going to create a Markov State Model on $n$ states.
 %Since each of the $n$ dominant eigenvalues of the transfer operator corresponds to a metastable set (no? %because membership fct instead of set?)...
 %Using the dominant spectrum of the transfer operator, we want to create a discrete Markov State Model on %$n$ states.
-The state space of this model should consist of the macro states of our Molecular System and its transition behaviour should be described via a $n\times n$-transition matrix $P(\tau)$. \marginpar{?}
-%(i.e. row-stochastic matrix).
-%Each state space of this model shall be a macro state
-In order to get from our continuous operator $\Pcal(\tau)$ to a discrete matrix $P(\tau)$, we need at first to determine the size and shape of the membership functions  $\chi_i$.
-%We want to get from our continuous operator $\Pcal(\tau)$ to a discrete matrix $P(\tau)$, while preserving %the most important properties of the process. \marginpar{Markovianity?}
-%Of course by reducing the dimension we will lose some of the original informations but the discrete model
-%should be as good as possible
-%At first to determine the size and shape of the membership function $\chi_i$.
+%macro states/metastable sets/conformations
+The state space of this model should consist of the conformations of the molecular system in consideration and its transition behaviour should be described by a $n\times n$-transition matrix $P_c := P_c(\tau)$.
+%by/via; i.e. row-stochastic matrix???
+In order to obtain this discrete matrix  from the continuous operator $\Pcal$, we need at first to determine the size and shape of the membership functions  $\chi_i$.
 As described in section \ref{sec:fuzzy}, this can be done by computing a linear combination of the dominant eigenfunctions via
-%membership functions = always linear combination of eigenfunctions????
 \begin{equation}
 \label{eq:pcca_membership}
 \chi_j(q) = \sum_{i=1}^N A_{ij}\Xcal_i(q), \ j=1,\dots,n,
 \end{equation}
 where $A= \{A_{ij}\}_{i,j=1,\dots,n}$ is the solution of PCCA+ (convex maximization problem).
-\marginpar{PCCA+ only for finite/ discrete state spaces?}
-% state space = finite (6N states, but on continuous values)
-This choice of membership functions preserves Markovianity of the process when projecting. \marginpar{Ref?}
-%onto finite subspace consisting of states chi1,..chin (membership fct= state??)
-As a linear combination of eigenfunctions, the membership functions $\chi_i$ might have an overlap; they are not orthogonal!
+As a linear combination of (orthogonal) eigenfunctions, the membership functions $\chi_i$ might have an overlap; they are not orthogonal, but span the same subspace as the $\Xcal$.
+\\
 
-\subsubsection*{Galerkin Projection}
-Having computed the membership functions $\chi_i$, we can project $\Pcal(\tau)$ to a low-dimensional Markov State Model $P_c(\tau)$
-%reduce our continuous stochastic process to a finite process
-by the Galerkin discretization
-%finite, discrete process/ MSM. Galerkin projection/discretization
+%\subsubsection*{Galerkin Projection}
+%With these membership functions, 
+A Markov State Model is created by applying the Galerkin discretization
+%$\Pcal(\tau)$ is projected onto a finite Markov State Model $P_c(\tau)$ by applying the Galerkin discretization
 \begin{equation}
-\label{eq:galerkin}
+%\label{eq:galerkin}
 P_c(\tau) = G(\Pcal(\tau)) = (\langle \chi, \chi \rangle_\pi)\inv (\langle \chi, \Pcal(\tau) \chi \rangle_\pi).
 \end{equation}
-%compare theorem \ref{thm:galerkin}.
-%We can see that \eqref{eq:galerkin} fulfills Theorem \ref{thm:galerkin} in the case of set-based %conformations
-%$\chi_i$, because then we have $\chi_i^2 = 1$ and $\chi_i\chi_j = 0$ for $i \neq j$ (indicator functions).
-%as described in section \ref{sec:galerkin}.
-In order to know about the quality of this model, we are interested in the iteration error under this projection. As mentioned in section \ref{sec:recrossing}, this error is zero if the Galerkin discretization of $(\Pcal(\tau))^k$ is equal to the iteration $(P_c(\tau))^k$. In that case, the diagram \ref{fig:diagram_transfer} commutes.
-The following theorem shows that there is no discretization error under the projection \eqref{eq:galerkin}, i.e.  we have $(\Pcal(\tau))^k = (P(\tau))^k$, which implies that Markovianity is preserved. \marginpar{?}
-
-\begin{thm}[Weber {\cite[Theorem 2]{weber2011subspace}}]
-Let $\Pcal(\tau)$ be the $\pi_q$-self-adjoint transfer operator defined in \eqref{eq:transferoperator} with a set $\Xcal = \{ \Xcal_1,\dots, \Xcal_n\}$ of normalized eigenfunctions s.t. $\Pcal (\tau) \Xcal = \Xcal \Lambda$ and a set of functions $\chi = \Xcal A$ that is a linear combination of the eigenfunctions $\Xcal$ with a regular $n \times n$-transformation matrix $A$ from \eqref{eq:pcca_membership}.
-Then the iteration error for the Galerkin discretization $P_c(\tau) = G(\Pcal(\tau))$ in \eqref{eq:galerkin} vanishes.
-\end{thm}
-\begin{proof}
-%weber p.32
-\end{proof}
-It follows that the above projection represents the correct dynamical long-time behaviour of the original process and that the matrix $P_c(\tau)$ is the correct Markov State Model.
-%For the projected transfer operator
-%For the Markov State Model
-We can use the matrix representation $P_c(\tau)=S^{-1}T$ from theorem \ref{thm:galerkin}. Then $S$ and $T$ are stochastic matrices with \marginpar{?}
-%where $S$ is the matrix correponding to the statistical weights $w_i$.
+%$(\Pcal(\tau))^k = (P(\tau))^k$
+Theorem \ref{thm:iteration_error} implies that there is no discretization error under this projection, that is we have $G(\Pcal^k)$ = $(P_c)^k$. In particular, Markovianity is preserved.
+%Theorem \ref{thm:iteration_error} is true for arbitrary regular transformations $A$ of $\Xcal$, so in particular it holds for the solution computed by PCCA+.
+%Since the projection represents the correct dynamical long-time behaviour of the process, the matrix $P_c(\tau)$ is the correct Markov State Model.
+We can use the matrix representation $P_c(\tau)=S^{-1}T$ from theorem \ref{thm:galerkin}. Then $S$ and $T$ are stochastic matrices with \marginpar{falschrum}
 \begin{equation}
 \label{eq:projection_presentation}
 \begin{aligned}
@@ -196,40 +170,64 @@ S & = D^{-1} \langle \chi, \chi \rangle_\pi = D^{-1} A^T A,
 %T = D^{-1} \langle \chi, \Pcal(\tau) \chi \rangle_\pi = D^{-1}A^T \Lambda A \ \textrm{ and } \ 
 %S= D^{-1} \langle \chi, \chi \rangle_\pi = D^{-1} A^T A,
 %\end{equation}
-where $D= \mathrm{diag}(w_1,\dots,w_n)$ is the diagonal matrix of statistical weights in \eqref{eq:statistical_weights}.
+where $D= \mathrm{diag}(w_1,\dots,w_n)$ is the diagonal matrix of statistical weights from \eqref{eq:statistical_weights}.
 
-\subsubsection*{Measuring the Rebinding Effect} \marginpar{Interpretation}
+\subsubsection*{Measuring the Rebinding Effect}
 
 %habil p.34
-Even though $P_c(\tau) := P(\tau)$ is the correct Markov State Model, it cannot be interpreted as a transition matrix, since the inverse matrix of $S$ is not necessarily stochastic.
-The matrix $T = D^{-1} \langle \chi, \Pcal \chi \rangle$ however can be interpreted as a transition matrix. Then the difference between $P_c(\tau)$ and $T$ is given by
+%Even though $P_c(\tau)$ is the correct Markov State Model, it cannot be interpreted as a transition matrix, since the inverse matrix of $S$ is not necessarily stochastic.
+%\marginpar{falsch!!!}
+%$T = D^{-1} \langle \chi, \Pcal \chi \rangle$
+We remember the interpretation of the matrix representation $P_c = S\inv T$ of the Markov State Model from section \ref{sec:fuzzy}.
+The stochastic matrix $T$ determines the long-time behaviour of the clustered process, yet the Markov State Model differs from $T$ by
+%he matrix $T$ however is a transition matrix. The difference between $P_c(\tau)$ and $T$ is given by
 \begin{equation*}
 S P_c(\tau) = T.
 \end{equation*}
-Thus, the ``disturbance'' of ... can be measured by the matrix $S$.
-%Interpretation of $T$ and $S$.
-The more the matrix $S$ differs from the identity matrix, the more the correct projection $P(\tau)$ differs from the transition matrix $T$. Thus, the rebinding effect can be measured by the matrix $S$.
-The trace of $S$ is at most $n$. Optimizing $\mathrm{trace}(S)$ is equivalent to optimizing the \textit{crispness} of the conformations $\chi$ (Röblitz).
+%disturbance,deviation
+This ``deviation'' of the Markov State Model $P_c(\tau)$ from the stochastic matrix $T$ can be measured by the matrix $S$.
+%If $S$ is equal to the identity matrix, then the Markov State Model is Markovian.
+If $S$ is equal to the identity matrix, then the Markov State Model is solely determined by $T$.
+%If $S$ is close to the identity matrix, then $P_c(\tau)$ is close to being a stochastic matrix.
+If $S$ is close to the identity matrix, then $P_c(\tau)$ is close to $T$ and not strongly influenced by the overlap matrix $S$.
+The more the matrix $S$ differs from the identity matrix, the more the Markov State Model $P_c(\tau)$ differs from the transition matrix $T$.
+%Since for a matrix, being stochastic is equivalent to being the transition matrix of a Markov chain, the deviation of $P_c(\tau)$ from being stochastic can be interpreted as a violation of Markovianity and thus, of including some kind of memory.
+This is due to the recrossing/rebinding events.
+The larger this deviation, the larger the occuring memory effects.
+Thus, the rebinding effect, introduced in section \ref{sec:rebinding} as a \textbf{memory effect} provoked by a projection, can be measured by the matrix $S$.
+
+%corresponds to the results of our previous examinations. In section 1.4 ... In section 3.1
+These observations correspond to our previous results from the examination of the recrossing effect in section \ref{sec:recrossing} and the qualitative description of the rebinding effect in section \ref{sec:rebinding}. \marginpar{?}
+%characteristic functions
+%We found out that a crisp clustering, i.e. a set based-clustering, leads to a model $P_c(\tau)$ which is Markovian, caused by the orthogonality of membership functions and thus $S$ being the identity matrix.
+The more \textbf{overlap} occured in the membership functions, the more the matrix $S$ deviates from being the identity matrix (higher outer diagonal elements) and thereby includes more memory effects.
+
+Thus, the rebinding effect can be measured by the trace of the matrix $S$, the sum of its diagonal elements. It can lie between $0$ (very much overlap) and $n$ (diagonal matrix). This approach has been introduced by Weber and Fackeldey\cite{weber2014} and will be used in the next chapter to detect the minimal rebinding effect included in a system.
+\\
+
 
 %The data we get for our computations is based on simulations. As a transition rate matrix can be detected %from these simulations (instead of transition matrix), we formulate the above result for transition rates %instead of transition probabilities.
 
+%One further result/remark:
+Since PCCA+ maximizes the crispness of $S$, we can assume that it induces a small rebinding effect. \marginpar{wrong?}
+
 \subsubsection*{Infinitesimal Generator to transition rate matrix}
 
-Often (...) it is more convenient to consider/examine/investigate transition rate matrices instead of transition matrices/ infinitesimal generators instead of transfer operators. We can define the same/similar/analogous Galerkin Projection on the corresponding infinitesimal generator.
-
-Conceptually, $\Qcal$ is connected to the computation of transition rates.
-
-The transfer operator $\Pcal(\tau)$ defines a time-independent operator $\Qcal$ via
+%consider/examine. get/obtain
+Often it is more convenient to analyze transition rate matrices instead of transition matrices.
+Thus, we consider the infinitesimal generator $\Qcal$, which is defined from $\Pcal(\tau)$ via
+%In order to get a discrete transition rate matrix, we apply the Galerkin projection to the infinitesimal generator  induced by a given transfer operator.
+%The transfer operator $\Pcal(\tau)$ defines a time-independent operator $\Qcal$ via
 \begin{equation*}
-\Qcal = \lim_{\tau \rightarrow 0} \frac{\Pcal(\tau)-\mathcal{I}}{\tau},
+\Qcal = \lim_{\tau \rightarrow 0} \frac{\Pcal(\tau)-\mathcal{I}}{\tau}.
 \end{equation*}
-which is the infinitesimal generator of $\Pcal$: \marginpar{Chapman}
+%which is the infinitesimal generator of $\Pcal$.
+Moreover, these two operators are related by \marginpar{Chapman}
 \begin{equation*}
 \Pcal(\tau) = \exp{(\tau\Qcal)}.
 \end{equation*}
 Weber\cite{weber2011subspace} shows that such an infinitesimal generator exists for a discretization in terms of membership functions.
-
-Since the eigenfunctions of $\Qcal$ and $\Pcal$ are the same and their eigenvalues are related via $\exp{(\xi_i)} = \lambda_i$, we can apply the same Galerkin Projection for the infinitesimal generator as for the transfer operator in \eqref{eq:galerkin}.
+Since the eigenfunctions of $\Qcal$ and $\Pcal$ are the same and their eigenvalues are related via $\exp{(\xi_i)} = \lambda_i$, we can apply the same Galerkin Projection for the infinitesimal generator as for the transfer operator.
 %For the infinitesimal generator we can apply the same Galerkin Projection as for the transfer operator in
 %\eqref{eq:galerkin}
 We get a $n\times n$-rate matrix
@@ -238,6 +236,5 @@ We get a $n\times n$-rate matrix
 Q_c = A^{-1} \Xi A = (\langle \chi, \chi \rangle_\pi)\inv (\langle \chi, \Qcal \chi \rangle_\pi),
 \end{equation}
 where $\Xi$ is the diagonal matrix consisting of the $n$ leading eigenvalues $0 = \xi_1 > \xi_2 \geq \cdots \geq \xi_n$ of $\Qcal$ and $A$ is the transformation matrix of \eqref{eq:pcca_membership}, which analoguously transforms the eigenfunctions of $\Qcal$ into membership functions of the macro states.
-
-The matrix $Q_c$ can be interpreted as a transition rate matrix. \marginpar{?}
-\pagebreak
+The clustered matrix $Q_c$ can be interpreted as a transition rate matrix. \marginpar{?}
+%\clearpage

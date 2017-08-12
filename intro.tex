@@ -1,0 +1,111 @@
+%molecular systems belong to the most exhaustive computation/simulations.
+%that is due to the fact, that such systems consists of enormous many particles (molecule ~ ..) AND that,
+%in order to reveal relevant information about conformational changes, very long-time simulations are needed
+
+%even supercomputers need some hundred years for an easy simulation:
+
+%When projecting a Markov process onto non-overlapping macro states, the rebinding effect may spoil the Markov Property.
+%In order to represent a correct projection, the spatial arrangement of the system has to be included. This is achieved by overlapping membership functions $\chi = XA$, being a linear combination of  eigenvectors or Schur vectors. They enable us to measure the rebinding effect, stabilizing the clustered system. %(dominant)
+
+%being a linear combination
+%``Investigate a memory effect included in a projected process, which results from a fuzzy clustering in terms of membership functions $\chi = XA$ as a linear combination of (dominant) eigenvectors or Schur vectors of the originally Markovian system.''
+%occurs/originates/results/evolves.. of a metastable process.
+
+%``Investigate a memory effect included in a projected process, which results from a fuzzy clustering in terms of membership functions $\chi = XA$ as a linear combination of (dominant) eigenvectors or Schur vectors of a Markovian system.''
+
+%\fbox{\parbox[c]{14.5cm}{
+%``Examining the rebinding effect, which occurs when projecting a Markov process onto a finite state space and may spoil the Markovianity.''\\
+		
+%Assuming a fuzzy clustering in terms of membership functions $\chi = XA$, being a linear combination of eigenvectors or Schur vectors, we investigate the minimal rebinding effect included in a given system.}} \\[2ex]
+%
+%When projecting onto non-overlapping macro states, rebinding effect spoils Markov Property. may spoil
+%When projecting onto overlapping macro states, the spatial arrangement is included in the clustering. Hence Markov?
+
+%\paragraph*{Context:}  %= State of the Art
+%\begin{itemize}
+%	\item %What is a Markov Process
+	Markov processes are memoryless stochastic processes with applications in many different kinds of areas.
+	They are employed to describe molecular systems like protein folding or ligand-binding processes.
+	Such processes act on very large state spaces and additionally require simulations on rather long time-scales in order to observe rare conformational changes. %obs. transitions between diff. conf.
+%	\item %Why we need a projection: computations on longer time-scales, simplification, better overview
+	Consequently, a reduction of dimension is aimed at, which can be realized by a projection onto a smaller state space. %realized/achieved
+	The reduced model should represent the correct long-time behaviour of the process, while being less complex. %represent/maintain, especially metast.,
+	The existence of metastable sets can be exploited to create such a ``Markov State Model''. %in order to create
+	%If this model is based on the metastable sets of the original process, then it is called Markov State Model
+	%if the projected process is Markovian, it is called a ``Markov State Model'' for the original process.
+	A well-established solution is the  fuzzy clustering algorithm PCCA+, which identifies metastable sets with the aid of membership functions $\chi = XA$, being a linear combination of eigenvectors. %overlapping
+	%common/well-established %to obtain/create such a model
+	%a spectral clustering method. %a linear combination of eigenvectors. correct projection + clusters wrt metastability (optimal metastability)
+%\end{itemize}
+\\
+
+%\paragraph*{Problem \& Solution:}
+%\begin{itemize}
+	%Problemstellung
+	%\item %Problem:
+	%However, by projecting a process onto a finite state space,
+	When projecting a process onto a finite state space, it can lose its Markov property, more precisely it can include short-time memory effects.
+	%\item %observed binding affinities were significantly higher than expected.
+	Such memory effects were observed in the context of ligand-binding-systems, where in certain configurations significantly increased binding affinities were detected. %detected/found. configurations/experiments. caused/provoked by the projection
+	They are explained by an additional memory caused by the projection: short time after a ligand unbound from its target, it is assumed to be still nearby and thus rebinds with a high probability. Consequently, this short-time memory is denoted as \textbf{rebinding effect}.
+	%leading to a fast rebinding of a ligand after a dissociation
+	%Ligands ``rebind'' shortly after a dissociation took place
+	%\item %Rebinding = Overlap
+	This memory effect is strongly related to the \textbf{overlap} of the membership functions $\chi$ determining the clustering. %connected/related/associated
+	Hence, knowing them makes it easy to compute the actual rebinding effect caused by this projection.
+	%\item When clustering a process according to a set of membership functions $\chi$, then the actual rebinding effect can easily be measured by analyzing the matrix representation of the
+	%\item %Computing minimal bound
+	However, in many cases the original process and the membership functions are not known. For instance, a finite process can be constructed as the solution of a differential equation and just be interpreted as the projection of a larger process. In order to identify possible memory effects included in that system, it is favorable to estimate the rebinding effect. This can be achieved by solving an optimization problem, revealing a minimal bound: %for it: %\\
+	%denotes fast rebinding after a dissociation, caused by an additional memory (due to spatial situation shortly after a dissociation)
+	%multivalent systems?
+	\\
+	
+	%``Given a clustered system, how strongly overlapping are the membership functions \textbf{at least}?''
+	%``Given a clustered system, how much rebinding is included \textbf{at least}?''
+%\end{itemize}
+\begin{equation*}
+\textrm{	``Given a clustered system, how much rebinding is included \textbf{at least}?''}
+\end{equation*}
+\\
+
+%\paragraph*{This thesis:}%+ was habe ich gemacht. von reversibel (EV) auf non-reversible (Schur)
+%The formulation of an optimization problem for the computation of the minimal reversible process included in a given kinetics has been accomplished by Weber and Fackeldey
+The computation of the minimal rebinding effect included in a given kinetics has been accomplished in 2014 by Weber and Fackeley\cite{weber2014} for reversible processes.
+%The computation of the minimal rebinding effect for reversible processes has been accomplished
+%The minimal rebinding effect for reversible processes has been computed by Weber and Fackeldey in\cite{weber2014}.
+In this thesis, the formulation of the corresponding optimization problem is extended onto non-reversible processes.
+%their approach/method is extended onto non-reversible processes. %method
+%generalized and now includes non-reversible processes as well.
+This is achieved by employing GenPCCA, a recent modification of PCCA+ by Weber and Fackeldey\cite{Weber2017} from 2017, which is based on Schur vectors instead of eigenvectors and includes non-reversible processes.
+This generalization is of particular interest since many real-world processes are non-reversible. %valuable/relevant/of particular interest
+%extended to non . new/recent extension/modification/improvement/enhancement
+%Thus, this thesis combines two current research topics. %new/current/recent
+\clearpage
+
+%\paragraph*{Significance \& Applications:} %Importance/Meaning/Relevance
+A significant application of the presented topic lies in the area of computational drug design. %straightforward/significant
+In order to treat diseases, ligands are designed such that they bind to pathogenic target molecules. %targets/receptors. %or to human cell; disease causing molecules?
+%Besides many other properties, 
+Improving the binding affinity is one important goal in drug design.
+%The knowledge/prediction of binding affinities is crucial to evaluate the quality of a drug/pharmaceutical. %rebinding effect: influence on binding affinity
+%Although design techniques for prediction of binding affinity are reasonably successful,
+%As the binding affinity is to a certain degree influenced by possible rebinding effects,
+%In order to correctly predict/compute the binding affinity, it is important to consider possible rebinding events, since they can increase the bind. aff.
+For a precise prediction of the binding behaviour, %of binding affinities, binding probabilities, binding events, bindings
+it is important to consider possible rebinding events, since they can influence the binding affinity. % to a certain degree. %correct/good. influence/increase
+%As they can influence the binding affinity, it is important to consider possible rebinding events for a precise prediction of the binding behaviour.
+%in order to evaluate/quantify the possible influence/consequences to the binding affinity
+\\
+
+%\paragraph*{Literature:}
+%As the main part/purpose/topic of this thesis is to establish a combination. topic/subject
+%This essential subject of this thesis is a combination of the two aforementioned papers of Weber and Fackeldey\cite{weber2014,Weber2017}, which consequently represent the main sources. %main/essential/important purpose/intention
+%The two main sources for this thesis 
+The main topic and structure of this thesis comply with Weber and Fackeldey\cite{weber2014}, though with the addition of considering non-reversible processes as proposed by Weber and Fackeldey\cite{Weber2017}. %by the same authors
+The mathematical foundations presented in the first two chapters are inspired by the book ``Metastability and Markov State Models in Molecular Dynamics'' by Sch\"utte and Sarich\cite{schutte2013metastability}.
+Furthermore, the dissertations of Huisinga\cite{huisinga2001metastability}, Weber\cite{weber2006meshless}, Sarich\cite{sarich2011projected}, Nielsen\cite{nielsen2015transfer} and the habilitation of Weber\cite{weber2011subspace} have been particularly useful for the deeper understanding of the mathematical concepts behind metastability, clustering and transfer operators.
+%useful/helpful/advantageous
+
+
+
+\clearpage

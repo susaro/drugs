@@ -1,31 +1,112 @@
-We want to apply the results from chapter \ref{chap:rebinding} on some easy examples.
+With the aim of consolidating and illustrating the results from chapter \ref{chap:rebinding}, we apply them on some easy examples.
+At first, we examine a \textbf{reversible} process and demonstrate the relation of the minimal rebinding effect to the degree of non-reversibility of the clustered system.
+Afterwards, we repeatedly analyze the first example, now introducing small perturbations to make it \textbf{non-reversible}, in order to observe possible consequences for the rebinding effect.
+%perturbations to non-reversibility. changes/consequences/differences
+Since the rebinding effect was introduced by its occurrence in ligand-binding processes, we present an easy \textbf{bivalent binding system} and investigate the included rebinding effect. %introduced/motivated. occurence/influence
+%Furthermore, Finally we come back
+As a further application, we analyze a system describing the movement of \textbf{electron densities} in the chemical reaction of a molecule. %a system/matrix/molecule.
+This example illustrates that the rebinding effect plays a role in many different kind of systems. It is not solely restricted to binding processes and consequently, for each process one has to interpret the meaning of this effect. %role of this effect. rebinding/recrossing. determine/interpret
+%a possible impact
+%see how that changes the rebinding effect. %Schur Decomposition
+%has a different meaning 
 
-\section{A Transition Network Graph}
+In the following examples, the minimal rebinding effect is computed by solving optimization problem \eqref{eq:optimization} \marginpar{Schur} implemented with the help of Optimization Toolbox in Matlab.
 
-\section{An artificial (bivalent) binding Process}
 
-One can distinguish between a monovalent binding process and a multivalent binding process (see ...), where multivalent processes are often considered as having a better binding affinity (see..).
+%\section{Transition Network Graph}
+%Relation of Rebinding Effect to Transition Regions
+%change transition rates? rates of transitions b/w the metastable sets in order to identify the meaning of transition regions for the rebinding effect
 
-For the monovalent case, the mathematical modeling of its kinetics is well understood.
-....
+%As a first easy example, we apply the results of the last chapter to an artificial system consisting of three metastable sets.
 
-Whenever the receptor molecules are spatially preorganized, the corresponding binding process is denoted as multivalent.
+%\section{Stability}
 
-(especialle bivalent or polyvalent case often observed in nature)
-These systems are of significant interest for pharmaceutical and technical applications. If the ligands are linked to each other in an appropriate way to match the preorganized receptor molecules and, thus, are also presented multivalently, then extremely high binding affinities are often observed.
+%Have process by transition matrix $P$, cluster it with different membership functions $\chi_i$.
+%\begin{itemize}
+%	\item crisp membership functions: almost characteristic. $P_c = S\inv T \approx T$. $T$ very metastable -> system very stable, $F$ low
+%	\item soft membership functions: $P_c = S\inv T$ not close to $T$. $T$ nov very metastable -> though system rather stable, $F$ low, by rebinding
+%\end{itemize}
 
-So we consider here a bivalent process, as the the easiest multivalent case.
 
-\begin{table}[ht]
-\begin{tabular}{lccc}
-\toprule
-conformation              & statistical weight & holding probability & life time (ps) \\
-\midrule
-1    & 0.0001   & 0.9833 & 4.76   \\
-2     & 0.0003  & 0.9666 & 2.34  \\
-3     & 0.0041  & 0.9713 &    \\
-4     & 0.0056 & 0.9987 &   \\
-\bottomrule
-\end{tabular}
-\caption{relation of statistical weights to holding probabilities of the conformations}
-\end{table}
+%\section{Rebinding Effect in an artificial (reversible) system}
+%\section{Rebinding Effect in a reversible system}
+%\section{Clusterings of a reversible system}
+\section{Rebinding in a reversible System}
+\label{sec:example_reversible}
+
+The clustering $Q_c$ of a \textbf{reversible} process $Q$ can be \textbf{non-reversible}. Hence, we are interested to compare the minimal rebinding effect included in a clustered system with its degree of non-reversibility. Furthermore, we want to compare the \textbf{minimal} rebinding effect with the \textbf{real} rebinding effect stemming from the clustering. %actual clustering
+%in order to know about/evaluate the quality of this estimation/bound
+
+\subsubsection*{Different clusterings of a system}
+%Cluster a system $Q$ with different tranformation matrices and compare the resulting rebinding effect vs nonreversibility
+
+Let a \textbf{reversible} metastable process be given by the transition matrix
+\begin{equation}
+\label{eq:transition_matrix}
+	P = 
+	\begin{pmatrix}
+		0.9876  &  0.0011  	&  0.0011  	&  0.0051	& 0.0051 	\\
+		0.0033 	&  0.4973  	&  0.4949  	&  0.0036  	& 0.0009	\\
+		0.0033  &  0.4949	&  0.4973  	&  0.0009  	& 0.0036	\\
+		0.0076  &  0.0018 	&  0.0004	&  0.4969  	& 0.4932	\\
+		0.0076  &  0.0004	&  0.0018   &  0.4932  	& 0.4969
+	\end{pmatrix}.
+\end{equation}
+This matrix stems from Weber\cite{Weber2017} and obviously describes a system on three metastable sets, having the dominant eigenvalues $\sigma(P) = \{1, 0.99, 0.98\}$.
+Thus, we are interested to examine different clusterings on a three-dimensional state space.
+%In order to examine different clustered systems via $\chi = XA$, we generate $200$ random transformation matrices $A$.
+%We want to examine different clustered systems out of this large system $P$.
+%various/different/random
+For that aim, we employ several transformation matrices $A \in \R^{3 \times 3}$, turning the dominant eigenvectors $X \in \R^{5 \times 3}$ into membership functions $\chi \in \R^{5 \times 3}$. In order that $\chi$ fulfills the partition of unity and non-negativity properties, the set of feasible matrices $F_A$ has to meet certain conditions, see Weber\cite[Chapter 3.4]{weber2006meshless}.
+%Such matrices can be obtained by a function from PCCA+. \marginpar{want: crisper clustering}
+Accordingly, we generate $200$ feasible transformation matrices $A$ and examine the rebinding effect caused by the projection.
+
+\begin{figure}[!ht]
+	\centering
+	\subfigure[The minimal rebinding effect compared to the degree of non-reversibility of the clustered system $Q_c$.]{\includegraphics[width=0.46\textwidth]{figures/rebinding/200_random/reb_opt_nonrev_200_random.eps}}
+	\subfigure[The minimal and the real rebinding effect compared to the degree of non-reversibility of the clustered system $Q_c$.]{\includegraphics[width=0.46\textwidth]{figures/rebinding/200_random/reb_nonrev_200_random.eps}}
+	%, increasing the probability of a fast \textbf{rebinding}.
+	\hspace{20pt}
+	\subfigure[The minimal rebinding effect $\det(\Sopt)$ compared to the real rebinding effect $\det(\Sreal)$ included in $Q_c$.]{\includegraphics[width=0.46\textwidth]{figures/rebinding/200_random/reb_200_random.eps}}
+	\caption{The system described by the transition matrix $P$ is clustered with $200$ randomly generated feasible transformation matrices $A$.} % in order to compare some important parameters
+	\label{fig:reb_example}
+\end{figure}
+
+The results of this example are presented in figure \ref{fig:reb_example} and can be interpreted as follows.
+In a), we see that the minimal rebinding effect correlates with the degree of non-reversibility $\Vert DQ_c - Q_c^T D \Vert_1$ of the clustered system, where $D = \diag(\pi_1, \dots, \pi_n)$ is the diagonal matrix consisting of the entries of the stationary distribution. %see detailed balance chap 1 
+The higher this degree of non-reversibility, the higher the minimal rebinding effect.
+This correlation also implies that for highly non-reversibly system, the minimal rebinding effect is a better estimation for the real rebinding effect, as represented in b).
+The last picture shows that in general, $\det(\Sopt)$ can be a rather good or a rather bad estimation for the real rebinding effect.
+The less rebinding is included in the system, the worse this estimation gets. %really?
+\newpage
+
+
+
+
+
+
+%\begin{table}[ht]
+%\begin{tabular}{lccc}
+%\toprule
+%conformation              & statistical weight & holding probability & life time (ps) \\
+%\midrule
+%1    & 0.0001   & 0.9833 & 4.76   \\
+%2     & 0.0003  & 0.9666 & 2.34  \\
+%3     & 0.0041  & 0.9713 &    \\
+%4     & 0.0056 & 0.9987 &   \\
+%\bottomrule
+%\end{tabular}
+%\caption{relation of statistical weights to holding probabilities of the conformations}
+%\end{table}
+
+%\section{Quality of this lower bound}
+
+%We project a process onto a smaller state space using PCCA+. Then we compare the real rebinding effect (provoked by he projection) to the minimal rebinding effect included in the projected process. Thereby we can see ``how good'' this lower bound is.
+
+%\subparagraph*{Rebinding $\leftrightarrow$ Multivalence}
+
+%\subparagraph*{Rebinding $\leftrightarrow$ Nonreversibility}
+
+%\subparagraph*{Rebinding $\leftrightarrow$ Transition Regions}
+
+%\subparagraph*{Rebinding $\leftrightarrow$ Application to different Processes (Raman)}

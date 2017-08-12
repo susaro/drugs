@@ -1,0 +1,30 @@
+\subsubsection*{Different clustered systems}
+%Increase nonreversibility of clustered system $Q_c$ and observe how rebinding effect changes
+
+
+%By theorem \ref{thm:reversible_trivial} we know that for a reversible process, $\det(S_\textrm{opt})=1$ and thus, there exists a clustering such that the system includes no rebinding effect.
+
+%In order to illustrate/demonstrate a possible relation/correlation between the non-reversibility and the rebinding effect, we examine a set of transition rate matrices with different deviation of reversibility and compute the included minimal rebinding effects.
+
+On the other hand, it would be interesting to examine clustered systems without knowing the corresponding original processes (since knowing the clustering always includes knowing the real rebinding effect, so no estimation/bound needed).
+We start with a reversible system $Q_c$ and increase its nonreversibility to see the consequences on the minimal rebinding effect.
+In order to fulfill the criteria of optimization problem \eqref{eq:optimization}, we assume that the corresponding original processes $Q$ are reversible. 
+However, the original processes can differ naturally.
+\\
+
+\begin{figure}[!ht]
+	\label{fig:rebinding_nonreversible}
+	\centering
+	
+	\includegraphics[width=0.6\textwidth]{figures/plot_reb_nonrev5}
+	
+	\caption{The minimal rebinding effect $\det(S_\mathrm{opt})$ depending on the degree of nonreversibility $\Vert DQ_c -Q_c^T D \Vert_1$ of the clustered system.}
+	
+\end{figure}
+
+Remark: this example shows/visualizes a strong relation between the non-reversibility of $Q_c$ and the minimal rebinding effect. However, the approach just works under the \textbf{assumption} that the original processes are reversible. This fact is certainly not guaranteed for all processes.
+
+That motivates the creation for a generalized version of optimization problem \eqref{eq:optimization}. It should provide a solution \textbf{independent} of the possibly unknown reversibility or non-reversibility of the original process. Certainly, this problem could be tackled utilizing $\chi = XA$, with membership functions as linear combinations of \textbf{Schur vectors} instead of eigenvectors, since this approach comprises reversible as well as non-reversible processes.
+\newpage
+
+%Figure \ref{fig:rebinding_nonreversible} shows a correlation between the nonreversibility of a process and the minimal rebinding effect included in the system.

@@ -16,6 +16,9 @@
 \usepackage[sort&compress,numbers,comma,merge]{natbib}
 \usepackage{bbold}
 \usepackage{tikz-cd}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{arrows,matrix,positioning}
 
 %for tables
 \usepackage{booktabs}
@@ -70,6 +73,7 @@
 \newcommand{\Ccal}{\mathcal{C}}
 \newcommand{\Dcal}{\mathcal{D}}
 \newcommand{\E}{\mathbb{E}}
+\newcommand{\Ical}{\mathcal{I}}
 \newcommand{\Lcal}{\mathcal{L}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Pcal}{\mathcal{P}}
@@ -77,8 +81,6 @@
 \newcommand{\Qcal}{\mathcal{Q}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Rdrei}{{\R^{3N}}}
-\newcommand{\Sopt}{S_{\mathrm{opt}}}
-\newcommand{\Sreal}{S_{\mathrm{real}}}
 \newcommand{\Tcal}{\mathcal{T}}
 \newcommand{\T}{\mathbb{T}}
 \newcommand{\Ucal}{\mathcal{U}}
@@ -95,6 +97,16 @@
 \newcommand{\xtilde}{\widetilde{X}}
 \newcommand{\xhat}{\widehat{X}}
 
+\newcommand{\Sopt}{S_{\mathrm{opt}}}
+\newcommand{\Sreal}{S_{\mathrm{real}}}
+
+%\newcommand{\Sopt}{$S_\textrm{opt}$}
+\newcommand{\detSopt}{\det(\Sopt)}
+%\newcommand{\Sreal}{$S_\textrm{real}$}
+\newcommand{\detSreal}{\det(\Sreal)}
+\newcommand{\Spcca}{S_\mathrm{PCCA+}}
+\newcommand{\detSpcca}{\det(\Spcca)}
+
 \newcommand{\diag}{\mathrm{diag}}
 \newcommand{\trace}{\mathrm{trace}}
 \newcommand*\diff{\mathop{}\!\mathrm{d}}
@@ -107,3 +119,21 @@
 \renewcommand{\labelenumi}{\roman{enumi})}
 
 \newcommand{\todo}[1]{\textbf{\textcolor{red}{TODO: #1}}}
+
+%widebar
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+\newcommand*\widebar[1]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+    \rel@kern{0.8}%
+    \overline{\rel@kern{-0.8}\macc@nucleus\rel@kern{0.2}}%
+    \rel@kern{-0.2}%
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+  \macc@nested@a\relax111{#1}%
+  \endgroup
+}

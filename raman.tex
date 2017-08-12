@@ -1,0 +1,16 @@
+\section{Transition Rate Matrix from Raman Data}
+
+%The Rebinding Effect (=Recrossing Effect) occurs by the projection of a process onto a subspace. Thus, its consequences are not only visible in the particular example of a receptor-ligand system, but also in any other kind of processes. We present one example from the topic of Raman spectroscopy. It uses scattering methods (laser on molecule) in order to identify molecules and their chemical bonding.
+
+We are given the transition matrix
+\begin{equation*}
+P_c = 
+\begin{pmatrix}
+8.0832573e-001 & 2.4773678e-001 & -5.6062515e-002 \\
+2.9917361e-002 & 9.7916849e-001 & -9.0858553e-003 \\
+1.8024711e-002 & -5.3149044e-003 & 9.8729019e-001
+\end{pmatrix}.
+\end{equation*}
+
+Theoretically, the corresponding transition rate matrix $Q_c$ should be independent of time. But for our computations, it is impossible to make the time infinitesimal small. That's why we have to choose a certain (small) lag-time, on which the transition rate matrix will be defined.
+For a lag-time $t = 0.05$(?), we compute $Q_c$ in order to solve the optimization problem \eqref{eq:optimization} for the rebinding effect.

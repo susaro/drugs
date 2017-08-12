@@ -1,103 +1,114 @@
-%In this chapter, we are going to see what is a Markov process and how it can be described using a transfer %operator. In order to describe this process on a smaller (or even finite) state space, the so called
-%\textit{Markov State Model} is used. That is basically a model of the original process, which acts on a
-%smaller (projected) space. By that (Galerkin) Projection some important properties are maintained while
-%some informations might be lost, like Markovianity (\textit{Recrossing Effect}).
-
-
-%In this chapter, we introduce the mathematical fundamentals that we need to describe the behaviour of %molecular systems. 
-%The notation of this chapter will be used in the following chapters.
-
-%We suppose that the basics of probability theory (see ...) are known.
-%probability space, measure theory (measure, measure space, measurable space), density/dist.fct.
-%The theory of (discrete) Markov chains is not necessarily a prerequisite to understand the definitions in this %chapter, but still useful to know (see..). Here we will present a generalized (continuous) concept of this topic, %so from time to time we will refer to the special case of a Markov chain to exemplify/illustrate our %results/notions/definitions.
-
-%The notation of this chapter is mainly based on the book Metastability and Markov State Models in Molecular %Dynamics from Sch\"utte and Sarich\cite{schutte2013metastability} which gives a good overview over the %basic concepts of Markov State Models.
-%basic mathematical concepts
-%Often we get a process as a solution of i.e. a SDE, so we have a continuous process. To make it easier to %compute with we have to project that process onto a finite-dim. state space.
-
-%\subsubsection*{MSM}
-Stochastic processes, especially Markov processes, are used in many applications in different areas, like biotechnology or ... . Simulations of biomolecular systems (in atomic representation) often require timescales that are far beyond the capacity of computer power currently available (for detailed example see Anton).
-To get a a simulation result in a reasonable time, it makes sense to consider a reduced model of that stochastic process which maintains the relevant dynamical properties while at the same time being less complex. Such reduced models are called Markov State Models. There has been a lot of investigations/research activity during the last years, see ...
-% recent,recently
+In order to be able to describe dynamical systems having a nondeterministic behaviour, we introduce Markov processes.
+They are memoryless stochastic processes which are commonly used to model different kinds of real-world processes, [ ].
+% in different areas.
+Recently they have been applied a lot in the research area of modelling biomolecular systems, [ ].
+%As those systems consists of many particles, the corresponding process acts on a enormous large space,
+%adequate, feasible time scales. computations/simulations
+As those systems are enormous large, it is very difficult to perform simulations on feasible time scales.
+%dimension/complexity
+%That is basically a model of the original process, which acts on a smaller (projected) space.
+That is why a reduction of complexity is needed, [ ].
+%large (cont.). important/relevant. (long-time behaviour..) 
+The originally large process is projected onto a suitable subspace, while maintaining the most relevant dynamical properties of the process. We present such a reduced model, called ``Markov State Model''.
+%and enables us to.. .
 
 %In principle a Markov State Model is a reduced model of a large (maybe continuous) stochastic process %which is built by conveniently grouping/ clustering some states of the process. That is done by a Galerkin %projection.
 %To describe that, we need at first some basic definitions of stochastic processes, especially Markov %processes and how their evolution can be described using the transfer operator.
 
-In order to define/create a Markov State Model, we need at first some basic definitions of stochastic processes, especially Markov processes and how their evolution can be described using the transfer operator. The actual dimension direction of the process happens by applying a Galerkin projection onto the transfer operator. By that action, states of the original process are clustered/grouped conveniently, such that .. properties/transition rates?.. are preserved..
+%define/create. adequately/rigorously
+In order to adequately define a Markov State Model, we need at first some basic definitions and properties of stochastic processes, especially Markov processes, and how their evolution in time can be described using the transfer operator. The actual dimension reduction of the process is realized by a Galerkin projection applied to the transfer operator. By that action, states of the original process are clustered conveniently.
+%clustered/grouped
+%such that .. properties/transition rates?.. are preserved..
+
+%The notation of this chapter is mainly based on the book Metastability and Markov State Models in Molecular %Dynamics from Sch\"utte and Sarich\cite{schutte2013metastability} which gives a good overview over the %basic concepts of Markov State Models.
 
 \section{Markov Process}
 \label{sec:markov}
 
-%certain/particular
-A Markov process is a special type of stochastic process with some nice properties which makes it easy to compute with. They are defined on possibly continuous state space and time, in opposite to a Markov chain where both these properties are discrete (finite state space?, transition matrix = stochastic matrix).
+%The theory of (discrete) Markov chains is not necessarily a prerequisite to understand the definitions in this %chapter, but still useful to know (see..). Here we will present a generalized (continuous) concept of this topic, %so from time to time we will refer to the special case of a Markov chain to exemplify/illustrate our %results/notions/definitions.
+
+%being a special type?
+We introduce Markov processes, which are a special type of stochastic processes and a generalization of the well-known Markov chains. Markov chains were defined as a memoryless process acting on a finite state space and evolving in discrete time, a behaviour that can be described by a stochastic matrix.
+%complex,extensive
+For general Markov processes, both these properties can be continuous and thus, we need some more extensive formulations and tools in order to describe such processes respectively their time-evolution rigorously.
 
 \subsubsection*{Transition function}
-% transition kernel, transition probability
+
+%We suppose that the basics of probability theory (see ...) are known.
 
 %From now on
-We will denote by $\X := (\X,\Sigma)$ a \textit{measurable space}, that is a set $\X$ with some $\sigma$-algebra $\Sigma$ defined on it. The triple $\Omega := (\Omega, \mathcal{A}, \Prob)$ will be a \textit{probability space}, that is a \marginpar{Borel-$\sigma$-alg.?}
+We will denote by $E := (E,\Sigma)$ a \textit{measurable space}, that is a set $E$ with some $\sigma$-algebra $\Sigma$ defined on it. The triple $\Omega := (\Omega, \mathcal{A}, \Prob)$ will be a \textit{probability space}, that is a
 %measure space with a probability measure
 measurable space with a probability measure $\Prob$ defined on it; for detailed information about these basic measure theoretic notations, see Bogachev\cite[chapter~1]{bogachev2007measure}.
 % Borel sigma-algebra on r is the smalles sigma-algebra of r which contains all open sets
 
-A \textit{random variable} $X: \Omega \rightarrow \X$ is a \textit{measurable function} from a probability space $\Omega$ into a measurable space $\X$, meaning that preimages of measurable sets in $\X$ are measurable in $\Omega$:
+A \textit{random variable} $X: \Omega \rightarrow E$ is a \textit{measurable function} from a probability space $\Omega$ into a measurable space $E$, meaning that preimages of measurable sets in $E$ are measurable in $\Omega$:
 \begin{equation*}
 A \in \Sigma \Rightarrow X^{-1}(A) \in \mathcal{A}.
 \end{equation*}
-Then the probability measure $\Prob$ of $\Omega$ induces a canonical probability measure on $\X$, also
+Then the probability measure $\Prob$ of $\Omega$ induces a canonical probability measure on $E$, by
 %which will also be denoted by
-denoted by $\Prob$, by $\Prob(A) := \Prob(X \in A) := \Prob(X^{-1}(A))$ for all $A \in \Sigma$, see (...).
-%canonical, natural prob. measure
+%denoted by $\mu$, by
+\begin{equation*}
+\mu(A) := \Prob(X \in A) := \Prob(X^{-1}(A))
+\end{equation*}
+for all $A \in \Sigma$, called the \textit{distribution} of $X$, see {\O}ksendal\cite[Section 2.1]{oksendal2003stochastic}.
+%The measure mu is called..
 
 \begin{defi}[Stochastic Process]
-A family $\markov$ of random variables $X_t : \Omega \rightarrow \X$ on some index set $\T$ is called
-a \textit{stochastic process} on a state space $\X$. \marginpar{restr. to $\R^n$ + $\B(\R^n)$?}
+A family $\markov$ of random variables $X_t : \Omega \rightarrow E$ on some index set $\T$ is called
+a \textit{stochastic process} on a state space $E$.
 \end{defi}
 
+In the following, we consider stochastic process on real state spaces $E \subset \R^d, d \in \N$, equipped with the Borel-$\sigma$-algebra $\Sigma = \B(E)$. \marginpar{?}
 %special case/type
 In order to introduce Markov processes as a special type of stochastic processes, we need a
 %object, tool, definition, concept
-tool to describe the time evolution or propagation of the process. This can be done using the transition function which describes the propagation of the distribution functions of a stochastic process.
+tool to describe the time evolution or propagation of a process. This can be done using the transition function which describes the propagation of the distribution functions of a stochastic process.
 
 \begin{defi}[Transition function]
 % \marginpar{transfer operator: propagation of distributions?}
-A function $p: \T \times \X \times \Sigma \rightarrow [0,1]$ is a \textit{transition function} if it fulfills the following properties: \marginpar{$E \times \B(\X)$}
+A function $p: \T \times E \times \Sigma \rightarrow [0,1]$ is a \textit{transition function} if it fulfills the following properties:
 \begin{enumerate}
-\item $x \mapsto p(t,x,A)$ is measurable on $\X$ for all $t\in\T$ and $A\in\Sigma$
-\item $A \mapsto p(t,x,A)$ is a probability measure for all $t\in\T$ and $x\in\X$
-\item $p(0,x,\X \setminus x) = 0$ for all $x \in\X$
+\item $x \mapsto p(t,x,A)$ is measurable on $E$ for all $t\in\T$ and $A\in\Sigma$,
+\item $A \mapsto p(t,x,A)$ is a probability measure for all $t\in\T$ and $x\in E$,
+\item $p(0,x,E \setminus x) = 0$ for all $x \in E$,
 \item the Chapman-Kolmogorov equation
 \marginpar{?}
-\begin{equation*}
-p(t+s,x,A) = \int_\X p(t,x,\diff z)p(s,z,A).
-\end{equation*}
-holds for all $t,s\in\T, x\in\X$ and $A\in\Sigma$.
+\begin{equation}
+\label{eq:chapman}
+p(t+s,x,A) = \int_E p(t,x,\diff z)p(s,z,A).
+\end{equation}
+holds for all $t,s\in\T, x\in E$ and $A\in\Sigma$.
 \end{enumerate}
 \end{defi}
-In this definition, the first three properties just ensure that we get reasonable (measurable) results and that that the process can only be in one state at the same time and not make a jump (a transition in $0$-time).
-
-%So the transition function gives us the probability to get into a certain subset $A$ in a time interval $t$
-So the transition function $p(t,x,A)$ can be considered as the probability  to get into a certain subset $A$ in a time interval $t$ starting from a point $x$.
-That follows from the Chapman-Kolmogorov equation, see (...). \marginpar{why? how?}
+%reasonable (measurable)
+In this definition, the first three properties ensure that we get reasonable results and that the process can only be in one state at the same time.
+From the Chapman-Kolmogorov equation \eqref{eq:chapman}, it follows that the transition function $p(t,x,A)$ can be considered as the probability  to get into a certain subset $A$ in a time interval $t$ starting from a point $x$.
 That means that we can describe the time evolution of a stochastic process by a transition function.
-In particular, the transition matrix of a Markov chain (time discrete, finite state space) is a special case of the transition function since it fullfills the above properties.
+%(time discrete, finite state space)
+In particular, the transition matrix of a Markov chain is a special case of the transition function since it fulfills the above properties.
 %assuming we have a $1$-step transition matrix and $t=1$.
 %but also for any other timesteps matrices
 
 \subsubsection*{Markov Process}
 %class/case/type
-Now we can define Markov processes as a special type of stochastic processes.
+%Now we can define Markov processes, a special type of stochastic processes.
+With the aid of a transition function, we are able to define Markov processes.
 
 \begin{defi}[Markov Process]
-A stochastic process $\markov$ on a state space $\mathbb{X}$ is a \textit{Markov process} if its transition function fulfills the equation
+A stochastic process $\markov$ on a state space $E$ is a \textit{Markov process} if its transition function fulfills the equation
 \begin{equation}
 \label{eq:markov_process_def}
 p(t,x,A) = \Prob (X_{t+s} \in A \mid X_s =x).
 \end{equation}
-for all $s,t \in T$, $x \in \mathbb{X}$ and $A \subset \mathbb{X}$. If that probability is independent from $s$, then the Markov process is called \textit{time-homogeneous}.
+for all $s,t \in \T$, $x \in E$ and $A \in \Sigma$. If that probability is independent from $s$, then the Markov process is called \textit{time-homogeneous}.
 \end{defi}
+
+\clearpage
 We are especially interested in time-homogeneous processes, which will be presumed from now on.
-As we can see from the definition, the time evolution of a Markov process is completely described by its transition function.
+As we can see from the definition, all possible transition probabilities are given and hence, the time evolution of a Markov process is completely described by its transition function.
+Thus a Markov process is uniquely determined by its transition function and an initial distribution $\mu$.
 %last known state/current state/actual state. independent of its history
 It is a process that has ``no memory'' in the sense that only the last known state of the process has an influence on the future of the process, as we can see on the right side of \eqref{eq:markov_process_def}.
 %sequences evolving in time which remember their past trajectory only through its most recent value! (meyn)
@@ -105,76 +116,99 @@ It is a process that has ``no memory'' in the sense that only the last known sta
 
 %lag time
 
-Indeed, there is a one-to-one relation between transition functions and (time-homogeneous) Markov processes, i.e. every homogeneous Markov process defines a transition function and vice versa, see Meyn and Tweedie\cite[chapter 3]{meyn1993}.
-\\
+Indeed, there is a one-to-one relation between transition functions and Markov processes, i.e. every homogeneous Markov process defines a transition function and vice versa, see Meyn and Tweedie\cite[Section 3.4]{meyn1993}.
+%A Markov process is uniquely determined by its transition function and an initial distribution $\mu$.
 %bzw: Chapman-Kolm (m time steps) -> Markov property (1 time step) = special case of CK
 % Markov prop -> Chapman-Kolm by using delta function
+The beginning of a Markov process $X_t$ with the transition function $p$ fulfills
+\begin{equation}
+%Nielsen MA p.37 Theorem 2
+\label{eq:beginning_markov}
+\Prob_\mu (X_0 \in A , X_t \in B) = \int_A p(t,x,B) \mu(\diff x)
+\end{equation}
+for any $A,B \in \Sigma$, where $\Prob_\mu$ indicates that $X_0 \sim \mu$, or equivalently $\mu(A) = \Prob(X_0 \in A)$.
+\\
 
 The transition function for a Markov process plays the same role as the transition matrix for a Markov chain; it propagates its distributions. \marginpar{?}
-If for the transition function we choose $t=1$ and transitions into one-elementic subsets, then the transition function corresponds to the $1$-step transition matrix $[p_{ij}]= T \in \R^{n \times n}$ of a Markov chain.
-Having introduced the notion of Markov processes, we can now define some important properties and give some examples.
+If for the transition function we choose $t=1$ and transitions into one-elementic subsets, then the transition function corresponds to the $1$-step transition matrix $[p_{ij}]= P \in \R^{n \times n}$ of a Markov chain.
+Having introduced the notion of Markov processes, we can define some important properties and give some examples.
 
 \subsubsection*{Invariant Measure}
 
-\marginpar{stat. distr., stat. measure}
-%\marginpar{Stationary distribution for Markov Chain -> invariant measure for Markov Process?}
-%\marginpar{skillnad stationary measure/ stat. distr.?}
 \begin{defi}[Invariant measure]
-Let $\markov$ be a Markov process. The probability measure $\mu$ is \textit{invariant} w.r.t. $\markov$ if for all $t\in\T$ and $A \subset \X$ we have
+Let $\markov$ be a Markov process. The probability measure $\mu$ is \textit{invariant} with respect to $\markov$ if for all $t\in\T$ and $A \in \Sigma$ we have
 \begin{equation*}
-\int_\X p(t,x,A) \mu(\diff x) = \mu(A).
+\int_E p(t,x,A) \mu(\diff x) = \mu(A).
 \end{equation*}
 \end{defi}
-%If an invariant measure is additionally a probability measure, then it is also a stationary measure.
-%Nielsen p. 18/19+28 for distinction b/w stationary and invariant measure
-In other words, a measure is invariant wrt a Markov process if the probability to \textbf{be} in any subset of the state space is the same as the probability to \textbf{get} into that subset by the evolution of the Markov process for any fixed transition time.
-%integrated over all possible start values, i.e. all elements of state space
-%starting from any other point of the state space. \marginpar{formulierung unklar}
-% ntegrated over all possible start values (elements of state space) for any fixed transition time.
-%starting from any other point in the state space
+%If an invariant measure is additionally a probability measure, then it is also a stationary measure. (Nielsen p.18/19+28)
+In other words, a measure is invariant with respect to a Markov process if the probability to \textbf{be} in any subset of the state space is the same as the probability to \textbf{get} into that subset by the evolution of the Markov process for any fixed transition time.
 
 \subsubsection*{Ergodicity}
 The long-time behaviour of stochastic processes can be described using ergodicity.
-\marginpar{difference $\mu$, $\Prob$?}
 \begin{defi}[ergodic process]
-Let $(X_t)_{t\in\T}$ be a Markov process with invariant probability measure $\mu$. Then $(X_t)_{t\in\T}$ is \textit{ergodic} w.r.t. $\mu$ if for all functions $u: \X \rightarrow \R$ with $\int_\X |u| \mu(\diff x) < \infty$
+Let $(X_t)_{t\in\T}$ be a Markov process with invariant probability measure $\mu$. Then $(X_t)_{t\in\T}$ is \textit{ergodic} with respect to $\mu$ if for all functions $u: E \rightarrow \R$ with $\int_E |u| \mu(\diff x) < \infty$
 we have
 % the following equation holds:
 \begin{equation*}
-\lim_{T \rightarrow \infty} \frac{1}{T} \int_0^T u(X_t) \diff t = \int_\X u(x) \mu(\diff x).
+\lim_{T \rightarrow \infty} \frac{1}{T} \int_0^T u(X_t) \diff t = \int_E u(x) \mu(\diff x).
 %= \E_\mu[u].
 \end{equation*}
 for almost all initial values $X_0=x_0$.
 \end{defi}
-So a Markov process is ergodic if its time average (left side) is the same as its average over the probability space (right side), known in the field of thermodynamics as its ensemble average. In an ergodic process, the state of the process after a long time is nearly independent of its initial state.
+In that sense, a Markov process is ergodic if its time average is the same as its average over the probability space.
+%known in the field of thermodynamics as its ensemble average.
+In an ergodic process, the state of the process after a long time is nearly independent of its initial state.
+
+%We will only consider/analyze ergodic Markov processes, i.e. processes that are \marginpar{only discrete case?} %irreducible
+%\marginpar{only one eigenvalue 1} and aperiodic (no periodic behaviour).
 
 \subsubsection*{Reversibility}
 
-A very useful property of Markov processes is reversibility.
-A process is reversible if it fulfills the detailed balance equation...;
-it means that they keep the same probability law even if their movement is considered backwards in time.
-
-%We will only consider ergodic Markov processes, i.e. processes that are \marginpar{only discrete case?} %irreducible
-%\marginpar{only one eigenvalue 1} and aperiodic (no periodic behaviour).
+Reversibility describes the invariance of a process with respect to time-reversal. 
+%A very useful property of Markov processes is reversibility.
+In the next section, we will see that an operator describing a reversible process yields some very favorable properties, which makes it easy to analyze such a process.
 
 \begin{defi}[reversible process]
-Let $(X_t)_{t\in\T}$ be a Markov process with invariant probability measure $\mu$. Then $(X_t)_{t\in\T}$ is \textit{reversible} w.r.t. $\mu$ if \marginpar{rev. for Markov chain bzw. abs. cont. meas.}
+Let $\markov$ be a Markov process with invariant probability measure $\mu$. Then $(X_t)_{t\in\T}$ is \textit{reversible} with respect to $\mu$ if
 \begin{equation*}
 \int_A p(t,x,B) \mu(\diff x) = \int_B p(t,x,A) \mu(\diff x)
 \end{equation*}
-for all $t \in \T$ and $A,B \subset \X$. If $\mu$ is unique, then $X_t$ is simply called \textit{reversible}. \marginpar{rev. follows ex. stat./inv. dist.?}
+for all $t \in \T$ and $A,B \in \Sigma$. If $\mu$ is unique, then $X_t$ is simply called \textit{reversible}.
+%if process fulfills this definition for a distribution mu, then mu is invariant measure
 \end{defi}
 
-If the stochastic transition function is absolutely continuous w.r.t. $\mu$, i.e. ...
-then reversibility corresponds to $p(t,x,y)=p(t,y,x)$ for all $t \in \T$ and $\mu$-a.e. $x,y  \in \X$. \marginpar{det.bal.?}
+%reverse direction/transition
+For a reversible process, the probability to get from any subset $A$ to another subset $B$ in a fixed time is the same as the probability for the reverse transition in the same time span.
+Thus this definition implies that the process keeps the same probability law even if its movement is considered backwards in time.
 
-\subsubsection*{Example (Markov Chain)}
+If the stochastic transition function is absolutely continuous with respect to $\mu$, then reversibility corresponds to $p(t,x,y)=p(t,y,x)$ for all $t \in \T$ and $\mu$-almost all $x,y  \in E$.
 
-To illustrate the previous definitions on an easy example, we set them in relation to the familiar/well-known special case of \textit{Markov Chains}.
+\subsubsection*{Example: Markov Chain}
 
-Let $X_t$ be a Markov chain with $\T = \mathbb{N}$ and finite state space $\X = \{1,\dots,n\}$ and with positive invariant measure $\mu$. Since we are considering $1$-step transitions, the associated transition function is given by $p(x,y) = p(1,x,y)$ and corresponds to the entries of the \textit{transition matrix} $T\in \R^{n \times n}$, i.e.
+%To illustrate the previous definitions on an easy example, we set them in relation to the familiar/well-known special case of \textit{Markov Chains}.
+
+Let $\markov$ be a Markov chain on discrete time $\T = \mathbb{N}$ and finite state space $E = \{1,\dots,n\}$.
+Since we consider $1$-step transitions, the associated transition function is given by $p(x,y) := p(1,x,y)$ and corresponds to the entries of the \textit{transition matrix} $P\in \R^{n \times n}$, that is
 \begin{equation*}
-T_{x,y} = p(x,y).
+P_{xy} = p(x,y) = \Prob(X_1 = y \mid X_0 = x).
 \end{equation*}
-The propagation of a vector(distribution) $v_0 \in \R^n$ in the unweighted state space can be written as $v_1^T = v_0^T T$, where $v_0^T$ denotes the transposed vector. \marginpar{inv. meas. = stat. meas. = stat. dist. = equi. dist.?}
-The invariant measure $\mu \in \R^n$ satisfies $\mu^T = \mu^T T$. \marginpar{weights p.29 (later)}
+%probability, initial distribution
+The propagation of a probability distribution $v_0 \in \R^n$ in the state space can be written as $v_1^T = v_0^T P$, where $v_0^T$ denotes the transposed vector of $v_0$.
+%equilibrium distribution = stat. distribution if process converges to it indep. of start distribution
+The invariant measure is given by the stationary distribution $\pi \in \R^n$, a normalized positive vector satisfying $\pi^T = \pi^T P$.
+If $P$ is irreducible, such an eigenvector exists due to Perron-Frobenius theorem\cite[P7.3.5]{golub1996} and in this case, the corresponding eigenvalue $1$ is simple.
+
+Reversibility of a Markov chain can be characterized by the \textit{detailed balance condition}
+\begin{equation*}
+\pi_i \cdot \Prob(X_1 = j \mid X_0 = i) = \pi_j \cdot \Prob(X_1 = i \mid X_0 = j) \ \ \ \forall i,j \in E.
+\end{equation*}
+%Then reversibility is equivalent to the detailed balance equation
+A more compact way to write this equation uses the diagonal matrix $D = \textrm{diag}(\pi_1,\dots,\pi_n)$.
+Then a Markov chain is reversible if and only if its transition matrix $P$ fulfills
+\begin{equation}
+\label{eq:detailed}
+DP = P^T D.
+\end{equation}
+%measure/determine
+This notation will be useful later in order to measure the degree of nonreversibility of a process.
